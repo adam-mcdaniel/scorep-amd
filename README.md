@@ -168,10 +168,6 @@ To use the metrics provided by PAPI, whether you use the `rocm_smi` or `coretemp
 
 ```bash
 $ # Make sure you've already run the previous steps!
-$ # Navigate to the project directory
-$ cd /path/to/scorep-amd
-$ # Add ScoreP to your environment
-$ source setup-env.sh
 $ # Navigate to the runs directory
 $ cd runs/
 $ # Build the ScoreP plugins to add ROCm instrumentation
