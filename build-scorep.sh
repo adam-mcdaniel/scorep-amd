@@ -1,0 +1,634 @@
+#!/bin/bash
+
+
+###############################################################################
+# LOGGING FUNCTIONS
+###############################################################################
+DEBUG=0
+log_info()  { printf "\033[1;32m[INFO]\033[0m %s\n" "$*"; }
+log_warn()  { printf "\033[1;33m[WARN]\033[0m %s\n" "$*"; }
+log_error() { printf "\033[1;31m[ERROR]\033[0m %s\n" "$*"; }
+log_note() { printf "\033[1;35m[NOTE]\033[0m %s\n" "$*"; }
+log_debug() { [ "$DEBUG" = 1 ] && printf "\033[1;36m[DEBUG]\033[0m %s\n" "$*"; }
+prompt() {
+    # printf "\033[1;36m[PROMPT]\033[0m %s " "$*"
+    # read -p "Enter your choice (1/2/3): " choice
+
+    # Read with the colored prompt plus the input
+    printf "\033[1;36m[PROMPT]\033[0m %s " "$*"
+    read -r choice
+}
+
+###############################################################################
+# SCORE-P COMPILER + LINKER FLAGS, LIBRARIES, AND INCLUDE PATHS
+###############################################################################
+
+# This defines which compiler to use for non-cross-compiled builds which
+# are created with Score-P.
+DEFAULT_COMPILER_SUITE="clang"
+
+# This function sets up the environment variables for Score-P
+# It sets the compiler, linker flags, and paths for ROCm libraries.
+# This must ONLY be called before building Score-P.
+function setup_scorep_env() {
+    export CC="/opt/rocm-$ROCM_VERSION/llvm/bin/clang"
+    export CXX="/opt/rocm-$ROCM_VERSION/llvm/bin/clang++"
+    export HIPCC="/opt/rocm-$ROCM_VERSION/bin/hipcc"
+
+    export PATH="/opt/rocm-$ROCM_VERSION/bin:$PATH"
+    export PATH="/opt/rocm-$ROCM_VERSION/lib:$PATH"
+    export PATH="/opt/rocm-$ROCM_VERSION/include:$PATH"
+    export PATH="/opt/rocm-$ROCM_VERSION/llvm/bin:$PATH"
+    export CFLAGS="-I/opt/rocm-$ROCM_VERSION/include -L/opt/rocm-$ROCM_VERSION/lib -Wl,-rpath,/opt/rocm-$ROCM_VERSION/lib"
+    export CXXFLAGS="-I/opt/rocm-$ROCM_VERSION/include -L/opt/rocm-$ROCM_VERSION/lib -Wl,-rpath,/opt/rocm-$ROCM_VERSION/lib"
+    export LDFLAGS="-L/opt/rocm-$ROCM_VERSION/lib -Wl,-rpath,/opt/rocm-$ROCM_VERSION/lib"
+
+    if [ -z "$C_INCLUDE_PATH" ]; then
+        export C_INCLUDE_PATH="/opt/rocm-$ROCM_VERSION/include"
+    else
+        export C_INCLUDE_PATH="/opt/rocm-$ROCM_VERSION/include:$C_INCLUDE_PATH"
+    fi
+    if [ -z "$LIBRARY_PATH" ]; then
+        export LIBRARY_PATH="/opt/rocm-$ROCM_VERSION/lib"
+    else
+        export LIBRARY_PATH="/opt/rocm-$ROCM_VERSION/lib:$LIBRARY_PATH"
+    fi
+    if [ -z "$LD_LIBRARY_PATH" ]; then
+        export LD_LIBRARY_PATH="/opt/rocm-$ROCM_VERSION/lib"
+    else
+        export LD_LIBRARY_PATH="/opt/rocm-$ROCM_VERSION/lib:$LD_LIBRARY_PATH"
+    fi
+}
+
+###############################################################################
+# ENVIRONMENT VARIABLES FOR DIRECTORIES, ROCm VERSION, AND INSTALLATION PATHS
+###############################################################################
+
+# The current directory is set to the script's directory.
+# Every install/build is done relative to this directory.
+CURRENT_DIR=$(pwd)
+
+# The patch directory is set to a subdirectory named "patches" in the current directory.
+# This directory is expected to contain patches for the `rocm_smi` and `coretemp` components of PAPI.
+PATCH_DIR=$CURRENT_DIR/patches
+# Where everything will be installed
+export INSTALL_DIR="$CURRENT_DIR/install"
+# The build directory is set to a subdirectory named "build" in the current directory.
+export BUILD_DIR="$CURRENT_DIR/build"
+# The ROCm installation is assumed to be in /opt/rocm-<version>
+# The script will automatically detect the latest ROCm version installed in /opt/.
+ROCM_VERSIONS=$(ls /opt/ | sed 's|/opt/rocm-||' | sort -V)
+# Strip the `-rocm-` prefixes if they exist
+ROCM_VERSIONS=$(echo "$ROCM_VERSIONS" | sed 's/rocm-//g')
+log_info "Available ROCm versions:"
+for version in $ROCM_VERSIONS; do
+    log_info "   - $version"
+done
+# Get the latest ROCm version
+# This assumes the versions are in the format x.y.z
+ROCM_VERSION=$(echo "$ROCM_VERSIONS" | tail -n 1)
+log_info "Selecting latest ROCm version: $ROCM_VERSION"
+
+# Add our installed binaries to the PATH
+export PATH="$INSTALL_DIR/bin:$PATH"
+
+
+###############################################################################
+# DEPENDENCIES BUILD PARAMETERS
+###############################################################################
+
+# This sets which dependencies will be built from source for
+# this script.
+# Set them to 1 to build, 0 to skip.
+# If the directory already exists, it will not be built again.
+
+BUILD_PAPI=$( [ -d "$BUILD_DIR/papi" ] && echo 0 || echo 1 )
+BUILD_LLVM=$( [ -d "$BUILD_DIR/llvm-project" ] && echo 0 || echo 1 )
+BUILD_AFS=$( [ -d "$BUILD_DIR/afs-dev-latest" ] && echo 0 || echo 1 )
+BUILD_PERFTOOLS=$( [ -d "$BUILD_DIR/perftools-dev-latest" ] && echo 0 || echo 1 )
+BUILD_OTF2=$( [ -d "$BUILD_DIR/otf2-3.1.1" ] && echo 0 || echo 1 )
+BUILD_CUBEW=$( [ -d "$BUILD_DIR/cubew-4.9" ] && echo 0 || echo 1 )
+BUILD_OPARI2=$( [ -d "$BUILD_DIR/opari2-2.0.9" ] && echo 0 || echo 1 )
+BUILD_CUBELIB=$( [ -d "$BUILD_DIR/cubelib-4.9" ] && echo 0 || echo 1 )
+BUILD_SCOREP=1
+
+# Set the number of parallel jobs for building
+PROC=64
+
+# Set the GCC directory/toolchain for building LLVM
+LLVM_WHICH_GCC_DIR=/auto/software/swtree/ubuntu22.04/x86_64/gcc/13.2.0
+
+# Add our installed libraries to the library path
+# This will let us use our installed dependencies to build other dependencies
+export LDFLAGS="-L$INSTALL_DIR/lib -Wl,-rpath,$INSTALL_DIR/lib"
+
+
+###############################################################################
+# CHECK CURRENT ENVIRONMENT AND SETUP
+###############################################################################
+
+# Check if the current directory is set
+if [ -z "$CURRENT_DIR" ]; then
+    log_error "Current directory is not set. Exiting."
+    exit 1
+fi
+# Check if the patch directory exists
+if [ ! -d "$PATCH_DIR" ]; then
+    log_error "Patch directory does not exist: $PATCH_DIR"
+
+    # Ask user if they want to continue without the patches
+    prompt "Do you want to continue without the patches? (y/n): "
+    if [[ "$choice" =~ ^[Yy]$ ]]; then
+        log_warn "Continuing without patches. This may lead to build failures."
+    else
+        log_error "Exiting due to missing patches."
+        exit 1
+    fi
+fi
+
+if [ ! -d "$BUILD_DIR" ]; then
+    log_info "Creating build directory at $BUILD_DIR"
+    mkdir -p $BUILD_DIR
+else
+    log_info "Build directory $BUILD_DIR already exists, skipping creation."
+fi
+
+if [ ! -d "$INSTALL_DIR" ]; then
+    log_info "Creating install directory at $INSTALL_DIR"
+else
+    log_info "Install directory $INSTALL_DIR already exists, skipping creation."
+fi
+
+
+###############################################################################
+# CHECK ROCm VERSION
+###############################################################################
+
+log_info "Using $PROC parallel jobs for building."
+# Check if the ROCm version is set
+if [ -z "$ROCM_VERSION" ]; then
+    log_error "No ROCm found in /opt/"
+    prompt "Please enter the ROCm version you want to use (e.g., 6.4.0): "
+    if [ -z "$choice" ]; then
+        log_error "No ROCm version provided. Exiting."
+        exit 1
+    else
+        ROCM_VERSION="$choice"
+        log_info "Using user-provided ROCm version: $ROCM_VERSION"
+        if [ ! -d "/opt/rocm-$ROCM_VERSION" ]; then
+            log_error "The specified ROCm version does not exist: /opt/rocm-$ROCM_VERSION"
+            exit 1
+        fi
+    fi
+fi
+
+log_info "Using ROCm version: $ROCM_VERSION"
+
+###############################################################################
+# REPORT BUILD CONFIGURATION
+###############################################################################
+
+log_note "Building the following from source:"
+# Only print if the build variable is set to 1
+for var in PAPI LLVM AFS PERFTOOLS OTF2 CUBEW OPARI2 CUBELIB SCOREP; do
+    value_var="BUILD_${var}"
+    if [ "${!value_var}" = "1" ]; then
+        log_note "   - $var"
+    fi
+done
+
+log_note "Skipping the following:"
+for var in PAPI LLVM AFS PERFTOOLS OTF2 CUBEW OPARI2 CUBELIB SCOREP; do
+    value_var="BUILD_${var}"
+    if [ "${!value_var}" = "0" ]; then
+        log_note "   - $var"
+    fi
+done
+
+###############################################################################
+# BUILD & INSTALL PAPI
+###############################################################################
+
+export PAPI_ROCM_ROOT="/opt/rocm-$ROCM_VERSION"
+export PAPI_ROCMSMI_ROOT="$PAPI_ROCM_ROOT"
+
+export PAPI_ROOT=$INSTALL_DIR
+export PAPI_LIB=$INSTALL_DIR/lib
+
+log_info "PAPI Environment Variables:"
+log_info "   - PAPI_ROOT: $PAPI_ROOT"
+log_info "   - PAPI_LIB: $PAPI_LIB"
+log_info "   - PAPI_ROCM_ROOT: $PAPI_ROCM_ROOT"
+log_info "   - PAPI_ROCMSMI_ROOT: $PAPI_ROCMSMI_ROOT"
+
+cd $BUILD_DIR
+if [ $BUILD_PAPI -eq 1 ]; then
+    if [ ! -d "papi" ]; then
+        log_info "PAPI directory not found, cloning..."
+        git clone --depth 1 https://github.com/icl-utk-edu/papi
+    fi
+    cd papi/src
+    if [ -d "$PATCH_DIR/rocm_smi" ]; then
+        log_info "Removing original PAPI rocm_smi component..."
+        rm -rf components/rocm_smi
+        log_info "Copying patched rocm_smi component from $PATCH_DIR..."
+        cp -R $PATCH_DIR/rocm_smi components/
+    else
+        log_warn "Patch directory for rocm_smi does not exist: $PATCH_DIR/rocm_smi"
+        log_warn "Skipping patching of rocm_smi component."
+    fi
+
+    if [ -d "$PATCH_DIR/coretemp" ]; then
+        log_info "Removing original PAPI coretemp component..."
+        rm -rf components/coretemp
+        log_info "Copying patched coretemp component from $PATCH_DIR..."
+        cp -R $PATCH_DIR/coretemp components/
+    else
+        log_warn "Patch directory for coretemp does not exist: $PATCH_DIR/rocm_smi"
+        log_warn "Skipping patching of coretemp component."
+    fi
+
+
+    log_info "Configuring PAPI with coretemp and rocm_smi components..."
+    ./configure --with-components="coretemp rocm_smi" --prefix=$INSTALL_DIR
+    if [ $? -ne 0 ]; then
+        log_error "PAPI configure failed."
+        exit 1
+    fi
+
+    make clean
+    make -j $PROC
+    if [ $? -ne 0 ]; then
+        log_error "PAPI build failed."
+        exit 1
+    fi
+    
+    make install -j $PROC
+    if [ $? -ne 0 ]; then
+        log_error "PAPI install failed."
+        exit 1
+    fi
+    cd $CURRENT_DIR
+    log_info "PAPI installed successfully."
+else
+    log_note "Skipping PAPI build."
+fi
+
+###############################################################################
+# BUILD & INSTALL LLVM
+###############################################################################
+
+cd $BUILD_DIR
+if [ $BUILD_LLVM -eq 1 ]; then
+    if [ ! -d "llvm-project" ]; then
+        log_info "llvm-project directory not found, cloning..."
+        git clone --depth 1 https://github.com/llvm/llvm-project.git
+    fi
+
+    # Go into the llvm-project directory and build LLVM
+    cd llvm-project
+    log_info "Using GCC from $LLVM_WHICH_GCC_DIR for LLVM build."
+    cmake -S llvm \
+        -B build \
+        -G Ninja \
+        -DCMAKE_INSTALL_PREFIX=$INSTALL_DIR \
+        -DLLVM_ENABLE_PROJECTS="clang;clang-tools-extra;lld" \
+        -DLLVM_ENABLE_RUNTIMES="libcxx;libcxxabi;openmp;offload;libunwind;compiler-rt" \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_C_COMPILER=$LLVM_WHICH_GCC_DIR/bin/gcc \
+        -DCMAKE_CXX_COMPILER=$LLVM_WHICH_GCC_DIR/bin/g++ \
+        -DLIBOMPTARGET_DEBUG=1 \
+        -DRUNTIMES_CMAKE_ARGS="-DCMAKE_C_FLAGS=--gcc-toolchain=$LLVM_WHICH_GCC_DIR -DCMAKE_CXX_FLAGS=--gcc-toolchain=$LLVM_WHICH_GCC_DIR" \
+        -DOPENMP_TEST_FLAGS=--gcc-toolchain=$LLVM_WHICH_GCC_DIR
+    log_info "Building LLVM project..."
+    cmake --build build --target install -- -j $PROC
+    if [ $? -ne 0 ]; then
+        log_error "LLVM build failed."
+        exit 1
+    fi
+    cd $BUILD_DIR
+    log_info "LLVM project installed successfully."
+else
+    log_note "Skipping LLVM build."
+fi
+
+###############################################################################
+# BUILD & INSTALL AFS
+###############################################################################
+
+cd $BUILD_DIR
+# Check if the tar file exists
+if [ $BUILD_AFS -eq 1 ]; then
+    if [ ! -f "afs-dev-latest.tar.gz" ]; then
+        log_info "afs-dev-latest.tar.gz not found, downloading..."
+        wget https://perftools.pages.jsc.fz-juelich.de/utils/afs-dev/afs-dev-latest.tar.gz
+        if [ $? -ne 0 ]; then
+            log_error "Failed to download afs-dev-latest."
+            exit 1
+        fi
+    fi
+    log_info "Extracting afs-dev-latest..."
+    tar xf afs-dev-latest.tar.gz
+    if [ $? -ne 0 ]; then
+        log_error "Failed to extract afs-dev-latest.tar.gz."
+        exit 1
+    fi
+    cd afs-dev-latest
+    ./install-afs-dev.sh --continue-after-download --prefix=$INSTALL_DIR
+    if [ $? -ne 0 ]; then
+        log_error "afs-dev-latest installation failed."
+        exit 1
+    fi
+    cd $BUILD_DIR
+    log_info "afs-dev-latest installed successfully."
+else
+    log_note "Skipping afs-dev-latest build."
+fi
+
+###############################################################################
+# BUILD & INSTALL PERFTOOLS
+###############################################################################
+
+cd $BUILD_DIR
+if [ ! -d "perftools-dev-latest" ]; then
+    # log_info "Downloading perftools-dev-latest..."
+    if [ ! -f "perftools-dev-latest.tar.gz" ]; then
+        log_info "perftools-dev-latest.tar.gz not found, downloading..."
+        wget https://perftools.pages.jsc.fz-juelich.de/utils/perftools-dev/perftools-dev-latest.tar.gz
+        if [ $? -ne 0 ]; then
+            log_error "Failed to download perftools-dev-latest."
+            exit 1
+        fi
+    fi
+    tar xf perftools-dev-latest.tar.gz
+    if [ $? -ne 0 ]; then
+        log_error "Failed to extract perftools-dev-latest.tar.gz."
+        exit 1
+    fi
+    cd perftools-dev-latest
+    ./install-perftools-dev.sh --continue-after-download --prefix=$INSTALL_DIR
+    if [ $? -ne 0 ]; then
+        log_error "perftools-dev-latest installation failed."
+        exit 1
+    fi
+    cd $BUILD_DIR
+    log_info "perftools-dev-latest installed successfully."
+else
+    log_note "Skipping perftools-dev-latest build."
+fi
+
+
+###############################################################################
+# BUILD & INSTALL OTF2
+###############################################################################
+
+cd $BUILD_DIR
+if [ $BUILD_OTF2 -eq 1 ]; then
+    # log_info "Downloading OTF2 3.1.1..."
+    if [ ! -f "otf2-3.1.1.tar.gz" ]; then
+        log_info "otf2-3.1.1.tar.gz not found, downloading..."
+        wget https://perftools.pages.jsc.fz-juelich.de/cicd/otf2/tags/otf2-3.1.1/otf2-3.1.1.tar.gz
+        if [ $? -ne 0 ]; then
+            log_error "Failed to download OTF2 3.1.1."
+            exit 1
+        fi
+    fi
+    tar xf otf2-3.1.1.tar.gz
+    if [ $? -ne 0 ]; then
+        log_error "Failed to extract OTF2 3.1.1."
+        exit 1
+    fi
+    cd otf2-3.1.1
+    ./configure --prefix=$INSTALL_DIR
+    if [ $? -ne 0 ]; then
+        log_error "OTF2 configure failed."
+        exit 1
+    fi
+    make -j $PROC
+    if [ $? -ne 0 ]; then
+        log_error "OTF2 build failed."
+        exit 1
+    fi
+    make install
+    if [ $? -ne 0 ]; then
+        log_error "OTF2 install failed."
+        exit 1
+    fi
+    cd $BUILD_DIR
+    log_info "OTF2 3.1.1 installed successfully."
+else
+    log_note "Skipping OTF2 build."
+fi
+
+
+###############################################################################
+# BUILD & INSTALL CUBEW
+###############################################################################
+
+cd $BUILD_DIR
+if [ $BUILD_CUBEW -eq 1 ]; then
+    if [ ! -f "cubew-4.9.tar.gz" ]; then
+        log_info "cubew-4.9.tar.gz not found, downloading..."
+        wget https://apps.fz-juelich.de/scalasca/releases/cube/4.9/dist/cubew-4.9.tar.gz
+        if [ $? -ne 0 ]; then
+            log_error "Failed to download cubew 4.9."
+            exit 1
+        fi
+    fi
+    echo "Extracting cubew 4.9..."
+    tar xf cubew-4.9.tar.gz
+    if [ $? -ne 0 ]; then
+        log_error "Failed to extract cubew 4.9."
+        exit 1
+    fi
+    cd cubew-4.9
+    ./configure --prefix=$INSTALL_DIR
+    if [ $? -ne 0 ]; then
+        log_error "cubew configure failed."
+        exit 1
+    fi
+    make -j $PROC
+    if [ $? -ne 0 ]; then
+        log_error "cubew build failed."
+        exit 1
+    fi
+    make install -j $PROC
+    if [ $? -ne 0 ]; then
+        log_error "cubew install failed."
+        exit 1
+    fi
+    cd $BUILD_DIR
+    log_info "cubew 4.9 installed successfully."
+else
+    log_note "Skipping cubew build."
+fi
+
+###############################################################################
+# BUILD & INSTALL OPARI
+###############################################################################
+
+cd $BUILD_DIR
+if [ $BUILD_OPARI2 -eq 1 ]; then
+    if [ ! -f "opari2-2.0.9.tar.gz" ]; then
+        log_info "opari2-2.0.9.tar.gz not found, downloading..."
+        wget https://perftools.pages.jsc.fz-juelich.de/cicd/opari2/tags/opari2-2.0.9/opari2-2.0.9.tar.gz
+        if [ $? -ne 0 ]; then
+            log_error "Failed to download OPARI2 2.0.9."
+            exit 1
+        fi
+    fi
+    tar xf opari2-2.0.9.tar.gz
+    if [ $? -ne 0 ]; then
+        log_error "Failed to extract OPARI2 2.0.9."
+        exit 1
+    fi
+    cd opari2-2.0.9
+    ./configure --prefix=$INSTALL_DIR
+    if [ $? -ne 0 ]; then
+        log_error "OPARI2 configure failed."
+        exit 1
+    fi
+    make -j $PROC
+    if [ $? -ne 0 ]; then
+        log_error "OPARI2 build failed."
+        exit 1
+    fi
+    make install -j $PROC
+    if [ $? -ne 0 ]; then
+        log_error "OPARI2 install failed."
+        exit 1
+    fi
+    cd $BUILD_DIR
+    log_info "OPARI2 2.0.9 installed successfully."
+else
+    log_note "Skipping OPARI2 build."
+fi
+
+###############################################################################
+# BUILD & INSTALL CUBELIB
+###############################################################################
+
+cd $BUILD_DIR
+if [ $BUILD_CUBELIB -eq 1 ]; then
+    if [ ! -f "cubelib-4.9.tar.gz" ]; then
+        log_info "cubelib-4.9.tar.gz not found, downloading..."
+        wget https://apps.fz-juelich.de/scalasca/releases/cube/4.9/dist/cubelib-4.9.tar.gz
+        if [ $? -ne 0 ]; then
+            log_error "Failed to download cubelib 4.9."
+            exit 1
+        fi
+    fi
+    log_info "Extracting cubelib 4.9..."
+    tar xf cubelib-4.9.tar.gz
+    if [ $? -ne 0 ]; then
+        log_error "Failed to extract cubelib 4.9."
+        exit 1
+    fi
+    cd cubelib-4.9
+    log_info "Configuring cubelib 4.9..."
+    ./configure --prefix=$INSTALL_DIR
+    if [ $? -ne 0 ]; then
+        log_error "cubelib configure failed."
+        exit 1
+    fi
+    log_info "Building cubelib 4.9..."
+    make clean
+    make -j $PROC
+    if [ $? -ne 0 ]; then
+        echo "cubelib build failed."
+        exit 1
+    fi
+    make install -j $PROC
+    if [ $? -ne 0 ]; then
+        echo "cubelib install failed."
+        exit 1
+    fi
+    cd $BUILD_DIR
+    log_info "cubelib 4.9 installed successfully."
+else
+    log_note "Skipping cubelib build."
+fi
+
+
+###############################################################################
+# BUILD & INSTALL SCOREP
+###############################################################################
+
+setup_scorep_env
+
+cd $BUILD_DIR
+if [ $BUILD_SCOREP -eq 1 ]; then
+    if [ ! -d "scorep-9.0" ]; then
+        log_info "scorep-9.0 directory not found, downloading..."
+        wget https://perftools.pages.jsc.fz-juelich.de/cicd/scorep/tags/scorep-9.0/scorep-9.0.tar.gz
+        if [ $? -ne 0 ]; then
+            log_error "Failed to download Score-P 9.0."
+            exit 1
+        fi
+    fi
+    tar xf scorep-9.0.tar.gz
+    if [ $? -ne 0 ]; then
+        log_error "Failed to extract Score-P 9.0."
+        exit 1
+    fi
+    cd scorep-9.0
+    rm -Rf _build
+    mkdir _build
+    cd _build
+    log_info "Configuring Score-P 9.0..."
+    ../configure \
+        --prefix="$INSTALL_DIR" \
+        --enable-shared=yes \
+        --without-shmem \
+        --without-mpi \
+        --with-papi-lib="$INSTALL_DIR/lib" \
+        --with-papi-header="$INSTALL_DIR/include" \
+        --with-otf2="$INSTALL_DIR" \
+        --with-cubelib="$INSTALL_DIR" \
+        --with-cubew="$INSTALL_DIR" \
+        --with-afs-dev="$INSTALL_DIR" \
+        --with-perftools-dev="$INSTALL_DIR" \
+        --with-opari2="$INSTALL_DIR" \
+        --with-libgotcha=download \
+        --with-libbfd=download \
+        --with-libunwind=download \
+        --with-libamdhip64-include="/opt/rocm-$ROCM_VERSION/include" \
+        --with-libamdhip64-lib="/opt/rocm-$ROCM_VERSION/lib" \
+        --with-libamdhip64=yes \
+        --with-librocm_smi64-include="/opt/rocm-$ROCM_VERSION/include" \
+        --with-librocm_smi64-lib="/opt/rocm-$ROCM_VERSION/lib" \
+        --with-librocm_smi64=yes \
+        --with-libroctracer64-include="/opt/rocm-$ROCM_VERSION/include" \
+        --with-libroctracer64-lib="/opt/rocm-$ROCM_VERSION/lib" \
+        --with-libroctracer64=yes \
+        --with-nocross-compiler-suite="$DEFAULT_COMPILER_SUITE" \
+        --with-rocm="/opt/rocm-$ROCM_VERSION" \
+        --with-llvm="/opt/rocm-$ROCM_VERSION/llvm"
+    if [ $? -ne 0 ]; then
+        log_error "Score-P configure failed."
+        exit 1
+    fi
+    make -j $PROC
+
+    if [ $? -ne 0 ]; then
+        log_error "Score-P build failed."
+        exit 1
+    fi
+    make install -j $PROC
+
+    if [ $? -ne 0 ]; then
+        log_error "Score-P install failed."
+        exit 1
+    fi
+
+    log_info "Score-P installed successfully."
+    cd $BUILD_DIR
+fi
+
+
+cd $CURRENT_DIR
+log_note "All components built and installed successfully!"
+
+log_note "You can now set up your environment for Score-P by sourcing the setup-env.sh script."
+log_note "Run the following command to set up your environment:"
+log_note "source $CURRENT_DIR/setup-env.sh"
