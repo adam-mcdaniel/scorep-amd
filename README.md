@@ -56,10 +56,10 @@ You need to have the following prerequisites installed:
 > This project *should* work with other versions of `ROCm` and other compatible AMD GPUs in the Mi200 and Mi300 series, but it has not been tested with many other configurations.
 > If you encounter issues, please feel free to [open an issue on the GitHub repository.](https://github.com/adam-mcdaniel/scorep-amd/issues/new)
 
-If you encounter issues refer to the following resources:
+If you encounter issues refer to the following documentation:
+- [Make sure you have permissions to access the API for your AMD GPU.](https://rocm.docs.amd.com/projects/install-on-linux/en/latest/install/prerequisites.html#using-group-membership) To run GPU applications, your account may need to be in the `render` group.
 - [ScoreP documentation](./docs/scorep.pdf)
 - [ROCm documentation](https://rocm.docs.amd.com/projects/install-on-linux/en/latest/reference/system-requirements.html)
-- [Make sure you have permissions to access the API for your AMD GPU.](https://rocm.docs.amd.com/projects/install-on-linux/en/latest/install/prerequisites.html#using-group-membership) To run GPU applications, your account may need to be in the `render` group.
 
 ## Usage
 
