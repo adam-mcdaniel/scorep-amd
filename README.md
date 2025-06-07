@@ -2,6 +2,23 @@
 
 A project to build and configure the `ScoreP` performance measurement framework for AMD GPUs, specifically the Mi300, with support for the `ROCm` stack.
 
+## Table of Contents
+
+- [Introduction](#introduction)
+- [Before You Start](#before-you-start)
+- [Usage](#usage)
+    - [1. Directory Structure](#1-directory-structure)
+    - [2. Building ScoreP](#2-building-scorep)
+    - [3. Adding ScoreP to Your Environment](#3-adding-scorep-to-your-environment)
+    - [4. Building ScoreP Plugins](#4-building-scorep-plugins)
+    - [5. Choose Your Measurement Parameters](#5-choose-your-measurement-parameters)
+    - [6. Compiling CPU-Only Applications](#6-compiling-cpu-only-applications)
+    - [7. Compiling GPU Applications](#7-compiling-gpu-applications)
+    - [8. Running Applications](#8-running-applications)
+    - [9. Viewing Results](#9-viewing-results)
+    - [10. Cleaning Up](#10-cleaning-up)
+- [Conclusion](#conclusion)
+
 ## Introduction
 
 This project performs the following tasks:
@@ -48,7 +65,6 @@ The project directory structure is as follows:
 ```bash
 scorep-amd/
 ├── README.md             # This file
-├── LICENSE               # License file for the scripts
 ├── docs/                 # Directory containing documentation files
 │   └── scorep.pdf        # Documentation for ScoreP
 │
@@ -167,7 +183,7 @@ $ ls $INSTALL_DIR/lib/lib*plugin*.so
 
 If you see the `libarocm_smi_plugin.so` and `libcoretemp_plugin.so` files, then the plugins have been built successfully.
 
-### 5. Compiling & Running ScoreP Applications
+### 5. Choose Your Measurement Parameters
 
 To run applications with `ScoreP` instrumentation, you must first set up the `ScoreP` measurement parameters.
 
@@ -186,7 +202,7 @@ This script will configure the `ScoreP` environment variables to specify the met
 
 Now that you have built `ScoreP` and the necessary plugins, you can compile and run applications with `ScoreP` instrumentation!
 
-#### 5.1 Compiling CPU-Only Applications
+### 6. Compiling CPU-Only Applications
 
 You can compile CPU applications with `ScoreP` instrumentation by using `scorep-clang`, `scorep-clang++`, or `scorep-flang` as your compiler. For example:
 
@@ -196,7 +212,7 @@ $ scorep-clang -o my_cpu_app my_cpu_app.c
 
 You may also write your own `Makefile`s that use the appropriate `ScoreP` wrapper as your `CC` or `CXX` variables, for example.
 
-#### 5.2 Compiling GPU Applications
+### 7. Compiling GPU Applications
 
 To compile GPU applications that use `hipcc`, you should use the `scorep-hipcc` wrapper. This wrapper will automatically instrument your code for `ScoreP` and link against the necessary libraries.
 
@@ -204,7 +220,7 @@ To compile GPU applications that use `hipcc`, you should use the `scorep-hipcc` 
 $ scorep-hipcc rocm-blas-gemm.cpp -o rocm-blas-gemm -lrocblas
 ```
 
-#### 5.3 Running Applications
+### 8. Running Applications
 
 To run your instrumented applications, simply execute them as you normally would. `ScoreP` will automatically collect performance data based on the configuration set in the `setup-run-params.sh` script, and produce output files in the specified output directories (e.g., `experiments/scorep-experiment-<time>`).
 
@@ -222,14 +238,14 @@ $ scorep-hipcc rocm-blas-gemm.cpp -o rocm-blas-gemm -lrocblas
 $ ./rocm-blas-gemm
 ```
 
-#### 6. Viewing Results
+## 9. Viewing Results
 
 By default, `ScoreP` will generate `.otf2` files in the specified output directory (e.g., `experiments/scorep-experiment-<time>`).
 
 To analyze the results, it is recommended (but not required) to use [Vampir](https://vampir.eu).
 
 
-## 7. Cleaning Up
+## 10. Cleaning Up
 
 To clean up the `build/` and `install/` directories, you can run the `clean.sh` script:
 
@@ -238,3 +254,9 @@ $ ./clean.sh
 ```
 
 This script provides you with the option to clean the specific directories you want, as well as the option to clear all the environment variables set by `setup-env.sh`. This is useful if you want to start with a fresh environment, or if you want to test a different configuration without the previous settings interfering.
+
+## Conclusion
+
+This project provides a comprehensive setup for building and configuring `ScoreP` for AMD GPUs, specifically the Mi300, with support for the `ROCm` stack. By following the steps outlined in this README, you should be able to successfully build `ScoreP`, configure it for AMD GPUs, and run applications with performance measurement capabilities.
+
+If you have any unexpected or unanticipated issues, please feel free to [open an issue on the GitHub repository!](https://github.com/adam-mcdaniel/scorep-amd/issues/new)
