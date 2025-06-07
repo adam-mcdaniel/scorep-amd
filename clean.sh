@@ -16,12 +16,6 @@ prompt() {
     read -r choice
 }
 
-# If neither build nor install directories exist, exit
-if [ ! -d "$INSTALL_DIR" ] && [ ! -d "$BUILD_DIR" ]; then
-    log_error "Neither install nor build directories exist. Nothing to clean."
-    exit 1
-fi
-
 function clean_install_dir () {
     log_info "Cleaning install directory: $INSTALL_DIR"
     if [ -d "$INSTALL_DIR" ]; then
