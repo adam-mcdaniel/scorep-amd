@@ -50,7 +50,7 @@ You need to have the following prerequisites installed:
 - `ROCm` (Radeon Open Compute) stack - You'll need to check the [ROCm documentation](https://rocmdocs.amd.com/en/latest/) for installation instructions. The system requirements can be found [here](https://rocm.docs.amd.com/projects/install-on-linux/en/latest/reference/system-requirements.html). This project assumes you're using Linux, and have a compatible AMD GPU for use with `hipcc` and LLVM.
 - Your `ROCm` installation must be in the `/opt/rocm-<version>` directory. This script will adapt to your version automatically, assuming it's compatible with ScoreP.
 - Your `ROCm` installation must support the `rocm-smi` API, which is used to query GPU information.
-- You must have a C compiler installed. This project has been tested with `gcc` version `13.3.0` on `Ubuntu 24.04`.
+- You must have a C compiler installed. The dependencies of ScoreP in this project were built and tested with `gcc` version `13.3.0` on `Ubuntu 24.04`, but other versions of `gcc` and `clang` should work too.
 
 > [!CAUTION]
 > This project *should* work with other versions of `ROCm` and other compatible AMD GPUs in the Mi200 and Mi300 series, but it has not been tested with many other configurations.
