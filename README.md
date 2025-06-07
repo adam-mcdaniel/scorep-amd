@@ -195,7 +195,7 @@ To run applications with `ScoreP` instrumentation, you must first set up the `Sc
 ```bash
 $ # Make sure you've already run the previous steps!
 $ # Navigate to the runs/ directory
-$ cd /path/to/scorep-amd/runs/
+$ cd /path/to/scorep-amd/runs
 $ # Set up the ScoreP measurement parameters
 $ ./setup-run-params.sh
 ```
