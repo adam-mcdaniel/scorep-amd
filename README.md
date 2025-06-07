@@ -5,6 +5,9 @@ A project to build and configure the `ScoreP` performance measurement framework 
 ## Table of Contents
 
 - [Introduction](#introduction)
+    - [Purpose](#purpose)
+    - [Functionality](#functionality)
+        - [Patches to PAPI](#patches-to-papi)
 - [Before You Start](#before-you-start)
 - [Usage](#usage)
     - [1. Directory Structure](#1-directory-structure)
@@ -21,13 +24,22 @@ A project to build and configure the `ScoreP` performance measurement framework 
 
 ## Introduction
 
+### Purpose
+
+The purpose of this project is to provide a comprehensive setup for HPC researchers and developers to gather performance metrics on exascale systems using AMD GPUs, especially those based on the Mi300 and Mi200 architectures (e.g. El Capitan, Frontier, etc.). 
+
+Additionally, this project provides extensions to the [PAPI](https://icl.utk.edu/papi/) interface so that researchers can perform analysis of the energy consumption of their applications on AMD GPUs. This is particularly useful for researchers who are interested in research questions surrounding how different applications or design choices affect the energy consumption of their applications on AMD GPUs, and how to optimize for energy efficiency.
+
+### Functionality
+
 This project performs the following tasks:
 - Builds the `ScoreP` performance measurement framework with support for AMD GPUs, and all the necessary dependencies from source.
 - Configures `ScoreP` to use the `ROCm` stack for performance measurement on AMD GPUs using the `hipcc` compiler infrastructure.
 - Provides scripts to automate the build and configuration process.
 
-> [!NOTE]
-> Additionally, this project provides two "patches": extensions to the [PAPI](https://github.com/icl-utk-edu/papi) interface to provide access to some `ROCm` features not available in the standard `PAPI` interface:
+#### Patches to PAPI
+
+Additionally, this project provides two patches which extend to the [PAPI](https://github.com/icl-utk-edu/papi) interface to provide access to some `ROCm` features not available in the standard `PAPI` interface
 
 - The energy consumption of the GPU provided in the `rocm-smi` API. The documentation for this metric can be found [here](https://rocm.docs.amd.com/projects/rocm_smi_lib/en/latest/doxygen/html/group__PowerQuer.html#ga1f61b24edaca83a0e395a34c466fcf86).
 - The Mi300 GPU introduces new performance counters for collecting instantaneous GPU power consumption metrics in microwatts. These counters are not available in the standard `PAPI` interface, but can be accessed through the `rocm-smi` API. The documentation for this metric can be found [here](https://rocm.docs.amd.com/projects/rocm_smi_lib/en/latest/doxygen/html/group__PowerQuer.html#gafb3d36d17698b411c320982cc8f8da82).
@@ -58,7 +70,7 @@ If you encounter issues refer to the following resources:
 
 All sections of this project are designed to run in a `bash` environment without root privileges.
 
-### 1. Directory Structure
+## 1. Directory Structure
 
 The project directory structure is as follows:
 
@@ -88,7 +100,7 @@ scorep-amd/
 
 The details of each directory and file will be explained piecemeal in the following sections.
 
-### 2. Building ScoreP
+## 2. Building ScoreP
 
 First, clone the repository and navigate to the project directory.
 The placement of this directory is not important to the project's functionality, as long as you have write permissions in the directory.
@@ -115,13 +127,13 @@ The script will automatically detect the version of `ROCm` installed on your sys
 > You may want to disable the `PAPI` patches if you do not desire the additional functionality provided by the `rocm_smi` and `coretemp` patches.
 > To do this, you can either: remove the patches from the `patches/` directory individually, remove the `patches/` directory entirely, or comment out the lines in the `build-scorep.sh` script that apply the patches.
 
-#### Expected Result
+### Expected Result
 
 After running the script, you should see output indicating that `ScoreP` and its dependencies have been built successfully. The final output will indicate the installation directory, which is `./install` by default.
 
 Check to make sure that all your desired binaries for ScoreP exist in the `./install/bin/` directory. For compiling applications that use GPU kernels, you should see the `scorep-hipcc` binary, which is a wrapper around the `hipcc` compiler that adds the necessary `ScoreP` instrumentation.
 
-### 3. Adding ScoreP to Your Environment
+## 3. Adding ScoreP to Your Environment
 
 To use `ScoreP` in your applications conveniently, you need to add the `ScoreP` binaries to your environment. You can do this by running the `setup-env.sh` script:
 
@@ -139,7 +151,7 @@ This script will:
 > [!IMPORTANT]
 > This `setup-env.sh` script must be `source`d before running any scripts in the `runs/` directory, or before compiling applications with `ScoreP`.
 
-#### Expected Result
+### Expected Result
 
 After running the `setup-env.sh` script, you should be able to run `scorep-hipcc` and other `ScoreP` tools from any directory in your terminal. You can verify this by running:
 
@@ -149,7 +161,7 @@ $ scorep-info config-summary
 
 If everything is set up correctly, you should see a summary of the `ScoreP` configuration, including the `hipcc` support and the `ROCm` provided LLVM tools.
 
-### 4. Building ScoreP Plugins
+## 4. Building ScoreP Plugins
 
 To use the metrics provided by PAPI, whether you use the `rocm_smi` or `coretemp` patches, you need to build the ScoreP plugins. The `runs/build-plugins.sh` script will do this for you.
 
@@ -169,7 +181,7 @@ $ # Build the ScoreP plugins to add ROCm instrumentation
 $ ./build-plugins.sh
 ```
 
-#### Expected Result
+### Expected Result
 
 If your environment is setup correctly and the `ScoreP` installation was successful, you should see output indicating that the plugins have been built successfully.
 
@@ -183,7 +195,7 @@ $ ls $INSTALL_DIR/lib/lib*plugin*.so
 
 If you see the `libarocm_smi_plugin.so` and `libcoretemp_plugin.so` files, then the plugins have been built successfully.
 
-### 5. Choose Your Measurement Parameters
+## 5. Choose Your Measurement Parameters
 
 To run applications with `ScoreP` instrumentation, you must first set up the `ScoreP` measurement parameters.
 
@@ -202,7 +214,7 @@ This script will configure the `ScoreP` environment variables to specify the met
 
 Now that you have built `ScoreP` and the necessary plugins, you can compile and run applications with `ScoreP` instrumentation!
 
-### 6. Compiling CPU-Only Applications
+## 6. Compiling CPU-Only Applications
 
 You can compile CPU applications with `ScoreP` instrumentation by using `scorep-clang`, `scorep-clang++`, or `scorep-flang` as your compiler. For example:
 
@@ -212,7 +224,7 @@ $ scorep-clang -o my_cpu_app my_cpu_app.c
 
 You may also write your own `Makefile`s that use the appropriate `ScoreP` wrapper as your `CC` or `CXX` variables, for example.
 
-### 7. Compiling GPU Applications
+## 7. Compiling GPU Applications
 
 To compile GPU applications that use `hipcc`, you should use the `scorep-hipcc` wrapper. This wrapper will automatically instrument your code for `ScoreP` and link against the necessary libraries.
 
@@ -220,7 +232,7 @@ To compile GPU applications that use `hipcc`, you should use the `scorep-hipcc` 
 $ scorep-hipcc rocm-blas-gemm.cpp -o rocm-blas-gemm -lrocblas
 ```
 
-### 8. Running Applications
+## 8. Running Applications
 
 To run your instrumented applications, simply execute them as you normally would. `ScoreP` will automatically collect performance data based on the configuration set in the `setup-run-params.sh` script, and produce output files in the specified output directories (e.g., `experiments/scorep-experiment-<time>`).
 
