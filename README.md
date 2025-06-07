@@ -164,7 +164,7 @@ To use the metrics provided by PAPI, whether you use the `rocm_smi` or `coretemp
 
 > [!IMPORTANT]
 > *Make sure you have run all previous steps!*
-> Also, be sure to `source` the `setup-env.sh` script before running this script, so that the environment variables are set correctly.
+> Also, don't forget to `source` the `setup-env.sh` script in your current environment before running the `build-plugins.sh` file.
 
 ```bash
 $ # Make sure you've already run the previous steps!
