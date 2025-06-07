@@ -101,8 +101,10 @@ First, clone the repository and navigate to the project directory.
 The placement of this directory is not important to the project's functionality, as long as you have write permissions in the directory.
 
 ```bash
-git clone https://github.com/adam-mcdaniel/scorep-amd.git
-cd scorep-amd
+$ # Clone the repository
+$ git clone https://github.com/adam-mcdaniel/scorep-amd.git
+$ # Navigate to the project directory
+$ cd scorep-amd
 ```
 
 To build `ScoreP`, run the `build-scorep.sh` script. This script will:
@@ -113,7 +115,7 @@ To build `ScoreP`, run the `build-scorep.sh` script. This script will:
 - Install `ScoreP` in the `./install` directory.
 
 ```bash
-./build-scorep.sh
+$ ./build-scorep.sh
 ```
 
 The script will automatically detect the version of `ROCm` installed on your system and adapt the build process accordingly.
@@ -133,7 +135,7 @@ Check to make sure that all your desired binaries for ScoreP exist in the `./ins
 To use `ScoreP` in your applications conveniently, you need to add the `ScoreP` binaries to your environment. You can do this by running the `setup-env.sh` script:
 
 ```bash
-source setup-env.sh
+$ source setup-env.sh
 ```
 
 This script will:
