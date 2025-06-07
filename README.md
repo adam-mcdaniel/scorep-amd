@@ -197,7 +197,7 @@ $ # Make sure you've already run the previous steps!
 $ # Navigate to the runs/ directory
 $ cd /path/to/scorep-amd/runs
 $ # Set up the ScoreP measurement parameters
-$ ./setup-run-params.sh
+$ source ./setup-run-params.sh
 ```
 
 This script will configure the `ScoreP` environment variables to specify the metrics to collect, the tracing/profiling options, the output directory and file formats, etc.
