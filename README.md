@@ -53,18 +53,13 @@ You need to have the following prerequisites installed:
 - You must have a C compiler installed. This project has been tested with `gcc` version `13.3.0` on `Ubuntu 24.04`.
 
 > [!CAUTION]
-> his project has not been tested on other architectures or with other versions of ScoreP or `ROCm`, but it *should* work with other versions of `ROCm` and other compatible AMD GPUs in the 200 and 300 series.
+> This project *should* work with other versions of `ROCm` and other compatible AMD GPUs in the Mi200 and Mi300 series, but it has not been tested with many other configurations.
+> If you encounter issues, please feel free to [open an issue on the GitHub repository.](https://github.com/adam-mcdaniel/scorep-amd/issues/new)
 
 If you encounter issues refer to the following resources:
 - [ScoreP documentation](./docs/scorep.pdf)
 - [ROCm documentation](https://rocm.docs.amd.com/projects/install-on-linux/en/latest/reference/system-requirements.html)
 - [Make sure you have permissions to access the API for your AMD GPU.](https://rocm.docs.amd.com/projects/install-on-linux/en/latest/install/prerequisites.html#using-group-membership) To run GPU applications, your account may need to be in the `render` group.
-
-<!-- 
-> [!NOTE]
-> 1. Your system must have the `ROCm` stack installed in the `/opt/rocm-<version>` directory.
-> 2. The `ROCm` version must be compatible with the version of ScoreP you are using.
-> 3. This project has only been test with `ROCm 6.4.0` and ScoreP `9.0`. -->
 
 ## Usage
 
