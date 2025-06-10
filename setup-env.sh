@@ -24,6 +24,18 @@ fi
 
 log_info "Setting up environment for using your installed Score-P profiling tools..."
 
+if [ ! -f "$ORIGINAL_BASH_ENV" ]; then
+    # Get all the environment variables that are set in the original bash environment
+    ORIGINAL_BASH_VARS=$(compgen -v)
+    # Save them to a file
+    export ORIGINAL_BASH_ENV=$(mktemp /tmp/original_bash_env.XXXXXX)
+    for var in $ORIGINAL_BASH_VARS; do
+        echo "$var=${!var}" >> "$ORIGINAL_BASH_ENV"
+    done
+    log_info "Saved original, untainted bash environment saved to $ORIGINAL_BASH_ENV"
+else
+    log_info "Original bash environment already saved to $ORIGINAL_BASH_ENV"
+fi
 
 ###############################################################################
 # DETERMINE INSTALL LOCATION
@@ -70,23 +82,93 @@ else
     export LD_LIBRARY_PATH="$INSTALL_DIR/lib:$LD_LIBRARY_PATH"
 fi
 
+
+ROCM_VERSIONS=$(ls /opt/ | sed 's|/opt/rocm-||' | sort -V)
+# Strip the `-rocm-` prefixes if they exist
+ROCM_VERSIONS=$(echo "$ROCM_VERSIONS" | sed 's/rocm-//g')
+log_info "Available ROCm versions:"
+for version in $ROCM_VERSIONS; do
+    log_info "   - $version"
+done
+# Get the latest ROCm version
+# This assumes the versions are in the format x.y.z
+ROCM_VERSION=$(echo "$ROCM_VERSIONS" | tail -n 1)
+log_info "Selecting latest ROCm version: $ROCM_VERSION"
+
+log_info "Adding all ROCm $ROCM_VERSION paths to the environment variables."
+export CC="/opt/rocm-$ROCM_VERSION/llvm/bin/clang"
+export CXX="/opt/rocm-$ROCM_VERSION/llvm/bin/clang++"
+export HIPCC="/opt/rocm-$ROCM_VERSION/bin/hipcc"
+export MPICC="/opt/rocm-$ROCM_VERSION/bin/clang"
+export MPICXX="/opt/rocm-$ROCM_VERSION/bin/clang++"
+
+export PATH="/opt/rocm-$ROCM_VERSION/bin:$PATH"
+export PATH="/opt/rocm-$ROCM_VERSION/lib:$PATH"
+export PATH="/opt/rocm-$ROCM_VERSION/include:$PATH"
+export PATH="/opt/rocm-$ROCM_VERSION/llvm/bin:$PATH"
+# export CXXFLAGS="-I/opt/rocm-$ROCM_VERSION/include -L/opt/rocm-$ROCM_VERSION/lib -Wl,-rpath,/opt/rocm-$ROCM_VERSION/lib ${CXXFLAGS}"
+# export LDFLAGS="-L/opt/rocm-$ROCM_VERSION/lib -Wl,-rpath,/opt/rocm-$ROCM_VERSION/lib ${LDFLAGS}"
+export LDFLAGS=" -L$INSTALL_DIR/rocm_smi_lib/lib -Wl,-rpath,$INSTALL_DIR/rocm_smi_lib/lib -L/opt/rocm-$ROCM_VERSION/lib -Wl,-rpath,/opt/rocm-$ROCM_VERSION/lib"
+export CFLAGS="-I/$INSTALL_DIR/rocm_smi_lib/include -I/opt/rocm-$ROCM_VERSION/include ${LDFLAGS} ${CFLAGS}"
+export CXXFLAGS="-I/$INSTALL_DIR/rocm_smi_lib/include -I/opt/rocm-$ROCM_VERSION/include ${LDFLAGS} ${CXXFLAGS}"
+
+export OMPI_MPICC="/opt/rocm-$ROCM_VERSION/llvm/bin/clang"
+export OMPI_MPICXX="/opt/rocm-$ROCM_VERSION/llvm/bin/clang++"
+export OMPI_FC="/opt/rocm-$ROCM_VERSION/llvm/bin/flang"
+export OMPI_CFLAGS="-I/opt/rocm-$ROCM_VERSION/include -L/opt/rocm-$ROCM_VERSION/lib -Wl,-rpath,/opt/rocm-$ROCM_VERSION/lib $(mpicc --showme:compile)"
+export OMPI_CXXFLAGS="-I/opt/rocm-$ROCM_VERSION/include -L/opt/rocm-$ROCM_VERSION/lib -Wl,-rpath,/opt/rocm-$ROCM_VERSION/lib $(mpicxx --showme:compile)"
+export OMPI_LDFLAGS="-L/opt/rocm-$ROCM_VERSION/lib -Wl,-rpath,/opt/rocm-$ROCM_VERSION/lib $OMPI_LDFLAGS $(mpicc --showme:link)"
+
+export PAPI_ROCM_ROOT="$INSTALL_DIR/rocm_smi_lib"
+export PAPI_ROCMSMI_ROOT="$PAPI_ROCM_ROOT"
+
+export PAPI_ROOT=$INSTALL_DIR/papi
+export PAPI_LIB=$PAPI_ROOT/lib
+
+export PATH="$PAPI_ROCM_ROOT/bin:$PAPI_ROOT/bin:$PATH"
+
+if [ -z "$C_INCLUDE_PATH" ]; then
+    export C_INCLUDE_PATH="$PAPI_ROCM_ROOT/include:/opt/rocm-$ROCM_VERSION/include"
+else
+    export C_INCLUDE_PATH="$PAPI_ROCM_ROOT/include:/opt/rocm-$ROCM_VERSION/include:$C_INCLUDE_PATH"
+fi
+if [ -z "$LIBRARY_PATH" ]; then
+    export LIBRARY_PATH="$PAPI_ROCM_ROOT/lib:/opt/rocm-$ROCM_VERSION/lib"
+else
+    export LIBRARY_PATH="$PAPI_ROCM_ROOT/lib:/opt/rocm-$ROCM_VERSION/lib:$LIBRARY_PATH"
+fi
+if [ -z "$LD_LIBRARY_PATH" ]; then
+    export LD_LIBRARY_PATH="$PAPI_ROCM_ROOT/lib:/opt/rocm-$ROCM_VERSION/lib"
+else
+    export LD_LIBRARY_PATH="$PAPI_ROCM_ROOT/lib:/opt/rocm-$ROCM_VERSION/lib:$LD_LIBRARY_PATH"
+fi
+
 ###############################################################################
 # REPORT ENVIRONMENT VARIABLES
 ###############################################################################
 
+CHANGED_VARIABLES="CC CXX HIPCC MPICC MPICXX CFLAGS CXXFLAGS LDFLAGS OMPI_MPICC OMPI_MPICXX OMPI_FC OMPI_CFLAGS OMPI_CXXFLAGS OMPI_LDFLAGS PATH C_INCLUDE_PATH LIBRARY_PATH LD_LIBRARY_PATH PAPI_ROCM_ROOT PAPI_ROCMSMI_ROOT PAPI_ROOT PAPI_LIB"
+
 log_note "Environment variables set for Score-P profiling tools:"
-log_note "  - PATH:"
-log_note "    $PATH"
-log_note "  - C_INCLUDE_PATH:"
-log_note "    $C_INCLUDE_PATH"
-log_note "  - LIBRARY_PATH:"
-log_note "    $LIBRARY_PATH"
-log_note "  - LD_LIBRARY_PATH:"
-log_note "    $LD_LIBRARY_PATH"
-log_note "  - INSTALL_DIR:"
-log_note "    $INSTALL_DIR"
+for var in $CHANGED_VARIABLES; do
+    log_note "   - $var:"
+    log_note "     ${!var}"
+done
+
+# log_note "  - PATH:"
+# log_note "    $PATH"
+# log_note "  - C_INCLUDE_PATH:"
+# log_note "    $C_INCLUDE_PATH"
+# log_note "  - LIBRARY_PATH:"
+# log_note "    $LIBRARY_PATH"
+# log_note "  - LD_LIBRARY_PATH:"
+# log_note "    $LD_LIBRARY_PATH"
+# log_note "  - INSTALL_DIR:"
+# log_note "    $INSTALL_DIR"
 # log_note "C_INCLUDE_PATH: $C_INCLUDE_PATH"
 # log_note "LIBRARY_PATH: $LIBRARY_PATH"
 # log_note "LD_LIBRARY_PATH: $LD_LIBRARY_PATH"
 
 log_info "Environment setup complete. You can now run your scorep profiling tools."
+log_note "If you want to remove these changes, source the clean script in this directory:"
+log_note "$ source $SCRIPT_DIR/clean.sh"
