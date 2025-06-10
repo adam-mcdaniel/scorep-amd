@@ -88,6 +88,7 @@ scorep-amd/
 ├── build-scorep.sh       # Script to build ScoreP and its dependencies
 ├── clean.sh              # Script to clean builds, installs, environment
 ├── setup-env.sh          # Script to add ScoreP to the environment
+├── build-papi.sh         # Script to build the patched PAPI and rocm_smi_lib
 │
 ├── build/                # Auto-generated directory where everything is built
 └── install/              # Auto-generated directory for all installed files
@@ -118,7 +119,7 @@ To build `ScoreP`, run the `build-scorep.sh` script. This script will:
 $ ./build-scorep.sh
 ```
 
-The script will automatically detect the version of `ROCm` installed on your system and adapt the build process accordingly.
+The script will automatically detect the version of `ROCm` installed on your system and adapt the build process accordingly. *You will not need to run `build-papi.sh` separately, as it is called by the `build-scorep.sh` script.*
 
 > [!IMPORTANT]
 > You may want to disable the `PAPI` patches if you do not desire the additional functionality provided by the `rocm_smi` and `coretemp` patches.
