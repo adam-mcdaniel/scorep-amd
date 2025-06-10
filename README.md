@@ -79,11 +79,14 @@ scorep-amd/
 │   ├── coretemp          # The PAPI patch for more SYSFS data (power usage)
 │   └── rocm_smi          # The PAPI patch for rocm_smi (energy consumption)
 │
-├── runs/                 # Directory for running ScoreP applications
-│   ├── build-plugins.sh      # Script to build ScoreP plugins for AMD GPUs
-│   ├── setup-run-params.sh   # Script to set up ScoreP measurement parameters
+├── plugins/              # Directory for ScoreP plugins
+│   ├── build-plugins.sh         # Script to build ScoreP plugins for AMD GPUs
 │   ├── scorep-arocm-smi-plugin/ # ROCm SMI plugin for ScoreP
 │   └── scorep-coretemp-plugin/  # Coretemp plugin for ScoreP
+│
+├── runs/                 # Directory for running ScoreP applications
+│   ├── build-plugins.sh      # Script to build ScoreP plugins for AMD GPUs
+│   └── setup-run-params.sh   # Script to set up ScoreP measurement parameters
 │
 ├── build-scorep.sh       # Script to build ScoreP and its dependencies
 ├── clean.sh              # Script to clean builds, installs, environment
