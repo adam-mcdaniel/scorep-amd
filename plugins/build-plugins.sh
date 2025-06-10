@@ -24,6 +24,6 @@ if [ $? -ne 0 ]; then
     echo "Score-P CoreTemp plugin build failed."
     exit 1
 fi
-cd ..
 
+cd ..
 echo "Done building Score-P plugins."

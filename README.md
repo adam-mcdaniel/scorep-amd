@@ -161,7 +161,7 @@ If everything is set up correctly, you should see a summary of the `ScoreP` conf
 
 ## 4. Building ScoreP Plugins
 
-To use the metrics provided by PAPI, whether you use the `rocm_smi` or `coretemp` patches, you need to build the ScoreP plugins. The `runs/build-plugins.sh` script will do this for you.
+To use the metrics provided by PAPI, whether you use the `rocm_smi` or `coretemp` patches, you need to build the ScoreP plugins. The `plugins/build-plugins.sh` script will do this for you.
 
 > [!IMPORTANT]
 > *Make sure you have run all previous steps!*
@@ -170,7 +170,7 @@ To use the metrics provided by PAPI, whether you use the `rocm_smi` or `coretemp
 ```bash
 $ # Make sure you've already run the previous steps!
 $ # Navigate to the runs directory
-$ cd runs/
+$ cd plugins/
 $ # Build the ScoreP plugins to add ROCm instrumentation
 $ ./build-plugins.sh
 ```
