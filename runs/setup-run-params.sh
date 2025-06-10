@@ -6,7 +6,7 @@ else
 	export SCOREP_ENABLE_TRACING=true
 	export SCOREP_ENABLE_UNWINDING=false
 	export SCOREP_VERBOSE=true
-	export SCOREP_TOTAL_MEMORY=10M
+	export SCOREP_TOTAL_MEMORY=50M
 	export SCOREP_PAGE_SIZE=8K
 	export SCOREP_EXPERIMENT_DIRECTORY='experiments/scorep-experiment'
 	export SCOREP_OVERWRITE_EXPERIMENT_DIRECTORY=true
@@ -35,11 +35,12 @@ else
 	export SCOREP_METRIC_RUSAGE=''
 	export SCOREP_METRIC_RUSAGE_PER_PROCESS=''
 	export SCOREP_METRIC_RUSAGE_SEP=','
-	export SCOREP_METRIC_PLUGINS='coretemp_plugin'
+	export SCOREP_METRIC_PLUGINS='coretemp_plugin,arocm_smi_plugin'
 	export SCOREP_METRIC_PLUGINS_SEP=','
 	export SCOREP_METRIC_PERF=''
 	export SCOREP_METRIC_PERF_PER_PROCESS=''
 	export SCOREP_METRIC_PERF_SEP=','
+	export SCOREP_METRIC_AROCM_SMI_PLUGIN='rocm_smi:::energy_count:device=0,rocm_smi:::energy_count:device=1,rocm_smi:::energy_count:device=2,rocm_smi:::energy_count:device=3'
 	export SCOREP_METRIC_CORETEMP_PLUGIN='coretemp:::hwmon2:power1_input,coretemp:::hwmon3:power1_input,coretemp:::hwmon4:power1_input,coretemp:::hwmon5:power1_input'
 	export SCOREP_SAMPLING_EVENTS='perf_cycles@10000000'
 	export SCOREP_SAMPLING_SEP=','

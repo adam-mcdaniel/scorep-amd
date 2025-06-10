@@ -106,9 +106,11 @@ export PATH="/opt/rocm-$ROCM_VERSION/bin:$PATH"
 export PATH="/opt/rocm-$ROCM_VERSION/lib:$PATH"
 export PATH="/opt/rocm-$ROCM_VERSION/include:$PATH"
 export PATH="/opt/rocm-$ROCM_VERSION/llvm/bin:$PATH"
-export CFLAGS="-I/opt/rocm-$ROCM_VERSION/include -L/opt/rocm-$ROCM_VERSION/lib -Wl,-rpath,/opt/rocm-$ROCM_VERSION/lib ${CFLAGS}"
-export CXXFLAGS="-I/opt/rocm-$ROCM_VERSION/include -L/opt/rocm-$ROCM_VERSION/lib -Wl,-rpath,/opt/rocm-$ROCM_VERSION/lib ${CXXFLAGS}"
-export LDFLAGS="-L/opt/rocm-$ROCM_VERSION/lib -Wl,-rpath,/opt/rocm-$ROCM_VERSION/lib ${LDFLAGS}"
+# export CXXFLAGS="-I/opt/rocm-$ROCM_VERSION/include -L/opt/rocm-$ROCM_VERSION/lib -Wl,-rpath,/opt/rocm-$ROCM_VERSION/lib ${CXXFLAGS}"
+# export LDFLAGS="-L/opt/rocm-$ROCM_VERSION/lib -Wl,-rpath,/opt/rocm-$ROCM_VERSION/lib ${LDFLAGS}"
+export LDFLAGS=" -L$INSTALL_DIR/rocm_smi_lib/lib -Wl,-rpath,$INSTALL_DIR/rocm_smi_lib/lib -L/opt/rocm-$ROCM_VERSION/lib -Wl,-rpath,/opt/rocm-$ROCM_VERSION/lib"
+export CFLAGS="-I/$INSTALL_DIR/rocm_smi_lib/include -I/opt/rocm-$ROCM_VERSION/include ${LDFLAGS} ${CFLAGS}"
+export CXXFLAGS="-I/$INSTALL_DIR/rocm_smi_lib/include -I/opt/rocm-$ROCM_VERSION/include ${LDFLAGS} ${CXXFLAGS}"
 
 export OMPI_MPICC="/opt/rocm-$ROCM_VERSION/llvm/bin/clang"
 export OMPI_MPICXX="/opt/rocm-$ROCM_VERSION/llvm/bin/clang++"
@@ -117,28 +119,35 @@ export OMPI_CFLAGS="-I/opt/rocm-$ROCM_VERSION/include -L/opt/rocm-$ROCM_VERSION/
 export OMPI_CXXFLAGS="-I/opt/rocm-$ROCM_VERSION/include -L/opt/rocm-$ROCM_VERSION/lib -Wl,-rpath,/opt/rocm-$ROCM_VERSION/lib $(mpicxx --showme:compile)"
 export OMPI_LDFLAGS="-L/opt/rocm-$ROCM_VERSION/lib -Wl,-rpath,/opt/rocm-$ROCM_VERSION/lib $OMPI_LDFLAGS $(mpicc --showme:link)"
 
+export PAPI_ROCM_ROOT="$INSTALL_DIR/rocm_smi_lib"
+export PAPI_ROCMSMI_ROOT="$PAPI_ROCM_ROOT"
+
+export PAPI_ROOT=$INSTALL_DIR/papi
+export PAPI_LIB=$PAPI_ROOT/lib
+
+export PATH="$PAPI_ROCM_ROOT/bin:$PAPI_ROOT/bin:$PATH"
 
 if [ -z "$C_INCLUDE_PATH" ]; then
-    export C_INCLUDE_PATH="/opt/rocm-$ROCM_VERSION/include"
+    export C_INCLUDE_PATH="$PAPI_ROCM_ROOT/include:/opt/rocm-$ROCM_VERSION/include"
 else
-    export C_INCLUDE_PATH="/opt/rocm-$ROCM_VERSION/include:$C_INCLUDE_PATH"
+    export C_INCLUDE_PATH="$PAPI_ROCM_ROOT/include:/opt/rocm-$ROCM_VERSION/include:$C_INCLUDE_PATH"
 fi
 if [ -z "$LIBRARY_PATH" ]; then
-    export LIBRARY_PATH="/opt/rocm-$ROCM_VERSION/lib"
+    export LIBRARY_PATH="$PAPI_ROCM_ROOT/lib:/opt/rocm-$ROCM_VERSION/lib"
 else
-    export LIBRARY_PATH="/opt/rocm-$ROCM_VERSION/lib:$LIBRARY_PATH"
+    export LIBRARY_PATH="$PAPI_ROCM_ROOT/lib:/opt/rocm-$ROCM_VERSION/lib:$LIBRARY_PATH"
 fi
 if [ -z "$LD_LIBRARY_PATH" ]; then
-    export LD_LIBRARY_PATH="/opt/rocm-$ROCM_VERSION/lib"
+    export LD_LIBRARY_PATH="$PAPI_ROCM_ROOT/lib:/opt/rocm-$ROCM_VERSION/lib"
 else
-    export LD_LIBRARY_PATH="/opt/rocm-$ROCM_VERSION/lib:$LD_LIBRARY_PATH"
+    export LD_LIBRARY_PATH="$PAPI_ROCM_ROOT/lib:/opt/rocm-$ROCM_VERSION/lib:$LD_LIBRARY_PATH"
 fi
 
 ###############################################################################
 # REPORT ENVIRONMENT VARIABLES
 ###############################################################################
 
-CHANGED_VARIABLES="CC CXX HIPCC MPICC MPICXX CFLAGS CXXFLAGS LDFLAGS OMPI_MPICC OMPI_MPICXX OMPI_FC OMPI_CFLAGS OMPI_CXXFLAGS OMPI_LDFLAGS PATH C_INCLUDE_PATH LIBRARY_PATH LD_LIBRARY_PATH"
+CHANGED_VARIABLES="CC CXX HIPCC MPICC MPICXX CFLAGS CXXFLAGS LDFLAGS OMPI_MPICC OMPI_MPICXX OMPI_FC OMPI_CFLAGS OMPI_CXXFLAGS OMPI_LDFLAGS PATH C_INCLUDE_PATH LIBRARY_PATH LD_LIBRARY_PATH PAPI_ROCM_ROOT PAPI_ROCMSMI_ROOT PAPI_ROOT PAPI_LIB"
 
 log_note "Environment variables set for Score-P profiling tools:"
 for var in $CHANGED_VARIABLES; do
