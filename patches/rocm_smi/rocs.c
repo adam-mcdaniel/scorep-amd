@@ -10,12 +10,16 @@
 
 #define NOPCIE
 #define ADDENERGY
+#define ADDPOWER
 // #define ADDENERGY_NO_ROCM_SMI_PATCH
 // #define ADDENERGY_PRINT_ROCM_SUPPORTED_FUNCTIONS 1
 unsigned int _rocm_smi_lock;
 
 #ifdef ADDENERGY
 static rsmi_status_t (*rsmi_dev_energy_count_get_p)(uint32_t dv_ind, uint64_t *power, float *counter_resolution, uint64_t *timestamp);
+#endif
+#ifdef ADDPOWER
+static rsmi_status_t (*rsmi_dev_current_socket_power_get_p)(uint32_t dv_ind, uint64_t *socket_power);
 #endif
 static rsmi_status_t (*rsmi_num_monitor_dev_p)(uint32_t *);
 static rsmi_status_t (*rsmi_func_iter_value_get_p)(rsmi_func_id_iter_handle_t, rsmi_func_id_value_t *);
@@ -224,7 +228,9 @@ static int access_rsmi_dev_vendor_name(rocs_access_mode_e, void *);
 #ifdef ADDENERGY
 static int access_rsmi_dev_energy_count(rocs_access_mode_e, void *);
 #endif
-
+#ifdef ADDPOWER
+static int access_rsmi_dev_current_socket_power(rocs_access_mode_e, void *);
+#endif
 
 typedef int (*open_function_f)(void *arg);
 typedef int (*close_function_f)(void *arg);
@@ -289,7 +295,10 @@ struct {
     {"rsmi_dev_xgmi_evt_get", open_xgmi_evt, close_xgmi_evt, start_xgmi_evt, stop_xgmi_evt, access_xgmi_evt},
     {"rsmi_dev_xgmi_bw_get", open_simple, close_simple, start_simple, stop_simple, access_xgmi_bw},
 #ifdef ADDENERGY
-    {"rsmi_dev_energy_count_get", open_simple, close_simple, start_simple,stop_simple, access_rsmi_dev_energy_count},
+    {"rsmi_dev_energy_count_get", open_simple, close_simple, start_simple, stop_simple, access_rsmi_dev_energy_count},
+#endif
+#ifdef ADDPOWER
+    {"rsmi_dev_current_socket_power_get", open_simple, close_simple, start_simple, stop_simple, access_rsmi_dev_current_socket_power},
 #endif
     {NULL, NULL, NULL, NULL, NULL, NULL}
 };
@@ -764,6 +773,9 @@ load_rsmi_sym(void)
 #ifdef ADDENERGY
     rsmi_dev_energy_count_get_p = dlsym(rsmi_dlp, "rsmi_dev_energy_count_get");
 #endif
+#ifdef ADDPOWER
+    rsmi_dev_current_socket_power_get_p = dlsym(rsmi_dlp, "rsmi_dev_current_socket_power_get");
+#endif
 
     int rsmi_not_initialized = (!rsmi_num_monitor_dev_p                     ||
                                 !rsmi_func_iter_value_get_p                 ||
@@ -831,6 +843,9 @@ load_rsmi_sym(void)
                                 !rsmi_is_P2P_accessible_p                   ||
 #ifdef ADDENERGY
                                 !rsmi_dev_energy_count_get_p                ||
+#endif
+#ifdef ADDPOWER
+                                !rsmi_dev_current_socket_power_get_p        ||
 #endif
                                 !rsmi_minmax_bandwidth_get_p);
 
@@ -918,7 +933,9 @@ unload_rsmi_sym(void)
 #ifdef ADDENERGY
     rsmi_dev_energy_count_get_p                = NULL;
 #endif
-
+#ifdef ADDPOWER
+    rsmi_dev_current_socket_power_get_p        = NULL;
+#endif
     dlclose(rsmi_dlp);
 
     return PAPI_OK;
@@ -2051,11 +2068,15 @@ get_event_name(const char *name, int32_t dev, int64_t variant, int64_t subvarian
         sprintf(event_name_str, "fan_speed_max:device=%i:sensor=%i", dev, (int) subvariant);
     } else if (strcmp(name, "rsmi_dev_fan_speed_get") == 0 || strcmp(name, "rsmi_dev_fan_speed_set") == 0) {
         sprintf(event_name_str, "fan_speed:device=%i:sensor=%i", dev, (int) subvariant);
-#ifdef ADDENERGY_NO_ROCM_SMI_PATCH
-#else
-      } else if (strcmp(name, "rsmi_dev_energy_count_get") == 0) {
+#ifdef ADDENERGY
+    } else if (strcmp(name, "rsmi_dev_energy_count_get") == 0) {
         sprintf(event_name_str, "energy_count:device=%i", dev);
 #endif
+#ifdef ADDPOWER
+    } else if (strcmp(name, "rsmi_dev_current_socket_power_get") == 0) {
+        sprintf(event_name_str, "current_socket_power:device=%i", dev);
+#endif
+    
     } else if (strcmp(name, "rsmi_dev_power_ave_get") == 0) {
         sprintf(event_name_str, "power_average:device=%i:sensor=%i", dev, (int) subvariant);
     } else if (strcmp(name, "rsmi_dev_power_cap_get") == 0 || strcmp(name, "rsmi_dev_power_cap_set") == 0) {
@@ -2565,11 +2586,15 @@ get_event_descr(const char *name, int64_t variant, int64_t subvariant)
         return strdup("Current fan speed in RPMs (Rotations Per Minute), Read Only, result [0-255].");
     } else if (strcmp(name, "rsmi_dev_fan_speed_set") == 0) {
         return strdup("Current fan speed in RPMs (Rotations Per Minute), Read/Write, Write must be <= MAX (see fan_speed_max event), arg in [0-255].");
-#ifdef ADDENERGY_NO_ROCM_SMI_PATCH
-#else
+#ifdef ADDENERGY
     } else if (strcmp(name, "rsmi_dev_energy_count_get") == 0) {
         return strdup("Accumulated GPU energy, in microjoules (µJ).");
 #endif
+#ifdef ADDPOWER
+    } else if (strcmp(name, "rsmi_dev_current_socket_power_get") == 0) {
+        return strdup("Current power consumption in microwatts (µW)");
+#endif
+
     } else if (strcmp(name, "rsmi_dev_power_ave_get") == 0) {
         return strdup("Current Average Power consumption in microwatts. Requires root privileges.");
     } else if (strcmp(name, "rsmi_dev_power_cap_get") == 0) {
@@ -4115,3 +4140,38 @@ access_rsmi_dev_energy_count(rocs_access_mode_e mode, void *arg)
 }
 
 #endif
+
+
+#ifdef ADDPOWER
+static int
+access_rsmi_dev_current_socket_power(rocs_access_mode_e mode, void *arg)
+{
+    ntv_event_t *event = (ntv_event_t *)arg;
+
+    /* This event is read-only. If a caller tries to WRITE, deny it. */
+    if (mode != ROCS_ACCESS_MODE__READ || mode != event->mode) {
+        return PAPI_ENOSUPP; /* not supported */
+    }
+
+    if (!rsmi_dev_current_socket_power_get_p) {
+        /* If symbol is missing entirely, treat as not supported. */
+        return PAPI_ENOSUPP;
+    }
+
+    rsmi_status_t status;
+    uint64_t power = 0ULL; /* in µW */
+
+    status = rsmi_dev_current_socket_power_get_p((uint32_t)event->device, &power);
+    if (status != RSMI_STATUS_SUCCESS && status != RSMI_STATUS_INVALID_ARGS) {
+        /*
+         * Note: RSMI_STATUS_INVALID_ARGS can mean "power was null" if the device
+         * actually supports the call. If it’s truly unsupported, typically
+         * RSMI_STATUS_NOT_SUPPORTED is returned. Adjust logic if needed.
+         */
+        return PAPI_EMISC;
+    }
+
+    event->value = (int64_t)power;
+    return PAPI_OK;
+}
+#endif /* ADDPOWER */

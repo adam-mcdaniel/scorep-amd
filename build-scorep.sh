@@ -796,7 +796,9 @@ if [ $BUILD_SCOREP -eq 1 ]; then
         --with-libroctracer64=yes \
         --with-nocross-compiler-suite="$DEFAULT_COMPILER_SUITE" \
         --with-rocm="/opt/rocm-$ROCM_VERSION" \
-        --with-llvm="/opt/rocm-$ROCM_VERSION/llvm"
+        --with-llvm="$INSTALL_DIR" \
+
+        # --with-llvm="/opt/rocm-$ROCM_VERSION/llvm"
         # --with-librocm_smi64-include="/opt/rocm-$ROCM_VERSION/include" \
         # --with-librocm_smi64-lib="/opt/rocm-$ROCM_VERSION/lib" \
     if [ $? -ne 0 ]; then

@@ -76,8 +76,9 @@ scorep-amd/
 │   └── scorep.pdf        # Documentation for ScoreP
 │
 ├── patches/              # Directory containing patches for PAPI
-│   ├── coretemp          # The PAPI patch for more SYSFS data (power usage)
-│   └── rocm_smi          # The PAPI patch for rocm_smi (energy consumption)
+│   ├── coretemp/         # The PAPI patch for more SYSFS data (power usage)
+│   ├── rocm_smi/         # The PAPI patch for rocm_smi (energy consumption)
+│   └── rocm_smi_lib/     # The patched ROCm SMI library API
 │
 ├── plugins/              # Directory for ScoreP plugins
 │   ├── build-plugins.sh         # Script to build ScoreP plugins for AMD GPUs

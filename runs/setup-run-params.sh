@@ -4,9 +4,9 @@ if [ -z $INSTALL_DIR ]; then
 else
 	export SCOREP_ENABLE_PROFILING=false
 	export SCOREP_ENABLE_TRACING=true
-	export SCOREP_ENABLE_UNWINDING=false
-	export SCOREP_VERBOSE=true
-	export SCOREP_TOTAL_MEMORY=50M
+	export SCOREP_ENABLE_UNWINDING=true
+	export SCOREP_VERBOSE=false
+	export SCOREP_TOTAL_MEMORY=500M
 	export SCOREP_PAGE_SIZE=8K
 	export SCOREP_EXPERIMENT_DIRECTORY='experiments/scorep-experiment'
 	export SCOREP_OVERWRITE_EXPERIMENT_DIRECTORY=true
@@ -40,14 +40,16 @@ else
 	export SCOREP_METRIC_PERF=''
 	export SCOREP_METRIC_PERF_PER_PROCESS=''
 	export SCOREP_METRIC_PERF_SEP=','
-	export SCOREP_METRIC_AROCM_SMI_PLUGIN='rocm_smi:::energy_count:device=0,rocm_smi:::energy_count:device=1,rocm_smi:::energy_count:device=2,rocm_smi:::energy_count:device=3'
+	export SCOREP_METRIC_AROCM_SMI_INTERVAL_US=1000
+	export SCOREP_METRIC_AROCM_SMI_PLUGIN='rocm_smi:::energy_count:device=0,rocm_smi:::energy_count:device=1,rocm_smi:::energy_count:device=2,rocm_smi:::energy_count:device=3,rocm_smi:::busy_percent:device=0,rocm_smi:::busy_percent:device=1,rocm_smi:::busy_percent:device=2,rocm_smi:::busy_percent:device=3,rocm_smi:::current_socket_power:device=0,rocm_smi:::current_socket_power:device=1,rocm_smi:::current_socket_power:device=2,rocm_smi:::current_socket_power:device=3'
+	export SCOREP_METRIC_CORETEMP_INTERVAL_US=1000
 	export SCOREP_METRIC_CORETEMP_PLUGIN='coretemp:::hwmon2:power1_input,coretemp:::hwmon3:power1_input,coretemp:::hwmon4:power1_input,coretemp:::hwmon5:power1_input'
-	export SCOREP_SAMPLING_EVENTS='perf_cycles@10000000'
+	export SCOREP_SAMPLING_EVENTS='timer@1000'
 	export SCOREP_SAMPLING_SEP=','
 	export SCOREP_TOPOLOGY_PLATFORM=true
 	export SCOREP_TOPOLOGY_PROCESS=true
 	export SCOREP_HIP_ENABLE='api','kernel','kernel_callsite','malloc','memcpy','sync'
-	export SCOREP_HIP_ACTIVITY_BUFFER_SIZE=1M
+	export SCOREP_HIP_ACTIVITY_BUFFER_SIZE=10M
 	export SCOREP_MEMORY_RECORDING=false
 	export SCOREP_IO_POSIX=false
 fi
