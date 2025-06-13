@@ -10,15 +10,20 @@ export PAPI_ROCMSMI_ROOT=$INSTALL_DIR/rocm_smi_lib
 export PAPI_ROOT=$INSTALL_DIR/papi
 export PAPI_LIB=$PAPI_ROOT/lib
 
-cd $BUILD_DIR/rocm_smi_lib/
+cd $BUILD_DIR
+rm -Rf rocm_smi_lib
+git clone https://github.com/adam-mcdaniel/rocm_smi_lib
 
+cd $BUILD_DIR/rocm_smi_lib/
 rm -Rf build
 mkdir build
 cd build
 cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$INSTALL_DIR/rocm_smi_lib
 make -j16 install
 
-
+cd $BUILD_DIR
+rm -Rf papi
+git clone https://github.com/adam-mcdaniel/papi
 
 # Install PAPI
 cd $BUILD_DIR/papi/src
