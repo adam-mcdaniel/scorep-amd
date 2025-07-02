@@ -33,7 +33,7 @@ fi
 # This defines whether to use MPI or not.
 # If set to 1, it will use MPI for building Score-P.
 # If set to 0, it will not use MPI.
-USE_MPI=1
+USE_MPI=0
 
 # This defines which compiler to use for non-cross-compiled builds which
 # are created with Score-P.
@@ -209,7 +209,7 @@ export INSTALL_DIR="$CURRENT_DIR/install"
 export BUILD_DIR="$CURRENT_DIR/build"
 # The ROCm installation is assumed to be in /opt/rocm-<version>
 # The script will automatically detect the latest ROCm version installed in /opt/.
-ROCM_VERSIONS=$(ls /opt/ | sed 's|/opt/rocm-||' | sort -V)
+ROCM_VERSIONS=$(ls -1 /opt/ | grep -E '^rocm(-[0-9]+(\.[0-9]+)*)?$' | sed 's/^rocm-//' | sort -V) # Strip the `-rocm-` prefixes if they exist
 # Strip the `-rocm-` prefixes if they exist
 ROCM_VERSIONS=$(echo "$ROCM_VERSIONS" | sed 's/rocm-//g')
 log_info "Available ROCm versions:"
@@ -344,7 +344,6 @@ if [ $BUILD_ROCM_SMI_LIB -eq 1 ]; then
         rm -rf $BUILD_DIR/rocm_smi_lib
         cp -r $PATCH_DIR/rocm_smi_lib $BUILD_DIR/rocm_smi_lib
     else
-        exit 1
         log_warn "Patch directory for rocm_smi_lib does not exist: $PATCH_DIR/rocm_smi_lib"
         log_warn "Skipping patching of rocm_smi_lib."
         if [ ! -d "rocm_smi_lib" ]; then
@@ -758,8 +757,8 @@ if [ $BUILD_SCOREP -eq 1 ]; then
             log_error "Failed to download Score-P 9.0."
             exit 1
         fi
+        tar xf scorep-9.0.tar.gz
     fi
-    tar xf scorep-9.0.tar.gz
     if [ $? -ne 0 ]; then
         log_error "Failed to extract Score-P 9.0."
         exit 1
