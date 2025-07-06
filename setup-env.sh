@@ -83,7 +83,7 @@ else
 fi
 
 
-ROCM_VERSIONS=$(ls /opt/ | sed 's|/opt/rocm-||' | sort -V)
+ROCM_VERSIONS=$(ls -1 /opt/ | grep -E '^rocm(-[0-9]+(\.[0-9]+)*)?$' | sed 's/^rocm-//' | sort -V) # Strip the `-rocm-` prefixes if they exist
 # Strip the `-rocm-` prefixes if they exist
 ROCM_VERSIONS=$(echo "$ROCM_VERSIONS" | sed 's/rocm-//g')
 log_info "Available ROCm versions:"
