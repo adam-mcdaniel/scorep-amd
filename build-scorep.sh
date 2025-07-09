@@ -8,7 +8,7 @@ DEBUG=0
 log_info()  { printf "\033[1;32m[INFO]\033[0m %s\n" "$*"; }
 log_warn()  { printf "\033[1;33m[WARN]\033[0m %s\n" "$*"; }
 log_error() { printf "\033[1;31m[ERROR]\033[0m %s\n" "$*"; }
-log_note() { printf "\033[1;35m[NOTE]\033[0m %s\n" "$*"; }
+log_note()  { printf "\033[1;35m[NOTE]\033[0m %s\n" "$*"; }
 log_debug() { [ "$DEBUG" = 1 ] && printf "\033[1;36m[DEBUG]\033[0m %s\n" "$*"; }
 prompt() {
     # printf "\033[1;36m[PROMPT]\033[0m %s " "$*"
@@ -118,6 +118,12 @@ function detect_mpi_backend() {
         log_info "MPI backend detection is disabled. Skipping."
         return
     fi
+    if [ -n "$MPI_IMPLEMENTATION" ]; then
+        # Check if the user-provided MPI backend is valid
+        log_info "Using user-provided MPI implementation: $MPI_IMPLEMENTATION"
+        return
+    fi
+
     mpicc --version
     # Check if mpicc is available
     if command -v mpicc &> /dev/null; then
@@ -131,7 +137,7 @@ function detect_mpi_backend() {
             MPI_IMPLEMENTATION="openmpi"
         elif [[ $(echo "$MPI_IMPLEMENTATION" | grep "mpich") ]]; then
             log_info "Detected MPICH as the MPI backend."
-            MPI_IMPLEMENTATION="mpich"
+            MPI_IMPLEMENTATION="cray"
         elif [[ $(echo "$MPI_IMPLEMENTATION" | grep "intelmpi") ]]; then
             log_info "Detected Intel MPI as the MPI backend."
             MPI_IMPLEMENTATION="intelmpi"
@@ -173,23 +179,23 @@ function verify_mpi_backend() {
         exit 1
     fi
 
-    # Confirm the MPI backend compiler matches the selected compiler suite
-    # local mpi_compiler=$(mpicc --version | head -n 1 | awk '{print $1}')
-    local mpi_compiler=$(mpicc --showme:command)
-    local mpi_compiler_matches=$(echo "$mpi_compiler" | grep $DEFAULT_COMPILER_SUITE)
+    # # Confirm the MPI backend compiler matches the selected compiler suite
+    # # local mpi_compiler=$(mpicc --version | head -n 1 | awk '{print $1}')
+    # local mpi_compiler=$(mpicc --showme:command)
+    # local mpi_compiler_matches=$(echo "$mpi_compiler" | grep $DEFAULT_COMPILER_SUITE)
 
-    if [[ -z "$mpi_compiler_matches" ]]; then
-        log_warn "The selected MPI implementation ($mpi_compiler) does not match the default compiler suite ($DEFAULT_COMPILER_SUITE)."
-        log_warn "The build may fail due to incompatible compiler versions."
-        prompt "Do you want to continue with the selected MPI implementation anyways? (y/n): "
-        if [[ "$choice" =~ ^[Yy]$ ]]; then
-            log_warn "Continuing with the selected MPI implementation $MPI_IMPLEMENTATION using $mpi_compiler as the compiler."
-        else
-            log_error "Exiting due to incompatible MPI implementation."
-            exit 1
-        fi
-    fi
-    log_info "Using MPI implementation $MPI_IMPLEMENTATION with $mpi_compiler as the compiler."
+    # if [[ -z "$mpi_compiler_matches" ]]; then
+    #     log_warn "The selected MPI implementation ($mpi_compiler) does not match the default compiler suite ($DEFAULT_COMPILER_SUITE)."
+    #     log_warn "The build may fail due to incompatible compiler versions."
+    #     prompt "Do you want to continue with the selected MPI implementation anyways? (y/n): "
+    #     if [[ "$choice" =~ ^[Yy]$ ]]; then
+    #         log_warn "Continuing with the selected MPI implementation $MPI_IMPLEMENTATION using $mpi_compiler as the compiler."
+    #     else
+    #         log_error "Exiting due to incompatible MPI implementation."
+    #         exit 1
+    #     fi
+    # fi
+    # log_info "Using MPI implementation $MPI_IMPLEMENTATION with $mpi_compiler as the compiler."
 }
 
 ###############################################################################
@@ -209,7 +215,7 @@ export INSTALL_DIR="$CURRENT_DIR/install"
 export BUILD_DIR="$CURRENT_DIR/build"
 # The ROCm installation is assumed to be in /opt/rocm-<version>
 # The script will automatically detect the latest ROCm version installed in /opt/.
-ROCM_VERSIONS=$(ls /opt/ | sed 's|/opt/rocm-||' | sort -V)
+ROCM_VERSIONS=$(ls -1 /opt/ | grep -E '^rocm(-[0-9]+(\.[0-9]+)*)?$' | sed 's/^rocm-//' | sort -V) # Strip the `-rocm-` prefixes if they exist
 # Strip the `-rocm-` prefixes if they exist
 ROCM_VERSIONS=$(echo "$ROCM_VERSIONS" | sed 's/rocm-//g')
 log_info "Available ROCm versions:"
@@ -344,7 +350,6 @@ if [ $BUILD_ROCM_SMI_LIB -eq 1 ]; then
         rm -rf $BUILD_DIR/rocm_smi_lib
         cp -r $PATCH_DIR/rocm_smi_lib $BUILD_DIR/rocm_smi_lib
     else
-        exit 1
         log_warn "Patch directory for rocm_smi_lib does not exist: $PATCH_DIR/rocm_smi_lib"
         log_warn "Skipping patching of rocm_smi_lib."
         if [ ! -d "rocm_smi_lib" ]; then
@@ -438,12 +443,13 @@ if [ $BUILD_PAPI -eq 1 ]; then
     # fi
     # cd $CURRENT_DIR
     # log_info "PAPI installed successfully."
+    
+    cd $CURRENT_DIR
+    ./build-papi.sh
 else
     log_note "Skipping PAPI build."
 fi
 
-cd $CURRENT_DIR
-./build-papi.sh
 
 ###############################################################################
 # BUILD & INSTALL LLVM
@@ -758,8 +764,8 @@ if [ $BUILD_SCOREP -eq 1 ]; then
             log_error "Failed to download Score-P 9.0."
             exit 1
         fi
+        tar xf scorep-9.0.tar.gz
     fi
-    tar xf scorep-9.0.tar.gz
     if [ $? -ne 0 ]; then
         log_error "Failed to extract Score-P 9.0."
         exit 1
