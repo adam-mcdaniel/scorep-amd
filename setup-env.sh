@@ -115,9 +115,9 @@ export CXXFLAGS="-I/$INSTALL_DIR/rocm_smi_lib/include -I/opt/rocm-$ROCM_VERSION/
 export OMPI_MPICC="/opt/rocm-$ROCM_VERSION/llvm/bin/clang"
 export OMPI_MPICXX="/opt/rocm-$ROCM_VERSION/llvm/bin/clang++"
 export OMPI_FC="/opt/rocm-$ROCM_VERSION/llvm/bin/flang"
-export OMPI_CFLAGS="-I/opt/rocm-$ROCM_VERSION/include -L/opt/rocm-$ROCM_VERSION/lib -Wl,-rpath,/opt/rocm-$ROCM_VERSION/lib $(mpicc --showme:compile)"
-export OMPI_CXXFLAGS="-I/opt/rocm-$ROCM_VERSION/include -L/opt/rocm-$ROCM_VERSION/lib -Wl,-rpath,/opt/rocm-$ROCM_VERSION/lib $(mpicxx --showme:compile)"
-export OMPI_LDFLAGS="-L/opt/rocm-$ROCM_VERSION/lib -Wl,-rpath,/opt/rocm-$ROCM_VERSION/lib $OMPI_LDFLAGS $(mpicc --showme:link)"
+# export OMPI_CFLAGS="-I/opt/rocm-$ROCM_VERSION/include -L/opt/rocm-$ROCM_VERSION/lib -Wl,-rpath,/opt/rocm-$ROCM_VERSION/lib $(mpicc --showme:compile)"
+# export OMPI_CXXFLAGS="-I/opt/rocm-$ROCM_VERSION/include -L/opt/rocm-$ROCM_VERSION/lib -Wl,-rpath,/opt/rocm-$ROCM_VERSION/lib $(mpicxx --showme:compile)"
+# export OMPI_LDFLAGS="-L/opt/rocm-$ROCM_VERSION/lib -Wl,-rpath,/opt/rocm-$ROCM_VERSION/lib $OMPI_LDFLAGS $(mpicc --showme:link)"
 
 export PAPI_ROCM_ROOT="$INSTALL_DIR/rocm_smi_lib"
 export PAPI_ROCMSMI_ROOT="$PAPI_ROCM_ROOT"
