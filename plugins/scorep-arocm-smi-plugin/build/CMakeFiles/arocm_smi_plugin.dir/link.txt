@@ -1,0 +1,1 @@
+/opt/cray/pe/craype/2.7.33/bin/cc -fPIC -D_GNU_SOURCE -std=c11 -O2 -g -shared -Wl,-soname,libarocm_smi_plugin.so -o libarocm_smi_plugin.so CMakeFiles/arocm_smi_plugin.dir/apapi.c.o  -Wl,-rpath,/ccs/home/adam.mcdaniel/scorep-amd/install/papi/lib: -lpthread -lm /ccs/home/adam.mcdaniel/scorep-amd/install/papi/lib/libpapi.so 

@@ -1,0 +1,1 @@
+/ccs/home/adam.mcdaniel/scorep-amd/install/lib/libcoretemp3_plugin.so

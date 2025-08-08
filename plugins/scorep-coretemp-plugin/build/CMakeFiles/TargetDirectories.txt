@@ -1,0 +1,7 @@
+/ccs/home/adam.mcdaniel/scorep-amd/plugins/scorep-coretemp-plugin/build/CMakeFiles/coretemp_plugin.dir
+/ccs/home/adam.mcdaniel/scorep-amd/plugins/scorep-coretemp-plugin/build/CMakeFiles/edit_cache.dir
+/ccs/home/adam.mcdaniel/scorep-amd/plugins/scorep-coretemp-plugin/build/CMakeFiles/rebuild_cache.dir
+/ccs/home/adam.mcdaniel/scorep-amd/plugins/scorep-coretemp-plugin/build/CMakeFiles/list_install_components.dir
+/ccs/home/adam.mcdaniel/scorep-amd/plugins/scorep-coretemp-plugin/build/CMakeFiles/install.dir
+/ccs/home/adam.mcdaniel/scorep-amd/plugins/scorep-coretemp-plugin/build/CMakeFiles/install/local.dir
+/ccs/home/adam.mcdaniel/scorep-amd/plugins/scorep-coretemp-plugin/build/CMakeFiles/install/strip.dir

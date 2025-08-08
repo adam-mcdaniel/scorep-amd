@@ -1,0 +1,645 @@
+
+---
+events:
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CMakeDetermineSystem.cmake:233 (message)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      The system is: Linux - 6.4.0-150600.23.47_15.0.10-cray_shasta_c - x86_64
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "/usr/share/cmake/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
+      Compiler: /opt/rocm-6.4.1/llvm/bin/clang 
+      Build flags: -I//autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/include;-I/opt/rocm-6.4.1/include;-L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib;-Wl,-rpath,/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib;-L/opt/rocm-6.4.1/lib;-Wl,-rpath,/opt/rocm-6.4.1/lib;-I//autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/include;-I/opt/rocm-6.4.1/include;-L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib;-Wl,-rpath,/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib;-L/opt/rocm-6.4.1/lib;-Wl,-rpath,/opt/rocm-6.4.1/lib;-I//autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/include;-I/opt/rocm-6.4.1/include;-L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib;-Wl,-rpath,/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib;-L/opt/rocm-6.4.1/lib;-Wl,-rpath,/opt/rocm-6.4.1/lib
+      Id flags:  
+      
+      The output was:
+      0
+      
+      
+      Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "a.out"
+      
+      The C compiler identification is Clang, found in:
+        /ccs/home/adam.mcdaniel/scorep-amd/plugins/scorep-coretemp-plugin-2/build/CMakeFiles/3.28.3/CompilerIdC/a.out
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "/usr/share/cmake/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
+      Compiler: /opt/rocm-6.4.1/llvm/bin/clang++ 
+      Build flags: -I//autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/include;-I/opt/rocm-6.4.1/include;-L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib;-Wl,-rpath,/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib;-L/opt/rocm-6.4.1/lib;-Wl,-rpath,/opt/rocm-6.4.1/lib;-I//autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/include;-I/opt/rocm-6.4.1/include;-L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib;-Wl,-rpath,/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib;-L/opt/rocm-6.4.1/lib;-Wl,-rpath,/opt/rocm-6.4.1/lib;-I//autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/include;-I/opt/rocm-6.4.1/include;-L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib;-Wl,-rpath,/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib;-L/opt/rocm-6.4.1/lib;-Wl,-rpath,/opt/rocm-6.4.1/lib
+      Id flags:  
+      
+      The output was:
+      0
+      
+      
+      Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "a.out"
+      
+      The CXX compiler identification is Clang, found in:
+        /ccs/home/adam.mcdaniel/scorep-amd/plugins/scorep-coretemp-plugin-2/build/CMakeFiles/3.28.3/CompilerIdCXX/a.out
+      
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerABI.cmake:57 (try_compile)"
+      - "/usr/share/cmake/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:2 (project)"
+    checks:
+      - "Detecting C compiler ABI info"
+    directories:
+      source: "/ccs/home/adam.mcdaniel/scorep-amd/plugins/scorep-coretemp-plugin-2/build/CMakeFiles/CMakeScratch/TryCompile-X92LQO"
+      binary: "/ccs/home/adam.mcdaniel/scorep-amd/plugins/scorep-coretemp-plugin-2/build/CMakeFiles/CMakeScratch/TryCompile-X92LQO"
+    cmakeVariables:
+      CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS: "/opt/rocm-6.4.1/lib/llvm/bin/clang-scan-deps"
+      CMAKE_C_FLAGS: "-I//autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/include -I/opt/rocm-6.4.1/include  -L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -Wl,-rpath,/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -L/opt/rocm-6.4.1/lib -Wl,-rpath,/opt/rocm-6.4.1/lib -I//autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/include -I/opt/rocm-6.4.1/include  -L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -Wl,-rpath,/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -L/opt/rocm-6.4.1/lib -Wl,-rpath,/opt/rocm-6.4.1/lib -I//autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/include -I/opt/rocm-6.4.1/include  -L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -Wl,-rpath,/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -L/opt/rocm-6.4.1/lib -Wl,-rpath,/opt/rocm-6.4.1/lib"
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: "-L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -Wl,-rpath,/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -L/opt/rocm-6.4.1/lib -Wl,-rpath,/opt/rocm-6.4.1/lib"
+    buildResult:
+      variable: "CMAKE_C_ABI_COMPILED"
+      cached: true
+      stdout: |
+        Change Dir: '/ccs/home/adam.mcdaniel/scorep-amd/plugins/scorep-coretemp-plugin-2/build/CMakeFiles/CMakeScratch/TryCompile-X92LQO'
+        
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_6477d/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_6477d.dir/build.make CMakeFiles/cmTC_6477d.dir/build
+        gmake[1]: Entering directory '/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/plugins/scorep-coretemp-plugin-2/build/CMakeFiles/CMakeScratch/TryCompile-X92LQO'
+        Building C object CMakeFiles/cmTC_6477d.dir/CMakeCCompilerABI.c.o
+        /opt/rocm-6.4.1/llvm/bin/clang   -I//autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/include -I/opt/rocm-6.4.1/include  -L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -Wl,-rpath,/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -L/opt/rocm-6.4.1/lib -Wl,-rpath,/opt/rocm-6.4.1/lib -I//autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/include -I/opt/rocm-6.4.1/include  -L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -Wl,-rpath,/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -L/opt/rocm-6.4.1/lib -Wl,-rpath,/opt/rocm-6.4.1/lib -I//autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/include -I/opt/rocm-6.4.1/include  -L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -Wl,-rpath,/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -L/opt/rocm-6.4.1/lib -Wl,-rpath,/opt/rocm-6.4.1/lib    -v -MD -MT CMakeFiles/cmTC_6477d.dir/CMakeCCompilerABI.c.o -MF CMakeFiles/cmTC_6477d.dir/CMakeCCompilerABI.c.o.d -o CMakeFiles/cmTC_6477d.dir/CMakeCCompilerABI.c.o -c /usr/share/cmake/Modules/CMakeCCompilerABI.c
+        AMD clang version 19.0.0git (https://github.com/RadeonOpenCompute/llvm-project roc-6.4.1 25184 c87081df219c42dc27c5b6d86c0525bc7d01f727)
+        Target: x86_64-unknown-linux-gnu
+        Thread model: posix
+        InstalledDir: /opt/rocm-6.4.1/lib/llvm/bin
+        Configuration file: /opt/rocm-6.4.1/lib/llvm/bin/clang.cfg
+        Selected GCC installation: /usr/lib64/gcc/x86_64-suse-linux/13
+        Candidate multilib: .;@m64
+        Selected multilib: .;@m64
+        Found HIP installation: /opt/rocm-6.4.1/lib/llvm/bin/../../.., version 6.4.43483
+        clang: warning: -Wl,-rpath,/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib: 'linker' input unused [-Wunused-command-line-argument]
+        clang: warning: -Wl,-rpath,/opt/rocm-6.4.1/lib: 'linker' input unused [-Wunused-command-line-argument]
+        clang: warning: -Wl,-rpath,/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib: 'linker' input unused [-Wunused-command-line-argument]
+        clang: warning: -Wl,-rpath,/opt/rocm-6.4.1/lib: 'linker' input unused [-Wunused-command-line-argument]
+        clang: warning: -Wl,-rpath,/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib: 'linker' input unused [-Wunused-command-line-argument]
+        clang: warning: -Wl,-rpath,/opt/rocm-6.4.1/lib: 'linker' input unused [-Wunused-command-line-argument]
+        clang: warning: argument unused during compilation: '-L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib' [-Wunused-command-line-argument]
+        clang: warning: argument unused during compilation: '-L/opt/rocm-6.4.1/lib' [-Wunused-command-line-argument]
+        clang: warning: argument unused during compilation: '-L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib' [-Wunused-command-line-argument]
+        clang: warning: argument unused during compilation: '-L/opt/rocm-6.4.1/lib' [-Wunused-command-line-argument]
+        clang: warning: argument unused during compilation: '-L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib' [-Wunused-command-line-argument]
+        clang: warning: argument unused during compilation: '-L/opt/rocm-6.4.1/lib' [-Wunused-command-line-argument]
+         (in-process)
+         "/opt/rocm-6.4.1/lib/llvm/bin/clang-19" -cc1 -triple x86_64-unknown-linux-gnu -emit-obj -disable-free -clear-ast-before-backend -disable-llvm-verifier -discard-value-names -main-file-name CMakeCCompilerABI.c -mrelocation-model static -mframe-pointer=all -fmath-errno -ffp-contract=on -fno-rounding-math -mconstructor-aliases -funwind-tables=2 -target-cpu x86-64 -tune-cpu generic -debugger-tuning=gdb -fdebug-compilation-dir=/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/plugins/scorep-coretemp-plugin-2/build/CMakeFiles/CMakeScratch/TryCompile-X92LQO -v -fcoverage-compilation-dir=/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/plugins/scorep-coretemp-plugin-2/build/CMakeFiles/CMakeScratch/TryCompile-X92LQO -resource-dir /opt/rocm-6.4.1/lib/llvm/lib/clang/19 -dependency-file CMakeFiles/cmTC_6477d.dir/CMakeCCompilerABI.c.o.d -MT CMakeFiles/cmTC_6477d.dir/CMakeCCompilerABI.c.o -sys-header-deps -I //autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/include -I /opt/rocm-6.4.1/include -I //autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/include -I /opt/rocm-6.4.1/include -I //autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/include -I /opt/rocm-6.4.1/include -c-isystem /autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/include -c-isystem /opt/rocm-6.4.1/include -c-isystem /autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/include -c-isystem /autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/include -c-isystem /opt/rocm-6.4.1/include -c-isystem /autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/include -c-isystem /autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/include -c-isystem /opt/rocm-6.4.1/include -c-isystem /autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/include -internal-isystem /opt/rocm-6.4.1/lib/llvm/lib/clang/19/include -internal-isystem /usr/local/include -internal-isystem /usr/lib64/gcc/x86_64-suse-linux/13/../../../../x86_64-suse-linux/include -internal-externc-isystem /include -internal-externc-isystem /usr/include -ferror-limit 19 -fgnuc-version=4.2.1 -fskip-odr-check-in-gmf -faddrsig -D__GCC_HAVE_DWARF2_CFI_ASM=1 -o CMakeFiles/cmTC_6477d.dir/CMakeCCompilerABI.c.o -x c /usr/share/cmake/Modules/CMakeCCompilerABI.c
+        clang -cc1 version 19.0.0git based upon LLVM 19.0.0git default target x86_64-unknown-linux-gnu
+        ignoring nonexistent directory "/include"
+        ignoring duplicate directory "//autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/include"
+        ignoring duplicate directory "/opt/rocm-6.4.1/include"
+        ignoring duplicate directory "//autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/include"
+        ignoring duplicate directory "/opt/rocm-6.4.1/include"
+        ignoring duplicate directory "/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/include"
+          as it is a non-system directory that duplicates a system directory
+        ignoring duplicate directory "/opt/rocm-6.4.1/include"
+          as it is a non-system directory that duplicates a system directory
+        ignoring duplicate directory "/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/include"
+        ignoring duplicate directory "/opt/rocm-6.4.1/include"
+        ignoring duplicate directory "/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/include"
+        ignoring duplicate directory "/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/include"
+        ignoring duplicate directory "/opt/rocm-6.4.1/include"
+        ignoring duplicate directory "/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/include"
+        #include "..." search starts here:
+        #include <...> search starts here:
+         /autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/include
+         /opt/rocm-6.4.1/include
+         /autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/include
+         /opt/rocm-6.4.1/lib/llvm/lib/clang/19/include
+         /usr/local/include
+         /usr/lib64/gcc/x86_64-suse-linux/13/../../../../x86_64-suse-linux/include
+         /usr/include
+        End of search list.
+        Linking C executable cmTC_6477d
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_6477d.dir/link.txt --verbose=1
+        /opt/rocm-6.4.1/llvm/bin/clang -I//autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/include -I/opt/rocm-6.4.1/include  -L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -Wl,-rpath,/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -L/opt/rocm-6.4.1/lib -Wl,-rpath,/opt/rocm-6.4.1/lib -I//autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/include -I/opt/rocm-6.4.1/include  -L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -Wl,-rpath,/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -L/opt/rocm-6.4.1/lib -Wl,-rpath,/opt/rocm-6.4.1/lib -I//autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/include -I/opt/rocm-6.4.1/include  -L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -Wl,-rpath,/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -L/opt/rocm-6.4.1/lib -Wl,-rpath,/opt/rocm-6.4.1/lib  -L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -Wl,-rpath,/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -L/opt/rocm-6.4.1/lib -Wl,-rpath,/opt/rocm-6.4.1/lib -v CMakeFiles/cmTC_6477d.dir/CMakeCCompilerABI.c.o -o cmTC_6477d 
+        AMD clang version 19.0.0git (https://github.com/RadeonOpenCompute/llvm-project roc-6.4.1 25184 c87081df219c42dc27c5b6d86c0525bc7d01f727)
+        Target: x86_64-unknown-linux-gnu
+        Thread model: posix
+        InstalledDir: /opt/rocm-6.4.1/lib/llvm/bin
+        Configuration file: /opt/rocm-6.4.1/lib/llvm/bin/clang.cfg
+        Selected GCC installation: /usr/lib64/gcc/x86_64-suse-linux/13
+        Candidate multilib: .;@m64
+        Selected multilib: .;@m64
+        Found HIP installation: /opt/rocm-6.4.1/lib/llvm/bin/../../.., version 6.4.43483
+         "/opt/rocm-6.4.1/lib/llvm/bin/ld.lld" --hash-style=gnu --eh-frame-hdr -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_6477d /usr/lib64/gcc/x86_64-suse-linux/13/../../../../lib64/crt1.o /usr/lib64/gcc/x86_64-suse-linux/13/../../../../lib64/crti.o /opt/rocm-6.4.1/lib/llvm/lib/clang/19/lib/linux/clang_rt.crtbegin-x86_64.o -L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -L/opt/rocm-6.4.1/lib -L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -L/opt/rocm-6.4.1/lib -L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -L/opt/rocm-6.4.1/lib -L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -L/opt/rocm-6.4.1/lib -L/usr/lib64/gcc/x86_64-suse-linux/13 -L/usr/lib64/gcc/x86_64-suse-linux/13/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib64/gcc/x86_64-suse-linux/13/../../../../x86_64-suse-linux/lib -L/lib -L/usr/lib -L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -L/opt/rocm-6.4.1/lib -L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/lib -L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -L/opt/rocm-6.4.1/lib -L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/lib -L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -L/opt/rocm-6.4.1/lib -L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/lib --enable-new-dtags -rpath /autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -rpath /opt/rocm-6.4.1/lib -rpath /autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -rpath /opt/rocm-6.4.1/lib -rpath /autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -rpath /opt/rocm-6.4.1/lib -rpath /autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -rpath /opt/rocm-6.4.1/lib CMakeFiles/cmTC_6477d.dir/CMakeCCompilerABI.c.o /opt/rocm-6.4.1/lib/llvm/lib/clang/19/lib/linux/libclang_rt.builtins-x86_64.a --as-needed -lgcc_s --no-as-needed -lc /opt/rocm-6.4.1/lib/llvm/lib/clang/19/lib/linux/libclang_rt.builtins-x86_64.a --as-needed -lgcc_s --no-as-needed /opt/rocm-6.4.1/lib/llvm/lib/clang/19/lib/linux/clang_rt.crtend-x86_64.o /usr/lib64/gcc/x86_64-suse-linux/13/../../../../lib64/crtn.o
+        gmake[1]: Leaving directory '/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/plugins/scorep-coretemp-plugin-2/build/CMakeFiles/CMakeScratch/TryCompile-X92LQO'
+        
+      exitCode: 0
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerABI.cmake:127 (message)"
+      - "/usr/share/cmake/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      Parsed C implicit include dir info: rv=done
+        found start of include info
+        found start of implicit include info
+          add: [/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/include]
+          add: [/opt/rocm-6.4.1/include]
+          add: [/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/include]
+          add: [/opt/rocm-6.4.1/lib/llvm/lib/clang/19/include]
+          add: [/usr/local/include]
+          add: [/usr/lib64/gcc/x86_64-suse-linux/13/../../../../x86_64-suse-linux/include]
+          add: [/usr/include]
+        end of search list found
+        collapse include dir [/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/include] ==> [/ccs/home/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/include]
+        collapse include dir [/opt/rocm-6.4.1/include] ==> [/opt/rocm-6.4.1/include]
+        collapse include dir [/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/include] ==> [/ccs/home/adam.mcdaniel/scorep-amd/install/include]
+        collapse include dir [/opt/rocm-6.4.1/lib/llvm/lib/clang/19/include] ==> [/opt/rocm-6.4.1/lib/llvm/lib/clang/19/include]
+        collapse include dir [/usr/local/include] ==> [/usr/local/include]
+        collapse include dir [/usr/lib64/gcc/x86_64-suse-linux/13/../../../../x86_64-suse-linux/include] ==> [/usr/x86_64-suse-linux/include]
+        collapse include dir [/usr/include] ==> [/usr/include]
+        implicit include dirs: [/ccs/home/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/include;/opt/rocm-6.4.1/include;/ccs/home/adam.mcdaniel/scorep-amd/install/include;/opt/rocm-6.4.1/lib/llvm/lib/clang/19/include;/usr/local/include;/usr/x86_64-suse-linux/include;/usr/include]
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerABI.cmake:159 (message)"
+      - "/usr/share/cmake/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      Parsed C implicit link information:
+        link line regex: [^( *|.*[/\\])(ld\\.lld|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
+        ignore line: [Change Dir: '/ccs/home/adam.mcdaniel/scorep-amd/plugins/scorep-coretemp-plugin-2/build/CMakeFiles/CMakeScratch/TryCompile-X92LQO']
+        ignore line: []
+        ignore line: [Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_6477d/fast]
+        ignore line: [/usr/bin/gmake  -f CMakeFiles/cmTC_6477d.dir/build.make CMakeFiles/cmTC_6477d.dir/build]
+        ignore line: [gmake[1]: Entering directory '/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/plugins/scorep-coretemp-plugin-2/build/CMakeFiles/CMakeScratch/TryCompile-X92LQO']
+        ignore line: [Building C object CMakeFiles/cmTC_6477d.dir/CMakeCCompilerABI.c.o]
+        ignore line: [/opt/rocm-6.4.1/llvm/bin/clang   -I//autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/include -I/opt/rocm-6.4.1/include  -L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -Wl -rpath /autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -L/opt/rocm-6.4.1/lib -Wl -rpath /opt/rocm-6.4.1/lib -I//autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/include -I/opt/rocm-6.4.1/include  -L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -Wl -rpath /autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -L/opt/rocm-6.4.1/lib -Wl -rpath /opt/rocm-6.4.1/lib -I//autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/include -I/opt/rocm-6.4.1/include  -L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -Wl -rpath /autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -L/opt/rocm-6.4.1/lib -Wl -rpath /opt/rocm-6.4.1/lib    -v -MD -MT CMakeFiles/cmTC_6477d.dir/CMakeCCompilerABI.c.o -MF CMakeFiles/cmTC_6477d.dir/CMakeCCompilerABI.c.o.d -o CMakeFiles/cmTC_6477d.dir/CMakeCCompilerABI.c.o -c /usr/share/cmake/Modules/CMakeCCompilerABI.c]
+        ignore line: [AMD clang version 19.0.0git (https://github.com/RadeonOpenCompute/llvm-project roc-6.4.1 25184 c87081df219c42dc27c5b6d86c0525bc7d01f727)]
+        ignore line: [Target: x86_64-unknown-linux-gnu]
+        ignore line: [Thread model: posix]
+        ignore line: [InstalledDir: /opt/rocm-6.4.1/lib/llvm/bin]
+        ignore line: [Configuration file: /opt/rocm-6.4.1/lib/llvm/bin/clang.cfg]
+        ignore line: [Selected GCC installation: /usr/lib64/gcc/x86_64-suse-linux/13]
+        ignore line: [Candidate multilib: .]
+        ignore line: [@m64]
+        ignore line: [Selected multilib: .]
+        ignore line: [@m64]
+        ignore line: [Found HIP installation: /opt/rocm-6.4.1/lib/llvm/bin/../../..  version 6.4.43483]
+        ignore line: [clang: warning: -Wl -rpath /autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib: 'linker' input unused [-Wunused-command-line-argument]]
+        ignore line: [clang: warning: -Wl -rpath /opt/rocm-6.4.1/lib: 'linker' input unused [-Wunused-command-line-argument]]
+        ignore line: [clang: warning: -Wl -rpath /autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib: 'linker' input unused [-Wunused-command-line-argument]]
+        ignore line: [clang: warning: -Wl -rpath /opt/rocm-6.4.1/lib: 'linker' input unused [-Wunused-command-line-argument]]
+        ignore line: [clang: warning: -Wl -rpath /autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib: 'linker' input unused [-Wunused-command-line-argument]]
+        ignore line: [clang: warning: -Wl -rpath /opt/rocm-6.4.1/lib: 'linker' input unused [-Wunused-command-line-argument]]
+        ignore line: [clang: warning: argument unused during compilation: '-L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib' [-Wunused-command-line-argument]]
+        ignore line: [clang: warning: argument unused during compilation: '-L/opt/rocm-6.4.1/lib' [-Wunused-command-line-argument]]
+        ignore line: [clang: warning: argument unused during compilation: '-L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib' [-Wunused-command-line-argument]]
+        ignore line: [clang: warning: argument unused during compilation: '-L/opt/rocm-6.4.1/lib' [-Wunused-command-line-argument]]
+        ignore line: [clang: warning: argument unused during compilation: '-L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib' [-Wunused-command-line-argument]]
+        ignore line: [clang: warning: argument unused during compilation: '-L/opt/rocm-6.4.1/lib' [-Wunused-command-line-argument]]
+        ignore line: [ (in-process)]
+        ignore line: [ "/opt/rocm-6.4.1/lib/llvm/bin/clang-19" -cc1 -triple x86_64-unknown-linux-gnu -emit-obj -disable-free -clear-ast-before-backend -disable-llvm-verifier -discard-value-names -main-file-name CMakeCCompilerABI.c -mrelocation-model static -mframe-pointer=all -fmath-errno -ffp-contract=on -fno-rounding-math -mconstructor-aliases -funwind-tables=2 -target-cpu x86-64 -tune-cpu generic -debugger-tuning=gdb -fdebug-compilation-dir=/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/plugins/scorep-coretemp-plugin-2/build/CMakeFiles/CMakeScratch/TryCompile-X92LQO -v -fcoverage-compilation-dir=/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/plugins/scorep-coretemp-plugin-2/build/CMakeFiles/CMakeScratch/TryCompile-X92LQO -resource-dir /opt/rocm-6.4.1/lib/llvm/lib/clang/19 -dependency-file CMakeFiles/cmTC_6477d.dir/CMakeCCompilerABI.c.o.d -MT CMakeFiles/cmTC_6477d.dir/CMakeCCompilerABI.c.o -sys-header-deps -I //autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/include -I /opt/rocm-6.4.1/include -I //autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/include -I /opt/rocm-6.4.1/include -I //autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/include -I /opt/rocm-6.4.1/include -c-isystem /autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/include -c-isystem /opt/rocm-6.4.1/include -c-isystem /autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/include -c-isystem /autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/include -c-isystem /opt/rocm-6.4.1/include -c-isystem /autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/include -c-isystem /autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/include -c-isystem /opt/rocm-6.4.1/include -c-isystem /autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/include -internal-isystem /opt/rocm-6.4.1/lib/llvm/lib/clang/19/include -internal-isystem /usr/local/include -internal-isystem /usr/lib64/gcc/x86_64-suse-linux/13/../../../../x86_64-suse-linux/include -internal-externc-isystem /include -internal-externc-isystem /usr/include -ferror-limit 19 -fgnuc-version=4.2.1 -fskip-odr-check-in-gmf -faddrsig -D__GCC_HAVE_DWARF2_CFI_ASM=1 -o CMakeFiles/cmTC_6477d.dir/CMakeCCompilerABI.c.o -x c /usr/share/cmake/Modules/CMakeCCompilerABI.c]
+        ignore line: [clang -cc1 version 19.0.0git based upon LLVM 19.0.0git default target x86_64-unknown-linux-gnu]
+        ignore line: [ignoring nonexistent directory "/include"]
+        ignore line: [ignoring duplicate directory "//autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/include"]
+        ignore line: [ignoring duplicate directory "/opt/rocm-6.4.1/include"]
+        ignore line: [ignoring duplicate directory "//autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/include"]
+        ignore line: [ignoring duplicate directory "/opt/rocm-6.4.1/include"]
+        ignore line: [ignoring duplicate directory "/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/include"]
+        ignore line: [  as it is a non-system directory that duplicates a system directory]
+        ignore line: [ignoring duplicate directory "/opt/rocm-6.4.1/include"]
+        ignore line: [  as it is a non-system directory that duplicates a system directory]
+        ignore line: [ignoring duplicate directory "/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/include"]
+        ignore line: [ignoring duplicate directory "/opt/rocm-6.4.1/include"]
+        ignore line: [ignoring duplicate directory "/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/include"]
+        ignore line: [ignoring duplicate directory "/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/include"]
+        ignore line: [ignoring duplicate directory "/opt/rocm-6.4.1/include"]
+        ignore line: [ignoring duplicate directory "/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/include"]
+        ignore line: [#include "..." search starts here:]
+        ignore line: [#include <...> search starts here:]
+        ignore line: [ /autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/include]
+        ignore line: [ /opt/rocm-6.4.1/include]
+        ignore line: [ /autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/include]
+        ignore line: [ /opt/rocm-6.4.1/lib/llvm/lib/clang/19/include]
+        ignore line: [ /usr/local/include]
+        ignore line: [ /usr/lib64/gcc/x86_64-suse-linux/13/../../../../x86_64-suse-linux/include]
+        ignore line: [ /usr/include]
+        ignore line: [End of search list.]
+        ignore line: [Linking C executable cmTC_6477d]
+        ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_6477d.dir/link.txt --verbose=1]
+        ignore line: [/opt/rocm-6.4.1/llvm/bin/clang -I//autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/include -I/opt/rocm-6.4.1/include  -L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -Wl -rpath /autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -L/opt/rocm-6.4.1/lib -Wl -rpath /opt/rocm-6.4.1/lib -I//autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/include -I/opt/rocm-6.4.1/include  -L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -Wl -rpath /autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -L/opt/rocm-6.4.1/lib -Wl -rpath /opt/rocm-6.4.1/lib -I//autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/include -I/opt/rocm-6.4.1/include  -L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -Wl -rpath /autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -L/opt/rocm-6.4.1/lib -Wl -rpath /opt/rocm-6.4.1/lib  -L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -Wl -rpath /autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -L/opt/rocm-6.4.1/lib -Wl -rpath /opt/rocm-6.4.1/lib -v CMakeFiles/cmTC_6477d.dir/CMakeCCompilerABI.c.o -o cmTC_6477d ]
+        ignore line: [AMD clang version 19.0.0git (https://github.com/RadeonOpenCompute/llvm-project roc-6.4.1 25184 c87081df219c42dc27c5b6d86c0525bc7d01f727)]
+        ignore line: [Target: x86_64-unknown-linux-gnu]
+        ignore line: [Thread model: posix]
+        ignore line: [InstalledDir: /opt/rocm-6.4.1/lib/llvm/bin]
+        ignore line: [Configuration file: /opt/rocm-6.4.1/lib/llvm/bin/clang.cfg]
+        ignore line: [Selected GCC installation: /usr/lib64/gcc/x86_64-suse-linux/13]
+        ignore line: [Candidate multilib: .]
+        ignore line: [@m64]
+        ignore line: [Selected multilib: .]
+        ignore line: [@m64]
+        ignore line: [Found HIP installation: /opt/rocm-6.4.1/lib/llvm/bin/../../..  version 6.4.43483]
+        link line: [ "/opt/rocm-6.4.1/lib/llvm/bin/ld.lld" --hash-style=gnu --eh-frame-hdr -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_6477d /usr/lib64/gcc/x86_64-suse-linux/13/../../../../lib64/crt1.o /usr/lib64/gcc/x86_64-suse-linux/13/../../../../lib64/crti.o /opt/rocm-6.4.1/lib/llvm/lib/clang/19/lib/linux/clang_rt.crtbegin-x86_64.o -L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -L/opt/rocm-6.4.1/lib -L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -L/opt/rocm-6.4.1/lib -L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -L/opt/rocm-6.4.1/lib -L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -L/opt/rocm-6.4.1/lib -L/usr/lib64/gcc/x86_64-suse-linux/13 -L/usr/lib64/gcc/x86_64-suse-linux/13/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib64/gcc/x86_64-suse-linux/13/../../../../x86_64-suse-linux/lib -L/lib -L/usr/lib -L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -L/opt/rocm-6.4.1/lib -L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/lib -L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -L/opt/rocm-6.4.1/lib -L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/lib -L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -L/opt/rocm-6.4.1/lib -L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/lib --enable-new-dtags -rpath /autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -rpath /opt/rocm-6.4.1/lib -rpath /autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -rpath /opt/rocm-6.4.1/lib -rpath /autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -rpath /opt/rocm-6.4.1/lib -rpath /autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -rpath /opt/rocm-6.4.1/lib CMakeFiles/cmTC_6477d.dir/CMakeCCompilerABI.c.o /opt/rocm-6.4.1/lib/llvm/lib/clang/19/lib/linux/libclang_rt.builtins-x86_64.a --as-needed -lgcc_s --no-as-needed -lc /opt/rocm-6.4.1/lib/llvm/lib/clang/19/lib/linux/libclang_rt.builtins-x86_64.a --as-needed -lgcc_s --no-as-needed /opt/rocm-6.4.1/lib/llvm/lib/clang/19/lib/linux/clang_rt.crtend-x86_64.o /usr/lib64/gcc/x86_64-suse-linux/13/../../../../lib64/crtn.o]
+          arg [/opt/rocm-6.4.1/lib/llvm/bin/ld.lld] ==> ignore
+          arg [--hash-style=gnu] ==> ignore
+          arg [--eh-frame-hdr] ==> ignore
+          arg [-m] ==> ignore
+          arg [elf_x86_64] ==> ignore
+          arg [-dynamic-linker] ==> ignore
+          arg [/lib64/ld-linux-x86-64.so.2] ==> ignore
+          arg [-o] ==> ignore
+          arg [cmTC_6477d] ==> ignore
+          arg [/usr/lib64/gcc/x86_64-suse-linux/13/../../../../lib64/crt1.o] ==> obj [/usr/lib64/gcc/x86_64-suse-linux/13/../../../../lib64/crt1.o]
+          arg [/usr/lib64/gcc/x86_64-suse-linux/13/../../../../lib64/crti.o] ==> obj [/usr/lib64/gcc/x86_64-suse-linux/13/../../../../lib64/crti.o]
+          arg [/opt/rocm-6.4.1/lib/llvm/lib/clang/19/lib/linux/clang_rt.crtbegin-x86_64.o] ==> obj [/opt/rocm-6.4.1/lib/llvm/lib/clang/19/lib/linux/clang_rt.crtbegin-x86_64.o]
+          arg [-L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib] ==> dir [/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib]
+          arg [-L/opt/rocm-6.4.1/lib] ==> dir [/opt/rocm-6.4.1/lib]
+          arg [-L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib] ==> dir [/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib]
+          arg [-L/opt/rocm-6.4.1/lib] ==> dir [/opt/rocm-6.4.1/lib]
+          arg [-L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib] ==> dir [/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib]
+          arg [-L/opt/rocm-6.4.1/lib] ==> dir [/opt/rocm-6.4.1/lib]
+          arg [-L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib] ==> dir [/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib]
+          arg [-L/opt/rocm-6.4.1/lib] ==> dir [/opt/rocm-6.4.1/lib]
+          arg [-L/usr/lib64/gcc/x86_64-suse-linux/13] ==> dir [/usr/lib64/gcc/x86_64-suse-linux/13]
+          arg [-L/usr/lib64/gcc/x86_64-suse-linux/13/../../../../lib64] ==> dir [/usr/lib64/gcc/x86_64-suse-linux/13/../../../../lib64]
+          arg [-L/lib/../lib64] ==> dir [/lib/../lib64]
+          arg [-L/usr/lib/../lib64] ==> dir [/usr/lib/../lib64]
+          arg [-L/usr/lib64/gcc/x86_64-suse-linux/13/../../../../x86_64-suse-linux/lib] ==> dir [/usr/lib64/gcc/x86_64-suse-linux/13/../../../../x86_64-suse-linux/lib]
+          arg [-L/lib] ==> dir [/lib]
+          arg [-L/usr/lib] ==> dir [/usr/lib]
+          arg [-L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib] ==> dir [/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib]
+          arg [-L/opt/rocm-6.4.1/lib] ==> dir [/opt/rocm-6.4.1/lib]
+          arg [-L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/lib] ==> dir [/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/lib]
+          arg [-L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib] ==> dir [/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib]
+          arg [-L/opt/rocm-6.4.1/lib] ==> dir [/opt/rocm-6.4.1/lib]
+          arg [-L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/lib] ==> dir [/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/lib]
+          arg [-L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib] ==> dir [/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib]
+          arg [-L/opt/rocm-6.4.1/lib] ==> dir [/opt/rocm-6.4.1/lib]
+          arg [-L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/lib] ==> dir [/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/lib]
+          arg [--enable-new-dtags] ==> ignore
+          arg [-rpath] ==> ignore
+          arg [/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib] ==> ignore
+          arg [-rpath] ==> ignore
+          arg [/opt/rocm-6.4.1/lib] ==> ignore
+          arg [-rpath] ==> ignore
+          arg [/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib] ==> ignore
+          arg [-rpath] ==> ignore
+          arg [/opt/rocm-6.4.1/lib] ==> ignore
+          arg [-rpath] ==> ignore
+          arg [/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib] ==> ignore
+          arg [-rpath] ==> ignore
+          arg [/opt/rocm-6.4.1/lib] ==> ignore
+          arg [-rpath] ==> ignore
+          arg [/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib] ==> ignore
+          arg [-rpath] ==> ignore
+          arg [/opt/rocm-6.4.1/lib] ==> ignore
+          arg [CMakeFiles/cmTC_6477d.dir/CMakeCCompilerABI.c.o] ==> ignore
+          arg [/opt/rocm-6.4.1/lib/llvm/lib/clang/19/lib/linux/libclang_rt.builtins-x86_64.a] ==> lib [/opt/rocm-6.4.1/lib/llvm/lib/clang/19/lib/linux/libclang_rt.builtins-x86_64.a]
+          arg [--as-needed] ==> ignore
+          arg [-lgcc_s] ==> lib [gcc_s]
+          arg [--no-as-needed] ==> ignore
+          arg [-lc] ==> lib [c]
+          arg [/opt/rocm-6.4.1/lib/llvm/lib/clang/19/lib/linux/libclang_rt.builtins-x86_64.a] ==> lib [/opt/rocm-6.4.1/lib/llvm/lib/clang/19/lib/linux/libclang_rt.builtins-x86_64.a]
+          arg [--as-needed] ==> ignore
+          arg [-lgcc_s] ==> lib [gcc_s]
+          arg [--no-as-needed] ==> ignore
+          arg [/opt/rocm-6.4.1/lib/llvm/lib/clang/19/lib/linux/clang_rt.crtend-x86_64.o] ==> obj [/opt/rocm-6.4.1/lib/llvm/lib/clang/19/lib/linux/clang_rt.crtend-x86_64.o]
+          arg [/usr/lib64/gcc/x86_64-suse-linux/13/../../../../lib64/crtn.o] ==> obj [/usr/lib64/gcc/x86_64-suse-linux/13/../../../../lib64/crtn.o]
+        remove lib [/opt/rocm-6.4.1/lib/llvm/lib/clang/19/lib/linux/libclang_rt.builtins-x86_64.a]
+        remove lib [/opt/rocm-6.4.1/lib/llvm/lib/clang/19/lib/linux/libclang_rt.builtins-x86_64.a]
+        collapse obj [/usr/lib64/gcc/x86_64-suse-linux/13/../../../../lib64/crt1.o] ==> [/usr/lib64/crt1.o]
+        collapse obj [/usr/lib64/gcc/x86_64-suse-linux/13/../../../../lib64/crti.o] ==> [/usr/lib64/crti.o]
+        collapse obj [/usr/lib64/gcc/x86_64-suse-linux/13/../../../../lib64/crtn.o] ==> [/usr/lib64/crtn.o]
+        collapse library dir [/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib] ==> [/ccs/home/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib]
+        collapse library dir [/opt/rocm-6.4.1/lib] ==> [/opt/rocm-6.4.1/lib]
+        collapse library dir [/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib] ==> [/ccs/home/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib]
+        collapse library dir [/opt/rocm-6.4.1/lib] ==> [/opt/rocm-6.4.1/lib]
+        collapse library dir [/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib] ==> [/ccs/home/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib]
+        collapse library dir [/opt/rocm-6.4.1/lib] ==> [/opt/rocm-6.4.1/lib]
+        collapse library dir [/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib] ==> [/ccs/home/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib]
+        collapse library dir [/opt/rocm-6.4.1/lib] ==> [/opt/rocm-6.4.1/lib]
+        collapse library dir [/usr/lib64/gcc/x86_64-suse-linux/13] ==> [/usr/lib64/gcc/x86_64-suse-linux/13]
+        collapse library dir [/usr/lib64/gcc/x86_64-suse-linux/13/../../../../lib64] ==> [/usr/lib64]
+        collapse library dir [/lib/../lib64] ==> [/lib64]
+        collapse library dir [/usr/lib/../lib64] ==> [/usr/lib64]
+        collapse library dir [/usr/lib64/gcc/x86_64-suse-linux/13/../../../../x86_64-suse-linux/lib] ==> [/usr/x86_64-suse-linux/lib]
+        collapse library dir [/lib] ==> [/lib]
+        collapse library dir [/usr/lib] ==> [/usr/lib]
+        collapse library dir [/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib] ==> [/ccs/home/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib]
+        collapse library dir [/opt/rocm-6.4.1/lib] ==> [/opt/rocm-6.4.1/lib]
+        collapse library dir [/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/lib] ==> [/ccs/home/adam.mcdaniel/scorep-amd/install/lib]
+        collapse library dir [/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib] ==> [/ccs/home/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib]
+        collapse library dir [/opt/rocm-6.4.1/lib] ==> [/opt/rocm-6.4.1/lib]
+        collapse library dir [/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/lib] ==> [/ccs/home/adam.mcdaniel/scorep-amd/install/lib]
+        collapse library dir [/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib] ==> [/ccs/home/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib]
+        collapse library dir [/opt/rocm-6.4.1/lib] ==> [/opt/rocm-6.4.1/lib]
+        collapse library dir [/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/lib] ==> [/ccs/home/adam.mcdaniel/scorep-amd/install/lib]
+        implicit libs: [gcc_s;c;gcc_s]
+        implicit objs: [/usr/lib64/crt1.o;/usr/lib64/crti.o;/opt/rocm-6.4.1/lib/llvm/lib/clang/19/lib/linux/clang_rt.crtbegin-x86_64.o;/opt/rocm-6.4.1/lib/llvm/lib/clang/19/lib/linux/clang_rt.crtend-x86_64.o;/usr/lib64/crtn.o]
+        implicit dirs: [/ccs/home/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib;/opt/rocm-6.4.1/lib;/usr/lib64/gcc/x86_64-suse-linux/13;/usr/lib64;/lib64;/usr/x86_64-suse-linux/lib;/lib;/usr/lib;/ccs/home/adam.mcdaniel/scorep-amd/install/lib]
+        implicit fwks: []
+      
+      
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerABI.cmake:57 (try_compile)"
+      - "/usr/share/cmake/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:2 (project)"
+    checks:
+      - "Detecting CXX compiler ABI info"
+    directories:
+      source: "/ccs/home/adam.mcdaniel/scorep-amd/plugins/scorep-coretemp-plugin-2/build/CMakeFiles/CMakeScratch/TryCompile-qzIWYc"
+      binary: "/ccs/home/adam.mcdaniel/scorep-amd/plugins/scorep-coretemp-plugin-2/build/CMakeFiles/CMakeScratch/TryCompile-qzIWYc"
+    cmakeVariables:
+      CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS: "/opt/rocm-6.4.1/lib/llvm/bin/clang-scan-deps"
+      CMAKE_CXX_FLAGS: "-I//autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/include -I/opt/rocm-6.4.1/include  -L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -Wl,-rpath,/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -L/opt/rocm-6.4.1/lib -Wl,-rpath,/opt/rocm-6.4.1/lib -I//autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/include -I/opt/rocm-6.4.1/include  -L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -Wl,-rpath,/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -L/opt/rocm-6.4.1/lib -Wl,-rpath,/opt/rocm-6.4.1/lib -I//autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/include -I/opt/rocm-6.4.1/include  -L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -Wl,-rpath,/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -L/opt/rocm-6.4.1/lib -Wl,-rpath,/opt/rocm-6.4.1/lib"
+      CMAKE_CXX_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: "-L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -Wl,-rpath,/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -L/opt/rocm-6.4.1/lib -Wl,-rpath,/opt/rocm-6.4.1/lib"
+    buildResult:
+      variable: "CMAKE_CXX_ABI_COMPILED"
+      cached: true
+      stdout: |
+        Change Dir: '/ccs/home/adam.mcdaniel/scorep-amd/plugins/scorep-coretemp-plugin-2/build/CMakeFiles/CMakeScratch/TryCompile-qzIWYc'
+        
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_e98ff/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_e98ff.dir/build.make CMakeFiles/cmTC_e98ff.dir/build
+        gmake[1]: Entering directory '/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/plugins/scorep-coretemp-plugin-2/build/CMakeFiles/CMakeScratch/TryCompile-qzIWYc'
+        Building CXX object CMakeFiles/cmTC_e98ff.dir/CMakeCXXCompilerABI.cpp.o
+        /opt/rocm-6.4.1/llvm/bin/clang++   -I//autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/include -I/opt/rocm-6.4.1/include  -L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -Wl,-rpath,/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -L/opt/rocm-6.4.1/lib -Wl,-rpath,/opt/rocm-6.4.1/lib -I//autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/include -I/opt/rocm-6.4.1/include  -L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -Wl,-rpath,/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -L/opt/rocm-6.4.1/lib -Wl,-rpath,/opt/rocm-6.4.1/lib -I//autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/include -I/opt/rocm-6.4.1/include  -L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -Wl,-rpath,/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -L/opt/rocm-6.4.1/lib -Wl,-rpath,/opt/rocm-6.4.1/lib    -v -MD -MT CMakeFiles/cmTC_e98ff.dir/CMakeCXXCompilerABI.cpp.o -MF CMakeFiles/cmTC_e98ff.dir/CMakeCXXCompilerABI.cpp.o.d -o CMakeFiles/cmTC_e98ff.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp
+        AMD clang version 19.0.0git (https://github.com/RadeonOpenCompute/llvm-project roc-6.4.1 25184 c87081df219c42dc27c5b6d86c0525bc7d01f727)
+        Target: x86_64-unknown-linux-gnu
+        Thread model: posix
+        InstalledDir: /opt/rocm-6.4.1/lib/llvm/bin
+        Configuration file: /opt/rocm-6.4.1/lib/llvm/bin/clang++.cfg
+        Selected GCC installation: /usr/lib64/gcc/x86_64-suse-linux/13
+        Candidate multilib: .;@m64
+        Selected multilib: .;@m64
+        Found HIP installation: /opt/rocm-6.4.1/lib/llvm/bin/../../.., version 6.4.43483
+        clang++: warning: -Wl,-rpath,/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib: 'linker' input unused [-Wunused-command-line-argument]
+        clang++: warning: -Wl,-rpath,/opt/rocm-6.4.1/lib: 'linker' input unused [-Wunused-command-line-argument]
+        clang++: warning: -Wl,-rpath,/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib: 'linker' input unused [-Wunused-command-line-argument]
+        clang++: warning: -Wl,-rpath,/opt/rocm-6.4.1/lib: 'linker' input unused [-Wunused-command-line-argument]
+        clang++: warning: -Wl,-rpath,/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib: 'linker' input unused [-Wunused-command-line-argument]
+        clang++: warning: -Wl,-rpath,/opt/rocm-6.4.1/lib: 'linker' input unused [-Wunused-command-line-argument]
+        clang++: warning: argument unused during compilation: '-L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib' [-Wunused-command-line-argument]
+        clang++: warning: argument unused during compilation: '-L/opt/rocm-6.4.1/lib' [-Wunused-command-line-argument]
+        clang++: warning: argument unused during compilation: '-L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib' [-Wunused-command-line-argument]
+        clang++: warning: argument unused during compilation: '-L/opt/rocm-6.4.1/lib' [-Wunused-command-line-argument]
+        clang++: warning: argument unused during compilation: '-L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib' [-Wunused-command-line-argument]
+        clang++: warning: argument unused during compilation: '-L/opt/rocm-6.4.1/lib' [-Wunused-command-line-argument]
+         (in-process)
+         "/opt/rocm-6.4.1/lib/llvm/bin/clang-19" -cc1 -triple x86_64-unknown-linux-gnu -emit-obj -disable-free -clear-ast-before-backend -disable-llvm-verifier -discard-value-names -main-file-name CMakeCXXCompilerABI.cpp -mrelocation-model static -mframe-pointer=all -fmath-errno -ffp-contract=on -fno-rounding-math -mconstructor-aliases -funwind-tables=2 -target-cpu x86-64 -tune-cpu generic -debugger-tuning=gdb -fdebug-compilation-dir=/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/plugins/scorep-coretemp-plugin-2/build/CMakeFiles/CMakeScratch/TryCompile-qzIWYc -v -fcoverage-compilation-dir=/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/plugins/scorep-coretemp-plugin-2/build/CMakeFiles/CMakeScratch/TryCompile-qzIWYc -resource-dir /opt/rocm-6.4.1/lib/llvm/lib/clang/19 -dependency-file CMakeFiles/cmTC_e98ff.dir/CMakeCXXCompilerABI.cpp.o.d -MT CMakeFiles/cmTC_e98ff.dir/CMakeCXXCompilerABI.cpp.o -sys-header-deps -I //autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/include -I /opt/rocm-6.4.1/include -I //autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/include -I /opt/rocm-6.4.1/include -I //autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/include -I /opt/rocm-6.4.1/include -c-isystem /autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/include -c-isystem /opt/rocm-6.4.1/include -c-isystem /autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/include -c-isystem /autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/include -c-isystem /opt/rocm-6.4.1/include -c-isystem /autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/include -c-isystem /autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/include -c-isystem /opt/rocm-6.4.1/include -c-isystem /autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/include -internal-isystem /usr/lib64/gcc/x86_64-suse-linux/13/../../../../include/c++/13 -internal-isystem /usr/lib64/gcc/x86_64-suse-linux/13/../../../../include/c++/13/x86_64-suse-linux -internal-isystem /usr/lib64/gcc/x86_64-suse-linux/13/../../../../include/c++/13/backward -internal-isystem /opt/rocm-6.4.1/lib/llvm/lib/clang/19/include -internal-isystem /usr/local/include -internal-isystem /usr/lib64/gcc/x86_64-suse-linux/13/../../../../x86_64-suse-linux/include -internal-externc-isystem /include -internal-externc-isystem /usr/include -fdeprecated-macro -ferror-limit 19 -fgnuc-version=4.2.1 -fskip-odr-check-in-gmf -fcxx-exceptions -fexceptions -faddrsig -D__GCC_HAVE_DWARF2_CFI_ASM=1 -o CMakeFiles/cmTC_e98ff.dir/CMakeCXXCompilerABI.cpp.o -x c++ /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp
+        clang -cc1 version 19.0.0git based upon LLVM 19.0.0git default target x86_64-unknown-linux-gnu
+        ignoring nonexistent directory "/include"
+        ignoring duplicate directory "//autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/include"
+        ignoring duplicate directory "/opt/rocm-6.4.1/include"
+        ignoring duplicate directory "//autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/include"
+        ignoring duplicate directory "/opt/rocm-6.4.1/include"
+        #include "..." search starts here:
+        #include <...> search starts here:
+         //autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/include
+         /opt/rocm-6.4.1/include
+         /usr/lib64/gcc/x86_64-suse-linux/13/../../../../include/c++/13
+         /usr/lib64/gcc/x86_64-suse-linux/13/../../../../include/c++/13/x86_64-suse-linux
+         /usr/lib64/gcc/x86_64-suse-linux/13/../../../../include/c++/13/backward
+         /opt/rocm-6.4.1/lib/llvm/lib/clang/19/include
+         /usr/local/include
+         /usr/lib64/gcc/x86_64-suse-linux/13/../../../../x86_64-suse-linux/include
+         /usr/include
+        End of search list.
+        Linking CXX executable cmTC_e98ff
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_e98ff.dir/link.txt --verbose=1
+        /opt/rocm-6.4.1/llvm/bin/clang++ -I//autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/include -I/opt/rocm-6.4.1/include  -L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -Wl,-rpath,/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -L/opt/rocm-6.4.1/lib -Wl,-rpath,/opt/rocm-6.4.1/lib -I//autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/include -I/opt/rocm-6.4.1/include  -L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -Wl,-rpath,/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -L/opt/rocm-6.4.1/lib -Wl,-rpath,/opt/rocm-6.4.1/lib -I//autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/include -I/opt/rocm-6.4.1/include  -L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -Wl,-rpath,/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -L/opt/rocm-6.4.1/lib -Wl,-rpath,/opt/rocm-6.4.1/lib  -L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -Wl,-rpath,/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -L/opt/rocm-6.4.1/lib -Wl,-rpath,/opt/rocm-6.4.1/lib -v CMakeFiles/cmTC_e98ff.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_e98ff 
+        AMD clang version 19.0.0git (https://github.com/RadeonOpenCompute/llvm-project roc-6.4.1 25184 c87081df219c42dc27c5b6d86c0525bc7d01f727)
+        Target: x86_64-unknown-linux-gnu
+        Thread model: posix
+        InstalledDir: /opt/rocm-6.4.1/lib/llvm/bin
+        Configuration file: /opt/rocm-6.4.1/lib/llvm/bin/clang++.cfg
+        Selected GCC installation: /usr/lib64/gcc/x86_64-suse-linux/13
+        Candidate multilib: .;@m64
+        Selected multilib: .;@m64
+        Found HIP installation: /opt/rocm-6.4.1/lib/llvm/bin/../../.., version 6.4.43483
+         "/opt/rocm-6.4.1/lib/llvm/bin/ld.lld" --hash-style=gnu --eh-frame-hdr -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_e98ff /usr/lib64/gcc/x86_64-suse-linux/13/../../../../lib64/crt1.o /usr/lib64/gcc/x86_64-suse-linux/13/../../../../lib64/crti.o /opt/rocm-6.4.1/lib/llvm/lib/clang/19/lib/linux/clang_rt.crtbegin-x86_64.o -L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -L/opt/rocm-6.4.1/lib -L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -L/opt/rocm-6.4.1/lib -L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -L/opt/rocm-6.4.1/lib -L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -L/opt/rocm-6.4.1/lib -L/usr/lib64/gcc/x86_64-suse-linux/13 -L/usr/lib64/gcc/x86_64-suse-linux/13/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib64/gcc/x86_64-suse-linux/13/../../../../x86_64-suse-linux/lib -L/lib -L/usr/lib -L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -L/opt/rocm-6.4.1/lib -L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/lib -L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -L/opt/rocm-6.4.1/lib -L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/lib -L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -L/opt/rocm-6.4.1/lib -L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/lib --enable-new-dtags -rpath /autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -rpath /opt/rocm-6.4.1/lib -rpath /autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -rpath /opt/rocm-6.4.1/lib -rpath /autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -rpath /opt/rocm-6.4.1/lib -rpath /autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -rpath /opt/rocm-6.4.1/lib CMakeFiles/cmTC_e98ff.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm /opt/rocm-6.4.1/lib/llvm/lib/clang/19/lib/linux/libclang_rt.builtins-x86_64.a -lgcc_s -lc /opt/rocm-6.4.1/lib/llvm/lib/clang/19/lib/linux/libclang_rt.builtins-x86_64.a -lgcc_s /opt/rocm-6.4.1/lib/llvm/lib/clang/19/lib/linux/clang_rt.crtend-x86_64.o /usr/lib64/gcc/x86_64-suse-linux/13/../../../../lib64/crtn.o
+        gmake[1]: Leaving directory '/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/plugins/scorep-coretemp-plugin-2/build/CMakeFiles/CMakeScratch/TryCompile-qzIWYc'
+        
+      exitCode: 0
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerABI.cmake:127 (message)"
+      - "/usr/share/cmake/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      Parsed CXX implicit include dir info: rv=done
+        found start of include info
+        found start of implicit include info
+          add: [//autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/include]
+          add: [/opt/rocm-6.4.1/include]
+          add: [/usr/lib64/gcc/x86_64-suse-linux/13/../../../../include/c++/13]
+          add: [/usr/lib64/gcc/x86_64-suse-linux/13/../../../../include/c++/13/x86_64-suse-linux]
+          add: [/usr/lib64/gcc/x86_64-suse-linux/13/../../../../include/c++/13/backward]
+          add: [/opt/rocm-6.4.1/lib/llvm/lib/clang/19/include]
+          add: [/usr/local/include]
+          add: [/usr/lib64/gcc/x86_64-suse-linux/13/../../../../x86_64-suse-linux/include]
+          add: [/usr/include]
+        end of search list found
+        collapse include dir [//autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/include] ==> [//autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/include]
+        collapse include dir [/opt/rocm-6.4.1/include] ==> [/opt/rocm-6.4.1/include]
+        collapse include dir [/usr/lib64/gcc/x86_64-suse-linux/13/../../../../include/c++/13] ==> [/usr/include/c++/13]
+        collapse include dir [/usr/lib64/gcc/x86_64-suse-linux/13/../../../../include/c++/13/x86_64-suse-linux] ==> [/usr/include/c++/13/x86_64-suse-linux]
+        collapse include dir [/usr/lib64/gcc/x86_64-suse-linux/13/../../../../include/c++/13/backward] ==> [/usr/include/c++/13/backward]
+        collapse include dir [/opt/rocm-6.4.1/lib/llvm/lib/clang/19/include] ==> [/opt/rocm-6.4.1/lib/llvm/lib/clang/19/include]
+        collapse include dir [/usr/local/include] ==> [/usr/local/include]
+        collapse include dir [/usr/lib64/gcc/x86_64-suse-linux/13/../../../../x86_64-suse-linux/include] ==> [/usr/x86_64-suse-linux/include]
+        collapse include dir [/usr/include] ==> [/usr/include]
+        implicit include dirs: [//autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/include;/opt/rocm-6.4.1/include;/usr/include/c++/13;/usr/include/c++/13/x86_64-suse-linux;/usr/include/c++/13/backward;/opt/rocm-6.4.1/lib/llvm/lib/clang/19/include;/usr/local/include;/usr/x86_64-suse-linux/include;/usr/include]
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerABI.cmake:159 (message)"
+      - "/usr/share/cmake/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      Parsed CXX implicit link information:
+        link line regex: [^( *|.*[/\\])(ld\\.lld|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
+        ignore line: [Change Dir: '/ccs/home/adam.mcdaniel/scorep-amd/plugins/scorep-coretemp-plugin-2/build/CMakeFiles/CMakeScratch/TryCompile-qzIWYc']
+        ignore line: []
+        ignore line: [Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_e98ff/fast]
+        ignore line: [/usr/bin/gmake  -f CMakeFiles/cmTC_e98ff.dir/build.make CMakeFiles/cmTC_e98ff.dir/build]
+        ignore line: [gmake[1]: Entering directory '/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/plugins/scorep-coretemp-plugin-2/build/CMakeFiles/CMakeScratch/TryCompile-qzIWYc']
+        ignore line: [Building CXX object CMakeFiles/cmTC_e98ff.dir/CMakeCXXCompilerABI.cpp.o]
+        ignore line: [/opt/rocm-6.4.1/llvm/bin/clang++   -I//autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/include -I/opt/rocm-6.4.1/include  -L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -Wl -rpath /autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -L/opt/rocm-6.4.1/lib -Wl -rpath /opt/rocm-6.4.1/lib -I//autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/include -I/opt/rocm-6.4.1/include  -L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -Wl -rpath /autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -L/opt/rocm-6.4.1/lib -Wl -rpath /opt/rocm-6.4.1/lib -I//autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/include -I/opt/rocm-6.4.1/include  -L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -Wl -rpath /autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -L/opt/rocm-6.4.1/lib -Wl -rpath /opt/rocm-6.4.1/lib    -v -MD -MT CMakeFiles/cmTC_e98ff.dir/CMakeCXXCompilerABI.cpp.o -MF CMakeFiles/cmTC_e98ff.dir/CMakeCXXCompilerABI.cpp.o.d -o CMakeFiles/cmTC_e98ff.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp]
+        ignore line: [AMD clang version 19.0.0git (https://github.com/RadeonOpenCompute/llvm-project roc-6.4.1 25184 c87081df219c42dc27c5b6d86c0525bc7d01f727)]
+        ignore line: [Target: x86_64-unknown-linux-gnu]
+        ignore line: [Thread model: posix]
+        ignore line: [InstalledDir: /opt/rocm-6.4.1/lib/llvm/bin]
+        ignore line: [Configuration file: /opt/rocm-6.4.1/lib/llvm/bin/clang++.cfg]
+        ignore line: [Selected GCC installation: /usr/lib64/gcc/x86_64-suse-linux/13]
+        ignore line: [Candidate multilib: .]
+        ignore line: [@m64]
+        ignore line: [Selected multilib: .]
+        ignore line: [@m64]
+        ignore line: [Found HIP installation: /opt/rocm-6.4.1/lib/llvm/bin/../../..  version 6.4.43483]
+        ignore line: [clang++: warning: -Wl -rpath /autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib: 'linker' input unused [-Wunused-command-line-argument]]
+        ignore line: [clang++: warning: -Wl -rpath /opt/rocm-6.4.1/lib: 'linker' input unused [-Wunused-command-line-argument]]
+        ignore line: [clang++: warning: -Wl -rpath /autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib: 'linker' input unused [-Wunused-command-line-argument]]
+        ignore line: [clang++: warning: -Wl -rpath /opt/rocm-6.4.1/lib: 'linker' input unused [-Wunused-command-line-argument]]
+        ignore line: [clang++: warning: -Wl -rpath /autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib: 'linker' input unused [-Wunused-command-line-argument]]
+        ignore line: [clang++: warning: -Wl -rpath /opt/rocm-6.4.1/lib: 'linker' input unused [-Wunused-command-line-argument]]
+        ignore line: [clang++: warning: argument unused during compilation: '-L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib' [-Wunused-command-line-argument]]
+        ignore line: [clang++: warning: argument unused during compilation: '-L/opt/rocm-6.4.1/lib' [-Wunused-command-line-argument]]
+        ignore line: [clang++: warning: argument unused during compilation: '-L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib' [-Wunused-command-line-argument]]
+        ignore line: [clang++: warning: argument unused during compilation: '-L/opt/rocm-6.4.1/lib' [-Wunused-command-line-argument]]
+        ignore line: [clang++: warning: argument unused during compilation: '-L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib' [-Wunused-command-line-argument]]
+        ignore line: [clang++: warning: argument unused during compilation: '-L/opt/rocm-6.4.1/lib' [-Wunused-command-line-argument]]
+        ignore line: [ (in-process)]
+        ignore line: [ "/opt/rocm-6.4.1/lib/llvm/bin/clang-19" -cc1 -triple x86_64-unknown-linux-gnu -emit-obj -disable-free -clear-ast-before-backend -disable-llvm-verifier -discard-value-names -main-file-name CMakeCXXCompilerABI.cpp -mrelocation-model static -mframe-pointer=all -fmath-errno -ffp-contract=on -fno-rounding-math -mconstructor-aliases -funwind-tables=2 -target-cpu x86-64 -tune-cpu generic -debugger-tuning=gdb -fdebug-compilation-dir=/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/plugins/scorep-coretemp-plugin-2/build/CMakeFiles/CMakeScratch/TryCompile-qzIWYc -v -fcoverage-compilation-dir=/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/plugins/scorep-coretemp-plugin-2/build/CMakeFiles/CMakeScratch/TryCompile-qzIWYc -resource-dir /opt/rocm-6.4.1/lib/llvm/lib/clang/19 -dependency-file CMakeFiles/cmTC_e98ff.dir/CMakeCXXCompilerABI.cpp.o.d -MT CMakeFiles/cmTC_e98ff.dir/CMakeCXXCompilerABI.cpp.o -sys-header-deps -I //autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/include -I /opt/rocm-6.4.1/include -I //autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/include -I /opt/rocm-6.4.1/include -I //autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/include -I /opt/rocm-6.4.1/include -c-isystem /autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/include -c-isystem /opt/rocm-6.4.1/include -c-isystem /autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/include -c-isystem /autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/include -c-isystem /opt/rocm-6.4.1/include -c-isystem /autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/include -c-isystem /autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/include -c-isystem /opt/rocm-6.4.1/include -c-isystem /autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/include -internal-isystem /usr/lib64/gcc/x86_64-suse-linux/13/../../../../include/c++/13 -internal-isystem /usr/lib64/gcc/x86_64-suse-linux/13/../../../../include/c++/13/x86_64-suse-linux -internal-isystem /usr/lib64/gcc/x86_64-suse-linux/13/../../../../include/c++/13/backward -internal-isystem /opt/rocm-6.4.1/lib/llvm/lib/clang/19/include -internal-isystem /usr/local/include -internal-isystem /usr/lib64/gcc/x86_64-suse-linux/13/../../../../x86_64-suse-linux/include -internal-externc-isystem /include -internal-externc-isystem /usr/include -fdeprecated-macro -ferror-limit 19 -fgnuc-version=4.2.1 -fskip-odr-check-in-gmf -fcxx-exceptions -fexceptions -faddrsig -D__GCC_HAVE_DWARF2_CFI_ASM=1 -o CMakeFiles/cmTC_e98ff.dir/CMakeCXXCompilerABI.cpp.o -x c++ /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp]
+        ignore line: [clang -cc1 version 19.0.0git based upon LLVM 19.0.0git default target x86_64-unknown-linux-gnu]
+        ignore line: [ignoring nonexistent directory "/include"]
+        ignore line: [ignoring duplicate directory "//autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/include"]
+        ignore line: [ignoring duplicate directory "/opt/rocm-6.4.1/include"]
+        ignore line: [ignoring duplicate directory "//autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/include"]
+        ignore line: [ignoring duplicate directory "/opt/rocm-6.4.1/include"]
+        ignore line: [#include "..." search starts here:]
+        ignore line: [#include <...> search starts here:]
+        ignore line: [ //autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/include]
+        ignore line: [ /opt/rocm-6.4.1/include]
+        ignore line: [ /usr/lib64/gcc/x86_64-suse-linux/13/../../../../include/c++/13]
+        ignore line: [ /usr/lib64/gcc/x86_64-suse-linux/13/../../../../include/c++/13/x86_64-suse-linux]
+        ignore line: [ /usr/lib64/gcc/x86_64-suse-linux/13/../../../../include/c++/13/backward]
+        ignore line: [ /opt/rocm-6.4.1/lib/llvm/lib/clang/19/include]
+        ignore line: [ /usr/local/include]
+        ignore line: [ /usr/lib64/gcc/x86_64-suse-linux/13/../../../../x86_64-suse-linux/include]
+        ignore line: [ /usr/include]
+        ignore line: [End of search list.]
+        ignore line: [Linking CXX executable cmTC_e98ff]
+        ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_e98ff.dir/link.txt --verbose=1]
+        ignore line: [/opt/rocm-6.4.1/llvm/bin/clang++ -I//autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/include -I/opt/rocm-6.4.1/include  -L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -Wl -rpath /autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -L/opt/rocm-6.4.1/lib -Wl -rpath /opt/rocm-6.4.1/lib -I//autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/include -I/opt/rocm-6.4.1/include  -L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -Wl -rpath /autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -L/opt/rocm-6.4.1/lib -Wl -rpath /opt/rocm-6.4.1/lib -I//autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/include -I/opt/rocm-6.4.1/include  -L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -Wl -rpath /autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -L/opt/rocm-6.4.1/lib -Wl -rpath /opt/rocm-6.4.1/lib  -L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -Wl -rpath /autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -L/opt/rocm-6.4.1/lib -Wl -rpath /opt/rocm-6.4.1/lib -v CMakeFiles/cmTC_e98ff.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_e98ff ]
+        ignore line: [AMD clang version 19.0.0git (https://github.com/RadeonOpenCompute/llvm-project roc-6.4.1 25184 c87081df219c42dc27c5b6d86c0525bc7d01f727)]
+        ignore line: [Target: x86_64-unknown-linux-gnu]
+        ignore line: [Thread model: posix]
+        ignore line: [InstalledDir: /opt/rocm-6.4.1/lib/llvm/bin]
+        ignore line: [Configuration file: /opt/rocm-6.4.1/lib/llvm/bin/clang++.cfg]
+        ignore line: [Selected GCC installation: /usr/lib64/gcc/x86_64-suse-linux/13]
+        ignore line: [Candidate multilib: .]
+        ignore line: [@m64]
+        ignore line: [Selected multilib: .]
+        ignore line: [@m64]
+        ignore line: [Found HIP installation: /opt/rocm-6.4.1/lib/llvm/bin/../../..  version 6.4.43483]
+        link line: [ "/opt/rocm-6.4.1/lib/llvm/bin/ld.lld" --hash-style=gnu --eh-frame-hdr -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_e98ff /usr/lib64/gcc/x86_64-suse-linux/13/../../../../lib64/crt1.o /usr/lib64/gcc/x86_64-suse-linux/13/../../../../lib64/crti.o /opt/rocm-6.4.1/lib/llvm/lib/clang/19/lib/linux/clang_rt.crtbegin-x86_64.o -L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -L/opt/rocm-6.4.1/lib -L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -L/opt/rocm-6.4.1/lib -L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -L/opt/rocm-6.4.1/lib -L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -L/opt/rocm-6.4.1/lib -L/usr/lib64/gcc/x86_64-suse-linux/13 -L/usr/lib64/gcc/x86_64-suse-linux/13/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib64/gcc/x86_64-suse-linux/13/../../../../x86_64-suse-linux/lib -L/lib -L/usr/lib -L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -L/opt/rocm-6.4.1/lib -L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/lib -L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -L/opt/rocm-6.4.1/lib -L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/lib -L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -L/opt/rocm-6.4.1/lib -L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/lib --enable-new-dtags -rpath /autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -rpath /opt/rocm-6.4.1/lib -rpath /autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -rpath /opt/rocm-6.4.1/lib -rpath /autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -rpath /opt/rocm-6.4.1/lib -rpath /autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib -rpath /opt/rocm-6.4.1/lib CMakeFiles/cmTC_e98ff.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm /opt/rocm-6.4.1/lib/llvm/lib/clang/19/lib/linux/libclang_rt.builtins-x86_64.a -lgcc_s -lc /opt/rocm-6.4.1/lib/llvm/lib/clang/19/lib/linux/libclang_rt.builtins-x86_64.a -lgcc_s /opt/rocm-6.4.1/lib/llvm/lib/clang/19/lib/linux/clang_rt.crtend-x86_64.o /usr/lib64/gcc/x86_64-suse-linux/13/../../../../lib64/crtn.o]
+          arg [/opt/rocm-6.4.1/lib/llvm/bin/ld.lld] ==> ignore
+          arg [--hash-style=gnu] ==> ignore
+          arg [--eh-frame-hdr] ==> ignore
+          arg [-m] ==> ignore
+          arg [elf_x86_64] ==> ignore
+          arg [-dynamic-linker] ==> ignore
+          arg [/lib64/ld-linux-x86-64.so.2] ==> ignore
+          arg [-o] ==> ignore
+          arg [cmTC_e98ff] ==> ignore
+          arg [/usr/lib64/gcc/x86_64-suse-linux/13/../../../../lib64/crt1.o] ==> obj [/usr/lib64/gcc/x86_64-suse-linux/13/../../../../lib64/crt1.o]
+          arg [/usr/lib64/gcc/x86_64-suse-linux/13/../../../../lib64/crti.o] ==> obj [/usr/lib64/gcc/x86_64-suse-linux/13/../../../../lib64/crti.o]
+          arg [/opt/rocm-6.4.1/lib/llvm/lib/clang/19/lib/linux/clang_rt.crtbegin-x86_64.o] ==> obj [/opt/rocm-6.4.1/lib/llvm/lib/clang/19/lib/linux/clang_rt.crtbegin-x86_64.o]
+          arg [-L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib] ==> dir [/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib]
+          arg [-L/opt/rocm-6.4.1/lib] ==> dir [/opt/rocm-6.4.1/lib]
+          arg [-L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib] ==> dir [/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib]
+          arg [-L/opt/rocm-6.4.1/lib] ==> dir [/opt/rocm-6.4.1/lib]
+          arg [-L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib] ==> dir [/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib]
+          arg [-L/opt/rocm-6.4.1/lib] ==> dir [/opt/rocm-6.4.1/lib]
+          arg [-L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib] ==> dir [/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib]
+          arg [-L/opt/rocm-6.4.1/lib] ==> dir [/opt/rocm-6.4.1/lib]
+          arg [-L/usr/lib64/gcc/x86_64-suse-linux/13] ==> dir [/usr/lib64/gcc/x86_64-suse-linux/13]
+          arg [-L/usr/lib64/gcc/x86_64-suse-linux/13/../../../../lib64] ==> dir [/usr/lib64/gcc/x86_64-suse-linux/13/../../../../lib64]
+          arg [-L/lib/../lib64] ==> dir [/lib/../lib64]
+          arg [-L/usr/lib/../lib64] ==> dir [/usr/lib/../lib64]
+          arg [-L/usr/lib64/gcc/x86_64-suse-linux/13/../../../../x86_64-suse-linux/lib] ==> dir [/usr/lib64/gcc/x86_64-suse-linux/13/../../../../x86_64-suse-linux/lib]
+          arg [-L/lib] ==> dir [/lib]
+          arg [-L/usr/lib] ==> dir [/usr/lib]
+          arg [-L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib] ==> dir [/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib]
+          arg [-L/opt/rocm-6.4.1/lib] ==> dir [/opt/rocm-6.4.1/lib]
+          arg [-L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/lib] ==> dir [/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/lib]
+          arg [-L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib] ==> dir [/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib]
+          arg [-L/opt/rocm-6.4.1/lib] ==> dir [/opt/rocm-6.4.1/lib]
+          arg [-L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/lib] ==> dir [/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/lib]
+          arg [-L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib] ==> dir [/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib]
+          arg [-L/opt/rocm-6.4.1/lib] ==> dir [/opt/rocm-6.4.1/lib]
+          arg [-L/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/lib] ==> dir [/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/lib]
+          arg [--enable-new-dtags] ==> ignore
+          arg [-rpath] ==> ignore
+          arg [/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib] ==> ignore
+          arg [-rpath] ==> ignore
+          arg [/opt/rocm-6.4.1/lib] ==> ignore
+          arg [-rpath] ==> ignore
+          arg [/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib] ==> ignore
+          arg [-rpath] ==> ignore
+          arg [/opt/rocm-6.4.1/lib] ==> ignore
+          arg [-rpath] ==> ignore
+          arg [/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib] ==> ignore
+          arg [-rpath] ==> ignore
+          arg [/opt/rocm-6.4.1/lib] ==> ignore
+          arg [-rpath] ==> ignore
+          arg [/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib] ==> ignore
+          arg [-rpath] ==> ignore
+          arg [/opt/rocm-6.4.1/lib] ==> ignore
+          arg [CMakeFiles/cmTC_e98ff.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
+          arg [-lstdc++] ==> lib [stdc++]
+          arg [-lm] ==> lib [m]
+          arg [/opt/rocm-6.4.1/lib/llvm/lib/clang/19/lib/linux/libclang_rt.builtins-x86_64.a] ==> lib [/opt/rocm-6.4.1/lib/llvm/lib/clang/19/lib/linux/libclang_rt.builtins-x86_64.a]
+          arg [-lgcc_s] ==> lib [gcc_s]
+          arg [-lc] ==> lib [c]
+          arg [/opt/rocm-6.4.1/lib/llvm/lib/clang/19/lib/linux/libclang_rt.builtins-x86_64.a] ==> lib [/opt/rocm-6.4.1/lib/llvm/lib/clang/19/lib/linux/libclang_rt.builtins-x86_64.a]
+          arg [-lgcc_s] ==> lib [gcc_s]
+          arg [/opt/rocm-6.4.1/lib/llvm/lib/clang/19/lib/linux/clang_rt.crtend-x86_64.o] ==> obj [/opt/rocm-6.4.1/lib/llvm/lib/clang/19/lib/linux/clang_rt.crtend-x86_64.o]
+          arg [/usr/lib64/gcc/x86_64-suse-linux/13/../../../../lib64/crtn.o] ==> obj [/usr/lib64/gcc/x86_64-suse-linux/13/../../../../lib64/crtn.o]
+        remove lib [/opt/rocm-6.4.1/lib/llvm/lib/clang/19/lib/linux/libclang_rt.builtins-x86_64.a]
+        remove lib [/opt/rocm-6.4.1/lib/llvm/lib/clang/19/lib/linux/libclang_rt.builtins-x86_64.a]
+        collapse obj [/usr/lib64/gcc/x86_64-suse-linux/13/../../../../lib64/crt1.o] ==> [/usr/lib64/crt1.o]
+        collapse obj [/usr/lib64/gcc/x86_64-suse-linux/13/../../../../lib64/crti.o] ==> [/usr/lib64/crti.o]
+        collapse obj [/usr/lib64/gcc/x86_64-suse-linux/13/../../../../lib64/crtn.o] ==> [/usr/lib64/crtn.o]
+        collapse library dir [/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib] ==> [/ccs/home/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib]
+        collapse library dir [/opt/rocm-6.4.1/lib] ==> [/opt/rocm-6.4.1/lib]
+        collapse library dir [/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib] ==> [/ccs/home/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib]
+        collapse library dir [/opt/rocm-6.4.1/lib] ==> [/opt/rocm-6.4.1/lib]
+        collapse library dir [/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib] ==> [/ccs/home/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib]
+        collapse library dir [/opt/rocm-6.4.1/lib] ==> [/opt/rocm-6.4.1/lib]
+        collapse library dir [/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib] ==> [/ccs/home/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib]
+        collapse library dir [/opt/rocm-6.4.1/lib] ==> [/opt/rocm-6.4.1/lib]
+        collapse library dir [/usr/lib64/gcc/x86_64-suse-linux/13] ==> [/usr/lib64/gcc/x86_64-suse-linux/13]
+        collapse library dir [/usr/lib64/gcc/x86_64-suse-linux/13/../../../../lib64] ==> [/usr/lib64]
+        collapse library dir [/lib/../lib64] ==> [/lib64]
+        collapse library dir [/usr/lib/../lib64] ==> [/usr/lib64]
+        collapse library dir [/usr/lib64/gcc/x86_64-suse-linux/13/../../../../x86_64-suse-linux/lib] ==> [/usr/x86_64-suse-linux/lib]
+        collapse library dir [/lib] ==> [/lib]
+        collapse library dir [/usr/lib] ==> [/usr/lib]
+        collapse library dir [/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib] ==> [/ccs/home/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib]
+        collapse library dir [/opt/rocm-6.4.1/lib] ==> [/opt/rocm-6.4.1/lib]
+        collapse library dir [/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/lib] ==> [/ccs/home/adam.mcdaniel/scorep-amd/install/lib]
+        collapse library dir [/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib] ==> [/ccs/home/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib]
+        collapse library dir [/opt/rocm-6.4.1/lib] ==> [/opt/rocm-6.4.1/lib]
+        collapse library dir [/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/lib] ==> [/ccs/home/adam.mcdaniel/scorep-amd/install/lib]
+        collapse library dir [/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib] ==> [/ccs/home/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib]
+        collapse library dir [/opt/rocm-6.4.1/lib] ==> [/opt/rocm-6.4.1/lib]
+        collapse library dir [/autofs/nccs-svm1_home1/adam.mcdaniel/scorep-amd/install/lib] ==> [/ccs/home/adam.mcdaniel/scorep-amd/install/lib]
+        implicit libs: [stdc++;m;gcc_s;c;gcc_s]
+        implicit objs: [/usr/lib64/crt1.o;/usr/lib64/crti.o;/opt/rocm-6.4.1/lib/llvm/lib/clang/19/lib/linux/clang_rt.crtbegin-x86_64.o;/opt/rocm-6.4.1/lib/llvm/lib/clang/19/lib/linux/clang_rt.crtend-x86_64.o;/usr/lib64/crtn.o]
+        implicit dirs: [/ccs/home/adam.mcdaniel/scorep-amd/install/rocm_smi_lib/lib;/opt/rocm-6.4.1/lib;/usr/lib64/gcc/x86_64-suse-linux/13;/usr/lib64;/lib64;/usr/x86_64-suse-linux/lib;/lib;/usr/lib;/ccs/home/adam.mcdaniel/scorep-amd/install/lib]
+        implicit fwks: []
+      
+      
+...
