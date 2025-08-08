@@ -27,3 +27,33 @@ fi
 
 cd ..
 echo "Done building Score-P plugins."
+
+
+# cd scorep-coretemp-plugin-1
+# ./c_all
+# if [ $? -ne 0 ]; then
+#     echo "Score-P CoreTemp plugin build failed."
+#     exit 1
+# fi
+# cd ..
+# echo "Done building Score-P plugins."
+
+# cd scorep-coretemp-plugin-2
+# ./c_all
+# if [ $? -ne 0 ]; then
+#     echo "Score-P CoreTemp plugin build failed."
+#     exit 1
+# fi
+# cd ..
+# echo "Done building Score-P plugins."
+
+# cd scorep-coretemp-plugin-3
+# ./c_all
+# if [ $? -ne 0 ]; then
+#     echo "Score-P CoreTemp plugin build failed."
+#     exit 1
+# fi
+# cd ..
+# echo "Done building Score-P plugins."
+
+echo "Done building Score-P plugins."
