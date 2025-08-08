@@ -33,7 +33,7 @@ fi
 # This defines whether to use MPI or not.
 # If set to 1, it will use MPI for building Score-P.
 # If set to 0, it will not use MPI.
-USE_MPI=0
+USE_MPI=1
 
 # This defines which compiler to use for non-cross-compiled builds which
 # are created with Score-P.
