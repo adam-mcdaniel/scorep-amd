@@ -1,26 +1,49 @@
 #!/bin/bash
-module load cmake ninja rocm/6.4.1 cray-mpich/8.1.31 PrgEnv-amd/8.6.0 cpe/24.11 gmake/4.4.1
+# module load cmake ninja rocm/6.4.1 cray-mpich/8.1.31 PrgEnv-amd/8.6.0 cpe/24.11 gmake/4.4.1
+# module load                 cmake ninja craype-x86-trento \
+#                             libfabric/1.22.0 \
+#                             craype-network-ofi \
+#                             xpmem/2.10.6-1.2_gfaa90a94be64 \
+#                             Core/25.03 \
+#                             tmux/3.4 \
+#                             hsi/default \
+#                             lfs-wrapper/0.0.1 \
+#                             DefApps \
+#                             cray-pmi/6.1.15 \
+#                             perftools-base/24.11.0 \
+#                             cpe/24.11 \
+#                             craype/2.7.33 \
+#                             cray-dsmml/0.3.0 \
+#                             PrgEnv-amd/8.6.0 \
+#                             amd/6.4.1 \
+#                             cray-libsci/24.11.0 \
+#                             cray-mpich/8.1.31 \
+#                             rocm/6.4.1 \
+#                             cray-openshmemx/11.7.3
+
+export ROCM_VERSION=6.4.1
+
+module load craype-x86-trento \
+            libfabric/1.22.0 \
+            craype-network-ofi \
+            Core/25.03 \
+            tmux/3.4 \
+            hsi/default \
+            lfs-wrapper/0.0.1 \
+            DefApps \
+            cray-pmi/6.1.15 \
+            perftools-base/24.11.0 \
+            cpe/24.11 \
+            craype/2.7.33 \
+            cray-dsmml/0.3.0 \
+            PrgEnv-amd/8.6.0 \
+            amd/$ROCM_VERSION \
+            cray-libsci/24.11.0 \
+            cray-mpich/8.1.31 \
+            rocm/$ROCM_VERSION \
+            cray-openshmemx/11.7.3
+            
 export MPI_IMPLEMENTATION="cray"
-module load                   craype-x86-trento \
-                            libfabric/1.22.0 \
-                            craype-network-ofi \
-                            xpmem/2.10.6-1.2_gfaa90a94be64 \
-                            Core/25.03 \
-                            tmux/3.4 \
-                            hsi/default \
-                            lfs-wrapper/0.0.1 \
-                            DefApps \
-                            cray-pmi/6.1.15 \
-                            perftools-base/24.11.0 \
-                            cpe/24.11 \
-                            craype/2.7.33 \
-                            cray-dsmml/0.3.0 \
-                            PrgEnv-amd/8.6.0 \
-                            amd/6.4.1 \
-                            cray-libsci/24.11.0 \
-                            cray-mpich/8.1.31 \
-                            rocm/6.4.1 \
-                            cray-openshmemx/11.7.3
 
 ###############################################################################
 # LOGGING FUNCTIONS
@@ -264,8 +287,8 @@ done
 # Get the latest ROCm version
 # This assumes the versions are in the format x.y.z
 ROCM_VERSION=$(echo "$ROCM_VERSIONS" | tail -n 1)
-log_info "Selecting latest ROCm version: $ROCM_VERSION"
 export ROCM_VERSION=6.4.1
+log_info "Selecting latest ROCm version: $ROCM_VERSION"
 
 ###############################################################################
 # DEPENDENCIES BUILD PARAMETERS
@@ -814,34 +837,56 @@ if [ $BUILD_SCOREP -eq 1 ]; then
     mkdir _build
     cd _build
     log_info "Configuring Score-P 9.2..."
-    ../configure \
-        --prefix="$INSTALL_DIR" \
-        --enable-shared=yes \
-        --with-librocm_smi64-include=$INSTALL_DIR/rocm_smi_lib/include \
-        --with-librocm_smi64-lib=$INSTALL_DIR/rocm_smi_lib/lib \
-        --with-librocm_smi64=yes \
-        --with-libamdhip64-include=/opt/rocm-$ROCM_VERSION/include \
-        --with-libamdhip64-lib=/opt/rocm-$ROCM_VERSION/lib \
-        --with-libamdhip64=yes \
-        --with-nocross-compiler-suite=cray \
-        --with-llvm=/opt/rocm-$ROCM_VERSION/llvm/ \
-        --with-papi-lib=$PAPI_LIB \
-        --with-papi-header="$PAPI_ROOT/include" \
-        --with-libroctracer64-include="/opt/rocm-$ROCM_VERSION/include" \
-        --with-libroctracer64-lib="/opt/rocm-$ROCM_VERSION/lib" \
-        --with-libroctracer64=yes \
-        --with-nocross-compiler-suite="$DEFAULT_COMPILER_SUITE" \
-        --with-rocm="/opt/rocm-$ROCM_VERSION" \
-        --with-otf2="$INSTALL_DIR" \
-        --with-cubelib="$INSTALL_DIR" \
-        --with-cubew="$INSTALL_DIR" \
-        --with-afs-dev="$INSTALL_DIR" \
-        --with-perftools-dev="$INSTALL_DIR" \
-        --with-opari2="$INSTALL_DIR" \
-        --with-libgotcha=download \
-        --with-libbfd-lib=/sw/crusher/scorep/vendor/libbfd/lib/ \
-        --with-libbfd-include=/sw/crusher/scorep/vendor/libbfd/include/ \
-        --with-libunwind=/sw/frontier/spack-envs/base/opt/cray-sles15-zen3/cce-15.0.0/libunwind-1.6.2-u2vxq4avjqtrv6mkkb4jazdlczpgvi6n/ \
+    # ../configure \
+    #     --prefix="$INSTALL_DIR" \
+    #     --enable-shared=yes \
+    #     --with-librocm_smi64-include=$INSTALL_DIR/rocm_smi_lib/include \
+    #     --with-librocm_smi64-lib=$INSTALL_DIR/rocm_smi_lib/lib \
+    #     --with-librocm_smi64=yes \
+    #     --with-libamdhip64-include=/opt/rocm-$ROCM_VERSION/include \
+    #     --with-libamdhip64-lib=/opt/rocm-$ROCM_VERSION/lib \
+    #     --with-libamdhip64=yes \
+    #     --with-nocross-compiler-suite=cray \
+    #     --with-llvm=/opt/rocm-$ROCM_VERSION/llvm/ \
+    #     --with-papi-lib=$PAPI_LIB \
+    #     --with-papi-header="$PAPI_ROOT/include" \
+    #     --with-libroctracer64-include="/opt/rocm-$ROCM_VERSION/include" \
+    #     --with-libroctracer64-lib="/opt/rocm-$ROCM_VERSION/lib" \
+    #     --with-libroctracer64=yes \
+    #     --with-nocross-compiler-suite="$DEFAULT_COMPILER_SUITE" \
+    #     --with-rocm="/opt/rocm-$ROCM_VERSION" \
+    #     --with-otf2="$INSTALL_DIR" \
+    #     --with-cubelib="$INSTALL_DIR" \
+    #     --with-cubew="$INSTALL_DIR" \
+    #     --with-afs-dev="$INSTALL_DIR" \
+    #     --with-perftools-dev="$INSTALL_DIR" \
+    #     --with-opari2="$INSTALL_DIR" \
+    #     --with-libgotcha=download \
+    #     --with-libbfd-lib=/sw/crusher/scorep/vendor/libbfd/lib/ \
+    #     --with-libbfd-include=/sw/crusher/scorep/vendor/libbfd/include/ \
+    #     --with-libunwind=/sw/frontier/spack-envs/base/opt/cray-sles15-zen3/cce-15.0.0/libunwind-1.6.2-u2vxq4avjqtrv6mkkb4jazdlczpgvi6n/ \
+
+        ../configure                --prefix=$INSTALL_DIR \
+                                    '--enable-shared' \
+                                    --with-rocm=/opt/rocm-$ROCM_VERSION \
+                                    --with-librocm_smi64-include=$INSTALL_DIR/rocm_smi_lib/include \
+                                    --with-librocm_smi64-lib=$INSTALL_DIR/rocm_smi_lib/lib \
+                                    --with-libroctracer64-include=/opt/rocm-$ROCM_VERSION/roctracer/include \
+                                    --with-libroctracer64-lib=/opt/rocm-$ROCM_VERSION/lib \
+                                    --with-libamdhip64-include=/opt/rocm-$ROCM_VERSION/hip/include \
+                                    --with-libamdhip64-lib=/opt/rocm-$ROCM_VERSION/lib \
+                                    --with-libamdhip64=yes \
+                                    --with-libroctracer64=yes \
+                                    --with-librocm_smi64=yes \
+                                    --with-nocross-compiler-suite=cray \
+                                    --with-llvm=/opt/rocm-$ROCM_VERSION/llvm/ \
+                                    --with-libbfd-lib=/sw/crusher/scorep/vendor/libbfd/lib/ \
+                                    --with-libbfd-include=/sw/crusher/scorep/vendor/libbfd/include/ \
+                                    --with-otf2=$INSTALL_DIR \
+                                    --with-libunwind=/sw/frontier/spack-envs/base/opt/cray-sles15-zen3/cce-15.0.0/libunwind-1.6.2-u2vxq4avjqtrv6mkkb4jazdlczpgvi6n/ \
+                                    --with-papi-lib=$INSTALL_DIR/papi/lib \
+                                    --with-papi-header=$INSTALL_DIR/papi/include \
+                                    --with-libgotcha=download
         # --with-libbfd=download \
         # --with-libunwind=download \
         # --with-llvm=/opt/rocm-$ROCM_VERSION/llvm/ \
