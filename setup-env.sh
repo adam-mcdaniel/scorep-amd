@@ -96,11 +96,11 @@ ROCM_VERSION=$(echo "$ROCM_VERSIONS" | tail -n 1)
 log_info "Selecting latest ROCm version: $ROCM_VERSION"
 
 log_info "Adding all ROCm $ROCM_VERSION paths to the environment variables."
-export CC="/opt/rocm-$ROCM_VERSION/llvm/bin/clang"
-export CXX="/opt/rocm-$ROCM_VERSION/llvm/bin/clang++"
-export HIPCC="/opt/rocm-$ROCM_VERSION/bin/hipcc"
-export MPICC="/opt/rocm-$ROCM_VERSION/bin/clang"
-export MPICXX="/opt/rocm-$ROCM_VERSION/bin/clang++"
+# export CC="/opt/rocm-$ROCM_VERSION/llvm/bin/clang"
+# export CXX="/opt/rocm-$ROCM_VERSION/llvm/bin/clang++"
+# export HIPCC="/opt/rocm-$ROCM_VERSION/bin/hipcc"
+# export MPI_CC="scorep mpicc"
+# export MPI_CXX="scorep mpicc"
 
 export PATH="/opt/rocm-$ROCM_VERSION/bin:$PATH"
 export PATH="/opt/rocm-$ROCM_VERSION/lib:$PATH"
@@ -127,20 +127,29 @@ export PAPI_LIB=$PAPI_ROOT/lib
 
 export PATH="$PAPI_ROCM_ROOT/bin:$PAPI_ROOT/bin:$PATH"
 
+export CMAKE_PREFIX_PATH="/opt/rocm-$ROCM_VERSION/lib/cmake/hip:/opt/rocm-$ROCM_VERSION:$CMAKE_PREFIX_PATH"
+export HIP_LIB_PATH="/opt/rocm-$ROCM_VERSION/lib"
+
+export CRAY_ROCM_DIR="/opt/rocm-$ROCM_VERSION"
+export CRAY_ROCM_INCLUDE_OPTS="-I/opt/rocm-$ROCM_VERSION/include -I/opt/rocm-$ROCM_VERSION/include/rocprofiler -I/opt/rocm-$ROCM_VERSION/include/roctracer -I/opt/rocm-$ROCM_VERSION/include/hip -D__HIP_PLATFORM_AMD__"
+export CRAY_ROCM_POST_LINK_OPTS="-L/opt/rocm-$ROCM_VERSION/lib -L/opt/rocm-$ROCM_VERSION/lib/rocprofiler -L/opt/rocm-$ROCM_VERSION/lib/roctracer -lamdhip64"
+export CRAY_ROCM_PREFIX="/opt/rocm-$ROCM_VERSION"
+export CRAY_ROCM_VERSION="$ROCM_VERSION"
+
 if [ -z "$C_INCLUDE_PATH" ]; then
-    export C_INCLUDE_PATH="$PAPI_ROCM_ROOT/include:/opt/rocm-$ROCM_VERSION/include"
+    export C_INCLUDE_PATH="$PAPI_ROCM_ROOT/include:/opt/rocm-$ROCM_VERSION/include:/opt/rocm-$ROCM_VERSION/llvm/include"
 else
-    export C_INCLUDE_PATH="$PAPI_ROCM_ROOT/include:/opt/rocm-$ROCM_VERSION/include:$C_INCLUDE_PATH"
+    export C_INCLUDE_PATH="$PAPI_ROCM_ROOT/include:/opt/rocm-$ROCM_VERSION/include:/opt/rocm-$ROCM_VERSION/llvm/include:$C_INCLUDE_PATH"
 fi
 if [ -z "$LIBRARY_PATH" ]; then
-    export LIBRARY_PATH="$PAPI_ROCM_ROOT/lib:/opt/rocm-$ROCM_VERSION/lib"
+    export LIBRARY_PATH="$PAPI_ROCM_ROOT/lib:/opt/rocm-$ROCM_VERSION/lib:/opt/rocm-$ROCM_VERSION/lib/llvm/lib"
 else
-    export LIBRARY_PATH="$PAPI_ROCM_ROOT/lib:/opt/rocm-$ROCM_VERSION/lib:$LIBRARY_PATH"
+    export LIBRARY_PATH="$PAPI_ROCM_ROOT/lib:/opt/rocm-$ROCM_VERSION/lib:/opt/rocm-$ROCM_VERSION/lib/llvm/lib:$LIBRARY_PATH"
 fi
 if [ -z "$LD_LIBRARY_PATH" ]; then
-    export LD_LIBRARY_PATH="$PAPI_ROCM_ROOT/lib:/opt/rocm-$ROCM_VERSION/lib"
+    export LD_LIBRARY_PATH="$PAPI_ROCM_ROOT/lib:/opt/rocm-$ROCM_VERSION/lib:/opt/rocm-$ROCM_VERSION/lib/llvm/lib"
 else
-    export LD_LIBRARY_PATH="$PAPI_ROCM_ROOT/lib:/opt/rocm-$ROCM_VERSION/lib:$LD_LIBRARY_PATH"
+    export LD_LIBRARY_PATH="$PAPI_ROCM_ROOT/lib:/opt/rocm-$ROCM_VERSION/lib:/opt/rocm-$ROCM_VERSION/lib/llvm/lib:$LD_LIBRARY_PATH"
 fi
 
 ###############################################################################
@@ -172,3 +181,8 @@ done
 log_info "Environment setup complete. You can now run your scorep profiling tools."
 log_note "If you want to remove these changes, source the clean script in this directory:"
 log_note "$ source $SCRIPT_DIR/clean.sh"
+
+export LD_FLAGS="$(scorep-config --ldflags) $LD_FLAGS"
+export CFLAGS="$(scorep-config --cflags) $CFLAGS"
+export CXXFLAGS="$(scorep-config --cxxflags) $CXXFLAGS"
+export LD_LIBRARY_PATH="$(scorep-config --preload-libs) $LD_LIBRARY_PATH"
