@@ -68,7 +68,7 @@ for i in "${!NODES[@]}"; do
         --nodes=1 --ntasks=1 --gpus-per-task=1 --exclusive -w "$node" \
         env NODE_NUMBER="$i" \
         bash -lc 'echo HPL on Host: $(hostname); echo NODE_NUMBER=$NODE_NUMBER; export SCOREP_EXPERIMENT_DIRECTORY="./results/rocHPL-$(hostname)"; echo "Writing to $SCOREP_EXPERIMENT_DIRECTORY..."; ./scorep-rocHPL/install-scorep-amd/bin/rochpl -P 1 -Q 1 -N 45312' \
-        > "rocHPL_${node}.out" 2>&1 &
+        > "./results/rocHPL_${node}.out" 2>&1 &
 done
 wait
 echo "1. rocHPL finished."
@@ -80,7 +80,7 @@ for i in "${!NODES[@]}"; do
         --nodes=1 --ntasks=1 --gpus-per-task=1 --exclusive -w "$node" \
         env NODE_NUMBER="$i" \
         bash -lc 'echo HPL-MxP on Host: $(hostname); echo NODE_NUMBER=$NODE_NUMBER; export SCOREP_EXPERIMENT_DIRECTORY="./results/rocHPL-MxP-$(hostname)"; echo "Writing to $SCOREP_EXPERIMENT_DIRECTORY..."; ./scorep-rocHPL-MxP/install-scorep-amd/bin/rochplmxp -P 1 -Q 1 -N 45312' \
-        > "rocHPL_MxP_${node}.out" 2>&1 &
+        > "./results/rocHPL_MxP_${node}.out" 2>&1 &
 done
 wait
 echo "2. rocHPL-MxP finished."
@@ -93,7 +93,7 @@ for i in "${!NODES[@]}"; do
         --nodes=1 --ntasks=1 --gpus-per-task=1 --exclusive -w "$node" \
         env NODE_NUMBER="$i" \
         bash -lc 'echo HPG on Host: $(hostname); echo NODE_NUMBER=$NODE_NUMBER; export SCOREP_EXPERIMENT_DIRECTORY="./results/HPG-$(hostname)"; echo "Writing to $SCOREP_EXPERIMENT_DIRECTORY..."; ./scorep-HPG-MxP/install-scorep-amd/bin/xhpgmp --runtype=standalone_ref' \
-        > "HPG_${node}.out" 2>&1 &
+        > "./results/HPG_${node}.out" 2>&1 &
 done
 wait
 echo "3. HPG finished."
@@ -105,7 +105,7 @@ for i in "${!NODES[@]}"; do
         --nodes=1 --ntasks=1 --gpus-per-task=1 --exclusive -w "$node" \
         env NODE_NUMBER="$i" \
         bash -lc 'echo HPG on Host: $(hostname); echo NODE_NUMBER=$NODE_NUMBER; export SCOREP_EXPERIMENT_DIRECTORY="./results/HPG-MxP-$(hostname)"; echo "Writing to $SCOREP_EXPERIMENT_DIRECTORY..."; ./scorep-HPG-MxP/install-scorep-amd/bin/xhpgmp --runtype=standalone_mxp' \
-        > "HPG_MxP_${node}.out" 2>&1 &
+        > "./results/HPG_MxP_${node}.out" 2>&1 &
 done
 wait
 echo "4. HPG-MxP finished."
