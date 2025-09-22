@@ -25,6 +25,12 @@ fi
 source ../setup-env.sh
 source ./setup-run-params.sh
 
+export MPICH_GPU_SUPPORT_ENABLED=1
+export MPICH_OFI_NIC_POLICY=GPU
+export FI_PROVIDER=cxi
+export MPIR_CVAR_CH4_IPC_P2P=1
+export MPIR_CVAR_CH4_IPC_GPU_HANDLE_MTYPE=hip
+
 echo "ROCm PATH: $ROCM_PATH"
 echo "ROCm VERSION: $ROCM_VERSION"
 
