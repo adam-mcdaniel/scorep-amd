@@ -321,7 +321,7 @@ static int generateEventList(char *base_dir) {
 
     // Add power and energy measurements from /sys/cray/pm_counters
     const char *base_cray_dir = "/sys/cray/pm_counters/";
-    const char *excluded_files[] = {"freshness", "startup", "version"};
+    const char *excluded_files[] = {"version", "startup"};
     struct dirent *entry;
 
     DIR *pm_dir = opendir(base_cray_dir);

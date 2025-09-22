@@ -15,7 +15,7 @@ else
 	export SCOREP_FORCE_CFG_FILES=true
 	export SCOREP_TIMER='tsc'
 	export SCOREP_PROFILING_TASK_EXCHANGE_NUM=1K
-	export SCOREP_PROFILING_MAX_CALLPATH_DEPTH=500
+	export SCOREP_PROFILING_MAX_CALLPATH_DEPTH=100
 	export SCOREP_PROFILING_BASE_NAME='profile'
 	export SCOREP_PROFILING_FORMAT='cube4'
 	export SCOREP_PROFILING_ENABLE_CLUSTERING=true
@@ -40,17 +40,18 @@ else
 	export SCOREP_METRIC_PERF=''
 	export SCOREP_METRIC_PERF_PER_PROCESS=''
 	export SCOREP_METRIC_PERF_SEP=','
-	export VT_CORETEMP_BUF_SIZE=128M
+	export VT_AROCM_SMI_BUF_SIZE=64M
+	export VT_CORETEMP_BUF_SIZE=64M
 	export SCOREP_METRIC_AROCM_SMI_INTERVAL_US=1000
-	export SCOREP_METRIC_AROCM_SMI_PLUGIN='rocm_smi:::temp_current:device=0:sensor=0,rocm_smi:::temp_current:device=2:sensor=0,rocm_smi:::temp_current:device=4:sensor=0,rocm_smi:::temp_current:device=6:sensor=0,rocm_smi:::memory_busy_percent:device=0,rocm_smi:::memory_busy_percent:device=2,rocm_smi:::memory_busy_percent:device=4,rocm_smi:::memory_busy_percent:device=6,rocm_smi:::busy_percent:device=0,rocm_smi:::busy_percent:device=2,rocm_smi:::busy_percent:device=4,rocm_smi:::busy_percent:device=6,rocm_smi:::energy_count:device=0,rocm_smi:::energy_count:device=2,rocm_smi:::energy_count:device=4,rocm_smi:::energy_count:device=6'
+	export SCOREP_METRIC_AROCM_SMI_PLUGIN='rocm_smi:::gpu_clk_freq_System:device=0:current,rocm_smi:::gpu_clk_freq_System:device=2:current,rocm_smi:::gpu_clk_freq_System:device=4:current,rocm_smi:::gpu_clk_freq_System:device=6:current,rocm_smi:::temp_current:device=0:sensor=0,rocm_smi:::temp_current:device=2:sensor=0,rocm_smi:::temp_current:device=4:sensor=0,rocm_smi:::temp_current:device=6:sensor=0,rocm_smi:::memory_busy_percent:device=0,rocm_smi:::memory_busy_percent:device=2,rocm_smi:::memory_busy_percent:device=4,rocm_smi:::memory_busy_percent:device=6,rocm_smi:::busy_percent:device=0,rocm_smi:::busy_percent:device=2,rocm_smi:::busy_percent:device=4,rocm_smi:::busy_percent:device=6,rocm_smi:::energy_count:device=0,rocm_smi:::energy_count:device=2,rocm_smi:::energy_count:device=4,rocm_smi:::energy_count:device=6'
 	export SCOREP_METRIC_CORETEMP_INTERVAL_US=1000
-	export SCOREP_METRIC_CORETEMP_PLUGIN='coretemp:::craypm:accel0_energy,coretemp:::craypm:accel0_power,coretemp:::craypm:accel1_energy,coretemp:::craypm:accel1_power,coretemp:::craypm:accel2_energy,coretemp:::craypm:accel2_power,coretemp:::craypm:accel3_energy,coretemp:::craypm:accel3_power'
+	export SCOREP_METRIC_CORETEMP_PLUGIN='coretemp:::craypm:power,coretemp:::craypm:energy,coretemp:::craypm:freshness,coretemp:::craypm:accel0_energy,coretemp:::craypm:accel0_power,coretemp:::craypm:accel1_energy,coretemp:::craypm:accel1_power,coretemp:::craypm:accel2_energy,coretemp:::craypm:accel2_power,coretemp:::craypm:accel3_energy,coretemp:::craypm:accel3_power'
 	export SCOREP_SAMPLING_EVENTS='timer@1000'
 	export SCOREP_SAMPLING_SEP=','
 	export SCOREP_TOPOLOGY_PLATFORM=true
 	export SCOREP_TOPOLOGY_PROCESS=true
-	export SCOREP_HIP_ENABLE='api','kernel','kernel_callsite','malloc','memcpy','sync'
-	export SCOREP_HIP_ACTIVITY_BUFFER_SIZE=128M
+	export SCOREP_HIP_ENABLE=none
+	# export SCOREP_HIP_ACTIVITY_BUFFER_SIZE=512M
 	export SCOREP_MEMORY_RECORDING=false
 	export SCOREP_IO_POSIX=false
 fi

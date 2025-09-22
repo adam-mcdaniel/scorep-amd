@@ -6,7 +6,7 @@ PARTITION="batch"
 WALL_MIN="15"
 JOB_NAME="multi-node-benchmarks"
 
-ROCM_VERSION=6.4.1
+export ROCM_VERSION=6.4.1
 
 ###############################################################################
 # 0. Setup common environment for all compute nodes
@@ -17,6 +17,10 @@ module load libfabric/1.22.0 \
             amd/$ROCM_VERSION \
             cray-mpich/8.1.31 \
             rocm/$ROCM_VERSION \
+
+if [! -d results ]; then
+    mkdir results
+fi
 
 source ../setup-env.sh
 source ./setup-run-params.sh
@@ -31,10 +35,12 @@ set -euo pipefail
 ###############################################################################
 JOBID="$(sbatch -A "$PROJECT_ACCOUNT" -p "$PARTITION" \
             -N "$NUMBER_OF_NODES" --exclusive -t "$WALL_MIN" \
-            -J "$JOB_NAME" --parsable \
+            -J "$JOB_NAME" --parsable --stepmgr \
             --wrap 'sleep infinity' 2>/dev/null || true)"
 
 echo "Allocated JOBID=$JOBID. Started $(date)."
+
+squeue -u "$USER" -j "$JOBID"
 
 ###############################################################################
 # 2. Wait for the allocation to become RUNNING
@@ -49,6 +55,7 @@ while :; do
 done
 echo
 echo "Allocation is RUNNING."
+sleep 2
 
 ###############################################################################
 # 3. Retrieve the node list for the job
@@ -64,11 +71,11 @@ echo "Running on ${#NODES[@]} nodes: ${NODES[*]}"
 for i in "${!NODES[@]}"; do
     node="${NODES[$i]}"
     echo "Launching on ${node} with NODE_NUMBER=${i}"
-    srun --jobid="$JOBID" \
-        --nodes=1 --ntasks=1 --gpus-per-task=1 --exclusive -w "$node" \
+    srun --jobid="$JOBID" --nodes=1 --ntasks=8 --gpus-per-task=1 --exclusive -w "$node" --gpu-bind=closest \
         env NODE_NUMBER="$i" \
-        bash -lc 'echo HPL on Host: $(hostname); echo NODE_NUMBER=$NODE_NUMBER; export SCOREP_EXPERIMENT_DIRECTORY="./results/rocHPL-$(hostname)"; echo "Writing to $SCOREP_EXPERIMENT_DIRECTORY..."; ./scorep-rocHPL/install-scorep-amd/bin/rochpl -P 1 -Q 1 -N 45312' \
+        ./wrap-proc.sh ./scorep-rocHPL/install-scorep-amd/bin/rochpl -P 1 -Q 8 -N 180224 \
         > "./results/rocHPL_${node}.out" 2>&1 &
+        # bash -lc 'echo HPL on Host: $(hostname); echo NODE_NUMBER=$NODE_NUMBER; export SCOREP_EXPERIMENT_DIRECTORY="./results/rocHPL-$(hostname)"; echo "Writing to $SCOREP_EXPERIMENT_DIRECTORY..."; ./scorep-rocHPL/install-scorep-amd/bin/rochpl -P 1 -Q 1 -N 45312' \
 done
 wait
 echo "1. rocHPL finished."
@@ -76,11 +83,12 @@ echo "1. rocHPL finished."
 for i in "${!NODES[@]}"; do
     node="${NODES[$i]}"
     echo "Launching on ${node} with NODE_NUMBER=${i}"
-    srun --jobid="$JOBID" \
-        --nodes=1 --ntasks=1 --gpus-per-task=1 --exclusive -w "$node" \
+
+    srun --jobid="$JOBID" --nodes=1 --ntasks=8 --gpus-per-task=1 --exclusive -w "$node" --gpu-bind=closest \
         env NODE_NUMBER="$i" \
-        bash -lc 'echo HPL-MxP on Host: $(hostname); echo NODE_NUMBER=$NODE_NUMBER; export SCOREP_EXPERIMENT_DIRECTORY="./results/rocHPL-MxP-$(hostname)"; echo "Writing to $SCOREP_EXPERIMENT_DIRECTORY..."; ./scorep-rocHPL-MxP/install-scorep-amd/bin/rochplmxp -P 1 -Q 1 -N 45312' \
+        ./wrap-proc.sh ./scorep-rocHPL-MxP/install-scorep-amd/bin/rochplmxp -P 1 -Q 8 -N 180224 \
         > "./results/rocHPL_MxP_${node}.out" 2>&1 &
+        # bash -lc 'echo HPL-MxP on Host: $(hostname); echo NODE_NUMBER=$NODE_NUMBER; export SCOREP_EXPERIMENT_DIRECTORY="./results/rocHPL-MxP-$(hostname)"; echo "Writing to $SCOREP_EXPERIMENT_DIRECTORY..."; ./scorep-rocHPL-MxP/install-scorep-amd/bin/rochplmxp -P 1 -Q 1 -N 45312' \
 done
 wait
 echo "2. rocHPL-MxP finished."
@@ -89,11 +97,11 @@ echo "2. rocHPL-MxP finished."
 for i in "${!NODES[@]}"; do
     node="${NODES[$i]}"
     echo "Launching on ${node} with NODE_NUMBER=${i}"
-    srun --jobid="$JOBID" \
-        --nodes=1 --ntasks=1 --gpus-per-task=1 --exclusive -w "$node" \
+    srun --jobid="$JOBID" --nodes=1 --ntasks=8 --gpus-per-task=1 --exclusive -w "$node" --gpu-bind=closest \
         env NODE_NUMBER="$i" \
-        bash -lc 'echo HPG on Host: $(hostname); echo NODE_NUMBER=$NODE_NUMBER; export SCOREP_EXPERIMENT_DIRECTORY="./results/HPG-$(hostname)"; echo "Writing to $SCOREP_EXPERIMENT_DIRECTORY..."; ./scorep-HPG-MxP/install-scorep-amd/bin/xhpgmp --runtype=standalone_ref' \
+        ./wrap-proc.sh ./scorep-HPG-MxP/install-scorep-amd/bin/xhpgmp --runtype=standalone_ref \
         > "./results/HPG_${node}.out" 2>&1 &
+        # bash -lc 'echo HPG on Host: $(hostname); echo NODE_NUMBER=$NODE_NUMBER; export SCOREP_EXPERIMENT_DIRECTORY="./results/HPG-$(hostname)"; echo "Writing to $SCOREP_EXPERIMENT_DIRECTORY..."; ./scorep-HPG-MxP/install-scorep-amd/bin/xhpgmp --runtype=standalone_ref' \
 done
 wait
 echo "3. HPG finished."
@@ -101,11 +109,11 @@ echo "3. HPG finished."
 for i in "${!NODES[@]}"; do
     node="${NODES[$i]}"
     echo "Launching on ${node} with NODE_NUMBER=${i}"
-    srun --jobid="$JOBID" \
-        --nodes=1 --ntasks=1 --gpus-per-task=1 --exclusive -w "$node" \
+    srun --jobid="$JOBID" --nodes=1 --ntasks=8 --gpus-per-task=1 --exclusive -w "$node" --gpu-bind=closest \
         env NODE_NUMBER="$i" \
-        bash -lc 'echo HPG on Host: $(hostname); echo NODE_NUMBER=$NODE_NUMBER; export SCOREP_EXPERIMENT_DIRECTORY="./results/HPG-MxP-$(hostname)"; echo "Writing to $SCOREP_EXPERIMENT_DIRECTORY..."; ./scorep-HPG-MxP/install-scorep-amd/bin/xhpgmp --runtype=standalone_mxp' \
+        ./wrap-proc.sh ./scorep-HPG-MxP/install-scorep-amd/bin/xhpgmp --runtype=standalone_mxp \
         > "./results/HPG_MxP_${node}.out" 2>&1 &
+        # bash -lc 'echo HPG on Host: $(hostname); echo NODE_NUMBER=$NODE_NUMBER; export SCOREP_EXPERIMENT_DIRECTORY="./results/HPG-MxP-$(hostname)"; echo "Writing to $SCOREP_EXPERIMENT_DIRECTORY..."; ./scorep-HPG-MxP/install-scorep-amd/bin/xhpgmp --runtype=standalone_mxp' \
 done
 wait
 echo "4. HPG-MxP finished."
