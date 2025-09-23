@@ -9,6 +9,14 @@ JOB_NAME="multi-node-benchmarks"
 export ROCM_VERSION=6.4.1
 
 ###############################################################################
+# 1. Create a persistent allocation
+###############################################################################
+JOBID="$(sbatch -A "$PROJECT_ACCOUNT" -p "$PARTITION" \
+            -N "$NUMBER_OF_NODES" --exclusive -t "$WALL_MIN" \
+            -J "$JOB_NAME" --parsable --stepmgr \
+            --wrap 'sleep infinity' 2>/dev/null || true)"
+
+###############################################################################
 # 0. Setup common environment for all compute nodes
 ###############################################################################
 module load libfabric/1.22.0 \
@@ -35,14 +43,6 @@ echo "ROCm PATH: $ROCM_PATH"
 echo "ROCm VERSION: $ROCM_VERSION"
 
 set -euo pipefail
-
-###############################################################################
-# 1. Create a persistent allocation
-###############################################################################
-JOBID="$(sbatch -A "$PROJECT_ACCOUNT" -p "$PARTITION" \
-            -N "$NUMBER_OF_NODES" --exclusive -t "$WALL_MIN" \
-            -J "$JOB_NAME" --parsable --stepmgr \
-            --wrap 'sleep infinity' 2>/dev/null || true)"
 
 echo "Allocated JOBID=$JOBID. Started $(date)."
 
@@ -105,7 +105,7 @@ for i in "${!NODES[@]}"; do
     echo "Launching on ${node} with NODE_NUMBER=${i}"
     srun --jobid="$JOBID" --nodes=1 --ntasks=8 --gpus-per-task=1 --exclusive -w "$node" --gpu-bind=closest \
         env NODE_NUMBER="$i" \
-        ./wrap-proc.sh ./scorep-HPG-MxP/install-scorep-amd/bin/xhpgmp --runtype=standalone_ref \
+        ./wrap-proc.sh ./scorep-HPG-MxP/install-scorep-amd/bin/xhpgmp --nx=320 --ny=320 --nz=320 --runtype=standalone_ref \
         > "./results/HPG_${node}.out" 2>&1 &
         # bash -lc 'echo HPG on Host: $(hostname); echo NODE_NUMBER=$NODE_NUMBER; export SCOREP_EXPERIMENT_DIRECTORY="./results/HPG-$(hostname)"; echo "Writing to $SCOREP_EXPERIMENT_DIRECTORY..."; ./scorep-HPG-MxP/install-scorep-amd/bin/xhpgmp --runtype=standalone_ref' \
 done
@@ -117,7 +117,7 @@ for i in "${!NODES[@]}"; do
     echo "Launching on ${node} with NODE_NUMBER=${i}"
     srun --jobid="$JOBID" --nodes=1 --ntasks=8 --gpus-per-task=1 --exclusive -w "$node" --gpu-bind=closest \
         env NODE_NUMBER="$i" \
-        ./wrap-proc.sh ./scorep-HPG-MxP/install-scorep-amd/bin/xhpgmp --runtype=standalone_mxp \
+        ./wrap-proc.sh ./scorep-HPG-MxP/install-scorep-amd/bin/xhpgmp --nx=320 --ny=320 --nz=320 --runtype=standalone_mxp \
         > "./results/HPG_MxP_${node}.out" 2>&1 &
         # bash -lc 'echo HPG on Host: $(hostname); echo NODE_NUMBER=$NODE_NUMBER; export SCOREP_EXPERIMENT_DIRECTORY="./results/HPG-MxP-$(hostname)"; echo "Writing to $SCOREP_EXPERIMENT_DIRECTORY..."; ./scorep-HPG-MxP/install-scorep-amd/bin/xhpgmp --runtype=standalone_mxp' \
 done

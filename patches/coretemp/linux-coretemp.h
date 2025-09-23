@@ -59,6 +59,7 @@ typedef struct CORETEMP_native_event_entry
   char path[PATH_MAX];
   int stone; /* some counters are set in stone, a max temperature is just that... */
 // OSCAR
+  long offset;
   int fd;
   long long value;
   // ADDED

@@ -29,6 +29,7 @@ struct temp_event {
     char location[PAPI_MAX_STR_LEN];
     char path[PATH_MAX];
     long count;
+    long offset;
     struct temp_event *next;
 };
 
@@ -48,6 +49,37 @@ static int insert_in_list(char *name, char *units, char *description, char *file
         return PAPI_ENOMEM;
     }
 
+    temp->next = NULL;
+
+    if (root == NULL) {
+        root = temp;
+    } else if (last) {
+        last->next = temp;
+    } else {
+        free(temp);
+        PAPIERROR("This shouldn't be possible\n");
+        return PAPI_ECMP;
+    }
+
+    last = temp;
+
+    snprintf(temp->name, PAPI_MAX_STR_LEN, "%s", name);
+    snprintf(temp->units, PAPI_MIN_STR_LEN, "%s", units);
+    snprintf(temp->description, PAPI_MAX_STR_LEN, "%s", description);
+    snprintf(temp->path, PATH_MAX, "%s", filename);
+    temp->offset = 0;
+
+    return PAPI_OK;
+}
+
+static int insert_in_list_with_offset(char *name, char *units, char *description, char *filename, long offset) {
+    struct temp_event *temp = (struct temp_event *)papi_calloc(1, sizeof(struct temp_event));
+    if (temp == NULL) {
+        PAPIERROR("out of memory!");
+        return PAPI_ENOMEM;
+    }
+
+    temp->offset = offset;
     temp->next = NULL;
 
     if (root == NULL) {
@@ -345,8 +377,8 @@ static int generateEventList(char *base_dir) {
 
                 fff = fopen(filename, "r");
                 if (fff == NULL) continue;
-                char value[PAPI_MAX_STR_LEN], unit[PAPI_MIN_STR_LEN];
-                fscanf(fff, "%s %s", value, unit);
+                char value[PAPI_MAX_STR_LEN], unit[PAPI_MAX_STR_LEN], timestamp[PAPI_MAX_STR_LEN];
+                int found_nums = fscanf(fff, "%s %s %s", value, unit, timestamp);
                 fclose(fff);
 
                 retlen = snprintf(name, PAPI_MAX_STR_LEN, "craypm:%s", entry->d_name);
@@ -368,6 +400,32 @@ static int generateEventList(char *base_dir) {
                     goto done_error;
                 }
                 count++;
+
+                // Add an additional check to see if `timestamp` is a valid number
+                if (found_nums == 3) {
+                    char *endptr;
+                    strtoll(timestamp, &endptr, 10);
+                    if (*endptr != '\0') {
+                        SUBDBG("Warning: Timestamp in %s is not a valid number: %s\n", filename, timestamp);
+                    }
+                    // Add the timestamp as a separate event
+                    retlen = snprintf(name, PAPI_MAX_STR_LEN, "craypm:%s_timestamp", entry->d_name);
+                    if (retlen <= 0 || PAPI_MAX_STR_LEN <= retlen) {
+                        SUBDBG("Unable to generate name craypm:%s_timestamp\n", entry->d_name);
+                        return (PAPI_EINVAL);
+                    }
+                    snprintf(units, PAPI_MAX_STR_LEN, "microseconds");
+                    retlen = snprintf(description, PAPI_MAX_STR_LEN, "%s, timestamp of last measurement", units);
+                    if (retlen <= 0 || PAPI_MAX_STR_LEN <= retlen) {
+                        SUBDBG("snprintf failed.\n");
+                        return PAPI_EINVAL;
+                    }
+
+                    if (insert_in_list_with_offset(name, units, description, filename, 2) != PAPI_OK) {
+                        goto done_error;
+                    }
+                    count++;
+                }
             }
         }
         closedir(pm_dir);
@@ -395,6 +453,7 @@ static long long getEventValue(int index) {
         return INVALID_RESULT;
     }
 
+    long offset = _coretemp_native_events[index].offset;
 #ifdef LSEEK
     // Use lseek to reset the file offset before reading
     if (lseek(fd, 0, SEEK_SET) == -1) {
@@ -404,11 +463,22 @@ static long long getEventValue(int index) {
     if (read(fd, buf, PAPI_MAX_STR_LEN) <= 0) {
         result = INVALID_RESULT;
     } else {
+        buf[PAPI_MAX_STR_LEN - 1] = '\0'; // Ensure null-termination
         char *space_pos = strchr(buf, ' ');
-        if (space_pos) {
-            *space_pos = '\0';
+        char *value_start = buf;
+        // Skip the number of space separated values indicated by offset
+        while (offset) {
+            if (space_pos) {
+                value_start = space_pos + 1;
+                space_pos = strchr(value_start, ' ');
+            } else {
+                break;
+            }
+            offset--;
         }
-        result = strtoll(buf, NULL, 10);
+        if (space_pos) *space_pos = '\0'; // Null-terminate at the
+
+        result = strtoll(value_start, NULL, 10);
     }
 #else
     // Use pread at offset 0
@@ -419,18 +489,28 @@ static long long getEventValue(int index) {
 
     // Null-terminate
     buf[bytes_read] = '\0';
-
-    // If there's a space, cut it off
     char *space_pos = strchr(buf, ' ');
-    if (space_pos) {
-        *space_pos = '\0';
+    char *value_start = buf;
+    
+    // Skip the number of space separated values indicated by offset
+    while (offset) {
+        if (space_pos) {
+            value_start = space_pos + 1;
+            space_pos = strchr(value_start, ' ');
+        } else {
+            break;
+        }
+        offset--;
     }
-    result = strtoll(buf, NULL, 10);
-#ifdef ENERGYZERO
-    if (strstr(_coretemp_native_events[index].name, "energy") != NULL) {
-        result -= _coretemp_native_events[index].initial_value;
-    }
-#endif
+    if (space_pos) *space_pos = '\0'; // Null-terminate at the
+
+    result = strtoll(value_start, NULL, 10);
+    
+// #ifdef ENERGYZERO
+//     if (strstr(_coretemp_native_events[index].name, "energy") != NULL) {
+//         result -= _coretemp_native_events[index].initial_value;
+//     }
+// #endif
 
 #endif
 
@@ -507,6 +587,7 @@ static int _coretemp_init_component(int cidx) {
         _coretemp_native_events[i].fd = -1;
         #endif
 
+        _coretemp_native_events[i].offset = t->offset;
         _coretemp_native_events[i].stone = 0;
         _coretemp_native_events[i].resources.selector = i + 1;
         last = t;
