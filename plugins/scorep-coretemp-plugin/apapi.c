@@ -40,7 +40,7 @@
 
 #include <papi.h>
 
-#define NUM_EVENTS 16
+#define NUM_EVENTS 32
 
 #if !defined(BACKEND_SCOREP) && !defined(BACKEND_VTRACE)
 #define BACKEND_VTRACE

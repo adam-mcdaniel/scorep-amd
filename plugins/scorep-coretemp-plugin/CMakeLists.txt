@@ -15,7 +15,7 @@ set(CMAKE_C_FLAGS "-D_GNU_SOURCE -std=c11 -O2 -g")
 #debugging c flags
 set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DHAVE_DEBUG -O0 -Wstrict-prototypes -Wall -Wundef -Wno-long-long -Wsign-compare -Wcomment -pedantic -finline-functions -fno-strict-aliasing")
 #release c flags
-set(CMAKE_C_FLAGS_RELEASE "-Os")
+set(CMAKE_C_FLAGS_RELEASE "-O3")
 
 
 if(BACKEND_SCOREP)

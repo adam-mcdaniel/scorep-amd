@@ -41,7 +41,7 @@
 #include <papi.h>
 
 #define HAVE_DEBUG
-#define NUM_EVENTS 16
+#define NUM_EVENTS 32
 
 #if !defined(BACKEND_SCOREP) && !defined(BACKEND_VTRACE)
 #define BACKEND_VTRACE
