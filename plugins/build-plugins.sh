@@ -18,6 +18,14 @@ if [ $? -ne 0 ]; then
 fi
 cd ..
 
+cd scorep-arocm2-smi-plugin
+./c_all
+if [ $? -ne 0 ]; then
+    echo "Score-P AROCM-SMI plugin build failed."
+    exit 1
+fi
+cd ..
+
 cd scorep-coretemp-plugin
 ./c_all
 if [ $? -ne 0 ]; then
@@ -26,34 +34,4 @@ if [ $? -ne 0 ]; then
 fi
 
 cd ..
-echo "Done building Score-P plugins."
-
-
-# cd scorep-coretemp-plugin-1
-# ./c_all
-# if [ $? -ne 0 ]; then
-#     echo "Score-P CoreTemp plugin build failed."
-#     exit 1
-# fi
-# cd ..
-# echo "Done building Score-P plugins."
-
-# cd scorep-coretemp-plugin-2
-# ./c_all
-# if [ $? -ne 0 ]; then
-#     echo "Score-P CoreTemp plugin build failed."
-#     exit 1
-# fi
-# cd ..
-# echo "Done building Score-P plugins."
-
-# cd scorep-coretemp-plugin-3
-# ./c_all
-# if [ $? -ne 0 ]; then
-#     echo "Score-P CoreTemp plugin build failed."
-#     exit 1
-# fi
-# cd ..
-# echo "Done building Score-P plugins."
-
 echo "Done building Score-P plugins."

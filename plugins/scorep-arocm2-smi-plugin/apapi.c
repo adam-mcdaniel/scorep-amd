@@ -40,6 +40,7 @@
 
 #include <papi.h>
 
+#define HAVE_DEBUG
 #define NUM_EVENTS 32
 
 #if !defined(BACKEND_SCOREP) && !defined(BACKEND_VTRACE)
@@ -159,19 +160,19 @@ uint64_t gettime()
     return (ts.tv_sec * 1E9 + ts.tv_nsec);
 }
 
-int32_t init_coretemp(void)
+int32_t init_arocm2_smi(void)
 {
     char * env_string;
     int ret;
 
 #if defined(HAVE_DEBUG)
-     fprintf(stderr, "CORETEMP: init called\n");
+     fprintf(stderr, "AROCM2_SMI: init called\n");
 #endif
 
 #if defined(BACKEND_SCOREP)
-    env_string = getenv("SCOREP_METRIC_CORETEMP_INTERVAL_US");
+    env_string = getenv("SCOREP_METRIC_AROCM2_SMI_INTERVAL_US");
 #elif defined(BACKEND_VTRACE)
-    env_string = getenv("VT_CORETEMP_INTERVAL_US");
+    env_string = getenv("VT_AROCM2_SMI_INTERVAL_US");
 #endif
     if (env_string == NULL)
         interval_us = 100000;
@@ -179,14 +180,14 @@ int32_t init_coretemp(void)
         interval_us = atoi(env_string);
         if (interval_us == 0) {
             fprintf(stderr,
-                    "Could not parse VT_CORETEMP_INTERVAL_US, using 100 ms\n");
+                    "Could not parse VT_AROCM2_SMI_INTERVAL_US, using 100 ms\n");
             interval_us = 100000;
         }
     }
 #if defined(BACKEND_SCOREP)
-    env_string = getenv("SCOREP_METRIC_CORETEMP_BUF_SIZE");
+    env_string = getenv("SCOREP_METRIC_AROCM2_SMI_BUF_SIZE");
 #elif defined(BACKEND_VTRACE)
-    env_string = getenv("VT_CORETEMP_BUF_SIZE");
+    env_string = getenv("VT_AROCM2_SMI_BUF_SIZE");
 #endif
     if (env_string != NULL) {
         buf_size = parse_buffer_size(env_string);
@@ -197,7 +198,7 @@ int32_t init_coretemp(void)
           }
     }
     //max_data_count = (buf_size * 1024 * 1024) /  sizeof(vt_plugin_cntr_timevalue);
-    //fprintf(stderr, "VT_CORETEMP_BUF_SIZE: using %dMB (%d Elements) per Event per Thread\n", buf_size, max_data_count);
+    //fprintf(stderr, "VT_AROCM2_SMI_BUF_SIZE: using %dMB (%d Elements) per Event per Thread\n", buf_size, max_data_count);
 
     ret = PAPI_library_init(PAPI_VER_CURRENT);
     if (ret != PAPI_VER_CURRENT) {
@@ -226,7 +227,7 @@ metric_properties_t * get_event_info(char * event_name)
 
     char apapi_name[STR_SIZE];
     memset(apapi_name, 0, STR_SIZE);
-    strcpy(apapi_name, "A2");
+    strcpy(apapi_name, "B2");
     strncat(apapi_name, event_name, STR_SIZE - 1 - strlen(apapi_name));
 
     /* parse the event name and put the event code into a global variable */
@@ -238,7 +239,7 @@ metric_properties_t * get_event_info(char * event_name)
 
     /* check if the counter is available on this architecture */
     if ((ret = PAPI_query_event(EventCodes[global_num_cntrs])) != PAPI_OK) {
-        fprintf(stderr, "CORETEMP: event %s is not avaible on this architecture\n", event_name);
+        fprintf(stderr, "AROCM2_SMI: event %s is not avaible on this architecture\n", event_name);
         return NULL;
     }
 
@@ -248,7 +249,7 @@ metric_properties_t * get_event_info(char * event_name)
 
     if (return_values == NULL)
     {
-      fprintf(stderr, "CORETEMP: Failed to allocate memory for information data structure\n");
+      fprintf(stderr, "AROCM2_SMI: Failed to allocate memory for information data structure\n");
       return NULL;
     }
 
@@ -315,7 +316,7 @@ void * thread_report(void * _id)
                     if (!once)
                     {
                         fprintf(stderr, "Buffer reached maximum %zuB. Loosing events.\n", (buf_size));
-                        fprintf(stderr, "Set VT_CORETEMP_BUF_SIZE environment variable to increase buffer size\n");
+                        fprintf(stderr, "Set VT_AROCM2_SMI_BUF_SIZE environment variable to increase buffer size\n");
                         once = 1;
                     }
                     break; // continue would lead to a busy wait
@@ -349,7 +350,7 @@ void * thread_report(void * _id)
                         static int once = 0;
                         if (!once) {
                         fprintf(stderr, "Buffer reached maximum %d. Loosing events.\n", max_data_count);
-                        fprintf(stderr, "Set VT_CORETEMP_BUF_SIZE environment variable to increase buffer size\n");
+                        fprintf(stderr, "Set VT_AROCM2_SMI_BUF_SIZE environment variable to increase buffer size\n");
                             once = 1;
                         }
                   continue;
@@ -373,7 +374,7 @@ void * thread_report(void * _id)
 
     int ret = PAPI_stop(event_list[id].EventSet, NULL);
     if (ret != PAPI_OK) {
-        fprintf(stderr, "failed to stop counters for id %d\n", id);
+        // fprintf(stderr, "failed to stop counters for id %d\n", id);
     }
 #if 0
      uint64_t num_samples = 0;
@@ -418,7 +419,7 @@ int32_t add_counter(char * event_name)
         event_list[id].num_cntrs = 0;
     }
 
-    counter_id = (id << 8) + event_list[id].num_cntrs;
+    counter_id = (id << 9) + event_list[id].num_cntrs;
 
      //event_list[id].res[counter_id].result_vector = malloc(max_data_count * sizeof(vt_plugin_cntr_timevalue));
      //event_list[id].res[counter_id].data_count    = 0;
@@ -474,7 +475,7 @@ uint64_t get_all_values(int32_t id, timevalue_t **result)
     timevalue_t *res = malloc(event_list[evt_id].sample_count * sizeof(timevalue_t));
   if (res == NULL)
   {
-    fprintf(stderr, "CORETEMP: Failed to allocate memory for results\n");
+    fprintf(stderr, "AROCM2_SMI: Failed to allocate memory for results\n");
     return 0;
   }
     long long *timevalues = event_list[evt_id].timevalues;
@@ -504,7 +505,7 @@ int disable_counter(int ID)
 }
 
 #ifdef BACKEND_SCOREP
-SCOREP_METRIC_PLUGIN_ENTRY( coretemp_plugin )
+SCOREP_METRIC_PLUGIN_ENTRY( arocm2_smi_plugin )
 #endif
 #ifdef BACKEND_VTRACE
 vt_plugin_cntr_info get_info()
@@ -517,7 +518,7 @@ vt_plugin_cntr_info get_info()
     info.run_per                      = SCOREP_METRIC_PER_HOST; //SCOREP_METRIC_PER_THREAD;
     info.sync                         = SCOREP_METRIC_ASYNC;
     info.delta_t                      = UINT64_MAX;
-    info.initialize                   = init_coretemp;
+    info.initialize                   = init_arocm2_smi;
     info.set_clock_function           = set_pform_wtime_function;
 #endif
 
