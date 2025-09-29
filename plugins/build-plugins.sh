@@ -18,13 +18,13 @@ if [ $? -ne 0 ]; then
 fi
 cd ..
 
-cd scorep-arocm2-smi-plugin
-./c_all
-if [ $? -ne 0 ]; then
-    echo "Score-P AROCM-SMI plugin build failed."
-    exit 1
-fi
-cd ..
+# cd scorep-arocm2-smi-plugin
+# ./c_all
+# if [ $? -ne 0 ]; then
+#     echo "Score-P AROCM-SMI plugin build failed."
+#     exit 1
+# fi
+# cd ..
 
 cd scorep-coretemp-plugin
 ./c_all

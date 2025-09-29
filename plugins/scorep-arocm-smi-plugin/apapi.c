@@ -374,7 +374,7 @@ void * thread_report(void * _id)
 
     int ret = PAPI_stop(event_list[id].EventSet, NULL);
     if (ret != PAPI_OK) {
-        // fprintf(stderr, "failed to stop counters for id %d\n", id);
+        fprintf(stderr, "failed to stop counters for id %d\n", id);
     }
 #if 0
      uint64_t num_samples = 0;
@@ -433,24 +433,24 @@ int32_t add_counter(char * event_name)
      * and start the corresponding sampling thread */
     if (event_list[id].num_cntrs == global_num_cntrs) {
         if ((ret = PAPI_create_eventset(&event_list[id].EventSet)) != PAPI_OK) {
-            // fprintf(stderr, "failed to create EventSet for id %d: %s\n", id, PAPI_strerror(ret));
-            // return -1;
+            fprintf(stderr, "failed to create EventSet for id %d: %s\n", id, PAPI_strerror(ret));
+            return -1;
         }
 
         if ((ret = PAPI_add_events(event_list[id].EventSet, EventCodes, event_list[id].num_cntrs)) != PAPI_OK) {
-            // fprintf(stderr, "failed to add %i events for id %d: %s\n", global_num_cntrs, id, PAPI_strerror(ret));
-            // return -1;
+            fprintf(stderr, "failed to add %i events for id %d: %s\n", global_num_cntrs, id, PAPI_strerror(ret));
+            return -1;
         }
 
         if ((ret = PAPI_start(event_list[id].EventSet)) != PAPI_OK) {
-            // fprintf(stderr, "failed to start counters for id %d: %s\n", id, PAPI_strerror(ret));
-            // return -1;
+            fprintf(stderr, "failed to start counters for id %d: %s\n", id, PAPI_strerror(ret));
+            return -1;
         }
 
         if ((ret = pthread_create(&event_list[id].thread, NULL, &thread_report, (void *)(intptr_t) id) != 0))
         {
-            // fprintf(stderr, "failed to create sampling thread: %s\n", strerror(ret));
-            // return -1;
+            fprintf(stderr, "failed to create sampling thread: %s\n", strerror(ret));
+            return -1;
         }
     }
 
