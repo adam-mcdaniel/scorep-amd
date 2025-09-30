@@ -626,6 +626,16 @@ Device::Device(std::string p, RocmSMI_env_vars const *e) :
   std::string m_name("/rocm_smi_");
   m_name += dev;
 
+  printf("ADAM: Getting mutex for device %s\n", dev.c_str());
+  #define HOST_NAME_MAX 256
+  // Add host name to make it unique across cluster
+  char host_name[HOST_NAME_MAX];
+  if (gethostname(host_name, HOST_NAME_MAX) == 0) {
+    printf("ADAM: Host name is %s\n", host_name);
+    m_name += "_";
+    m_name += host_name;
+  }
+
   mutex_ = shared_mutex_init(m_name.c_str(), 0777);
 
   if (mutex_.ptr == nullptr) {
