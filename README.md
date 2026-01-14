@@ -1,4 +1,4 @@
-# ScoreP Config for AMD Mi300
+# ScoreP Config for AMD MI250 and MI300 Accelerators 
 
 A project to build and configure the `ScoreP` performance measurement framework for AMD GPUs, specifically the Mi300, with support for the `ROCm` stack.
 
